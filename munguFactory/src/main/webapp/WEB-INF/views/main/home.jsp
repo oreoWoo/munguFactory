@@ -5,8 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	.homeContainer {
+		padding-left: 50px;
+		padding-top : 50px;
+	}
+</style>
 </head>
+
 <body>
-	<h1>contents here</h1>
+	<div class="homeContainer">
+		<h1>문구 공장 main 화면</h1>
+	</div>
 </body>
 </html>
