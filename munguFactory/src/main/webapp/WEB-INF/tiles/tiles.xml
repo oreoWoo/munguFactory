@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	
+	<!-- layout의 header footer 적용 안되고 body만 출력되는 부분 // 로그인 화면에 활용해도 괜찮음-->
+   <definition name="empty" template="/WEB-INF/views/layouts/empty.jsp">
+       <put-attribute name="body" value="" />
+   </definition>
+   <definition name="empty/*" extends="empty">
+       <put-attribute name="body" value="/WEB-INF/views/empty/{1}.jsp" />
+   </definition> 
+
+	
+	<definition name="blank" template="/WEB-INF/views/layouts/blank.jsp">
+		<put-attribute name="body" value="" />
+	</definition>
+	<definition name="blank/*" extends="blank">
+		<put-attribute name="body" value="/WEB-INF/views/blank/{1}.jsp" />
+	</definition>
+	
+ 	
+	<definition name="layout-tiles" template="/WEB-INF/views/layouts/layout-basic.jsp">
+		<put-attribute name="header"	value="/WEB-INF/views/layouts/header.jsp"/>
+		<put-attribute name="footer"	value="/WEB-INF/views/layouts/footer.jsp" />
+		<put-attribute name="menu" 		value="/WEB-INF/views/layouts/menu.jsp"/>
+		<put-attribute name="body"	value=""/>
+		<!-- <put-attribute name="include"	value="/WEB-INF/views/layouts/include.jsp"/> -->
+		<!-- <put-attribute name="side" 		value="/WEB-INF/views/layouts/side.jsp"/> -->
+	</definition>
+	
+	
+	<definition name="*/*" extends="layout-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+	
+	
+	<!--
+	<definition name="main/*/*/*" extends="layout-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/main/{1}/{2}/{3}.jsp"/>
+	</definition> 
+	-->
+	
+</tiles-definitions>
