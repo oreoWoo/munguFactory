@@ -1,0 +1,451 @@
+/* 
+230105
+
+테이블 생성 순서 
+
+dept - posit - emp - emp_list - factory - account - item - orders 
+- orders_detail - subul - productionorder - output - storages - comm
+
+*/
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS comm;
+DROP TABLE IF EXISTS emp;
+DROP TABLE IF EXISTS emp_list;
+DROP TABLE IF EXISTS dept;
+DROP TABLE IF EXISTS posit;
+DROP TABLE IF EXISTS factory;
+DROP TABLE IF EXISTS accounts;
+DROP TABLE IF EXISTS item;
+DROP TABLE IF EXISTS orders_detail;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS production_order;
+DROP TABLE IF EXISTS subul;
+DROP TABLE IF EXISTS storages;
+DROP TABLE IF EXISTS emp_list;
+DROP TABLE IF EXISTS output;
+DROP TABLE IF EXISTS AUTHORITY;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+---------------------------------------------------------------
+
+/* POSIT, DEPT, AUTHORITY, EMP, EMP_LIST (직급, 부서, 권한, 사원, 사원목록) 관련 DDL, DML */
+
+/* 직급 */
+CREATE TABLE POSIT (
+	POSIT_NO INT NOT NULL comment '직급 번호', 
+	POSIT_NAME VARCHAR(1000) comment '직급 명' 
+);
+
+CREATE UNIQUE INDEX PK_POSITION
+	ON POSIT (
+		POSIT_NO ASC
+	);
+
+ALTER TABLE POSIT
+	ADD
+		CONSTRAINT PK_POSITION
+		PRIMARY KEY (
+			POSIT_NO
+		);
+
+CREATE TABLE DEPT (
+	DEPT_NO INT NOT NULL comment '부서 번호', 
+	DEPT_NAME VARCHAR(1000) comment '부서 이름' 
+);
+
+CREATE UNIQUE INDEX PK_DEPT
+	ON DEPT (
+		DEPT_NO ASC
+	);
+
+ALTER TABLE DEPT
+	ADD
+		CONSTRAINT PK_DEPT
+		PRIMARY KEY (
+			DEPT_NO
+		);
+
+/* 권한 */
+CREATE TABLE AUTHORITY (
+	AUTH_NO INT NOT NULL comment '권한 번호',
+	AUTH_NAME VARCHAR(1000) comment '권한 명칭'
+);
+
+CREATE UNIQUE INDEX PK_AUTHORITY
+	ON AUTHORITY (
+		AUTH_NO ASC
+	);
+
+ALTER TABLE AUTHORITY
+	ADD
+		CONSTRAINT PK_AUTHORITY
+		PRIMARY KEY (
+			AUTH_NO
+		);
+
+insert into authority values(0, 'user');
+insert into authority values(1, 'admin');
+
+/* 사원 */
+CREATE TABLE EMP (
+	EMP_NO INT NOT NULL comment '사원 번호', 
+	EMP_NAME VARCHAR(1000) comment '사원 이름', 
+	EMP_ID VARCHAR(1000) comment '사원 아이디', 
+	EMP_PASSWORD VARCHAR(1000) comment '사원 비밀번호', 
+	EMP_ADDRESS VARCHAR(10000) comment '사원 주소', 
+	EMP_GENDER VARCHAR(1000) comment '사원 성별', 
+	EMP_HIRE_DATE TIMESTAMP(6) comment '사원 입사일',
+	EMP_EMAIL VARCHAR(1000) comment '사원 이메일', 
+	DEPT_NO INT comment '부서 번호', 
+	POSIT_NO INT comment '직급 번호', 
+	AUTH_NO INT comment '권한 번호'
+);
+
+CREATE UNIQUE INDEX PK_EMP
+	ON EMP (
+		EMP_NO ASC
+	);
+
+ALTER TABLE EMP
+	ADD
+		CONSTRAINT PK_EMP
+		PRIMARY KEY (
+			EMP_NO
+		);
+
+ALTER TABLE EMP
+	ADD
+		CONSTRAINT FK_DEPT_TO_EMP
+		FOREIGN KEY (
+			DEPT_NO
+		)
+		REFERENCES DEPT (
+			DEPT_NO
+		);
+
+ALTER TABLE EMP
+	ADD
+		CONSTRAINT FK_POSITION_TO_EMP
+		FOREIGN KEY (
+			POSIT_NO
+		)
+		REFERENCES POSIT (
+			POSIT_NO
+		);
+
+ALTER TABLE EMP
+	ADD
+		CONSTRAINT FK_AUTHORITY_TO_EMP
+		FOREIGN KEY (
+			AUTH_NO
+		)
+		REFERENCES AUTHORITY (
+			AUTH_NO
+		);
+
+CREATE TABLE EMP_List (
+	EMP_NO INT NOT NULL comment '사원 번호', 
+	EMP_NAME VARCHAR(1000) comment '사원 이름', 
+	EMP_HIRE_DATE TIMESTAMP(6) comment '사원 입사일', 
+	DEPT_NO INT comment '부서 번호', 
+	POSIT_NO INT comment '직급 번호', 
+	AUTH_NO INT comment '권한 번호' 
+);
+
+CREATE UNIQUE INDEX PK_EMP2
+	ON EMP_List (
+		EMP_NO ASC
+	);
+
+ALTER TABLE EMP_List
+	ADD
+		CONSTRAINT PK_EMP2
+		PRIMARY KEY (
+			EMP_NO
+		);
+
+
+insert into posit values(1, '사원');
+insert into posit values(2, '계장');
+insert into posit values(3, '과장');
+insert into posit values(4, '차장');
+insert into posit values(5, '부장');
+insert into posit values(6, '이사');
+insert into posit values(7, '상무');
+insert into posit values(8, '사장');
+insert into posit values(9, '회장');
+
+
+insert into dept values(1, '사업부');
+insert into dept values(2, '영업부');
+insert into dept values(3, '기획부');
+insert into dept values(4, '개발부');
+insert into dept values(5, '작업부');
+
+insert into emp_list values('2301001', '김우석', '2023-01-05 00:00:00', '1', '9', '1');
+
+insert into emp values('2301001', '김우석', 'wskimjeju', '12341234', '10412 경기 고양시 일산동구 산두로 3-1 /111동 1910호', '남자', '2023-01-05 16:27:59.000000', 'wskimjeju@naver.com', '1', '9', '1');
+
+------------------------------------------------------------------------------
+
+
+/* Factory 공장 테이블 */
+
+CREATE TABLE mungudb.factory
+
+(
+    factory_no INT PRIMARY KEY AUTO_INCREMENT,
+    factory_name VARCHAR(100),
+    factory_address1 VARCHAR(100),
+    factory_address2 VARCHAR(100),
+    factory_call VARCHAR(100),
+    factory_use INT
+
+);
+
+INSERT INTO Factory VALUES (701, '포승공장', '(17960) 경기도 평택시 포승읍 포승공단순환로 245', '포승공장', '031-8053-4754', 1);
+INSERT INTO Factory VALUES (702, '부천공장', '(14665) 경기도 부천시 안곡로 266 (역곡동)', '부천공장', '032-888-9875', 1);
+INSERT INTO Factory VALUES (703, '염창동공장', '(07535) 서울특별시 강서구 양천로67길 63 (염창동)', '염창동공장', '02-8877-9875', 1);
+INSERT INTO Factory VALUES (704, '부산공장', '(46042) 부산광역시 기장군 일광읍 일광로 188', '부산공장', '051-977-2345', 1);
+INSERT INTO Factory VALUES (705, '대구공장', '(42943) 대구광역시 달성군 화원읍 사문진로 384', '대구공장', '053-535-6789', 1);
+INSERT INTO Factory VALUES (706, '파주공장', '(10845) 경기도 파주시 월롱면 엘씨디로 284', '파주공장', '031-942-6578', 1);
+INSERT INTO Factory VALUES (707, '인천공장', '(22509) 인천광역시 동구 제물량로 386 (만석동)', '인천공장', '032-777-5287', 1);
+INSERT INTO Factory VALUES (708, '일산공장', '(10431) 경기 고양시 일산동구 장항로 297-38', '일산공장', '031-985-1387', 1);
+INSERT INTO Factory VALUES (709, '안성공장', '(17541) 경기 안성시 대덕면 모산로 345', '안성공장', '031-685-1875', 1);
+
+ALTER TABLE factory auto_increment = 710;
+
+------------------------------------------------------------------------------
+
+/* Accounts 거래처 테이블 */
+
+CREATE TABLE `accounts` (
+   `account_no`   int  not null  primary key  auto_increment,
+   `account_name`   VARCHAR(1000)   NULL,
+   `account_type`   VARCHAR(1000)   NULL,
+   `account_idno`   VARCHAR(1000)   NULL,
+   `acc_owner`   VARCHAR(1000)   NULL,
+   `acc_zipcode`   VARCHAR(1000)   NULL,
+   `acc_address`   VARCHAR(2000)   NULL,
+   `acc_address2`   VARCHAR(2000)   NULL,
+   `acc_conditions`   VARCHAR(1000)   NULL,
+   `acc_category`   VARCHAR(1000)   NULL,
+   `acc_manager`   VARCHAR(1000)   NULL,
+   `acc_enddate`   date   NULL,
+   `acc_state`   int   NULL,
+   `acc_telnum`   VARCHAR(500)   NULL
+);
+
+ALTER TABLE accounts auto_increment = 1001;
+
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('이마트 풍산점','대형마트','206-86-50913','강희석','10311','경기도 고양시 일산동구 무궁화로 237','이마트풍산점','소매업','대형마켓, 판매업','정용진','2025-12-31',0,'070-6522-1234');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('이마트 마포점','대형마트',	'206-86-50913','강희석','04196','서울특별시 마포구 백범로 212','대우 월드마크마포','소매업','대형마켓, 판매업','문동은','2026-12-31',0,'070-1234-5678');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('이마트 용산점','대형마트','206-86-50913','강희석','04377','서울특별시 용산구 한강대로23길 55','이마트용산점','소매업','대형마켓, 판매업','전재준','2024-12-31',0,'070-2589-3698');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('홈플러스 합정점','대형마트','220-81-60348','이제훈','04036','서울특별시 마포구 양화로 45','메세나폴리스','소매업','대형마켓, 판매업','박연진',	'2022-12-31',	1,'070-5555-9999');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('홈플러스 목동점','대형마트','220-81-60348','이제훈','07992','서울특별시 양천구 목동서로 170','홈플러스목동점','소매업','대형마켓, 판매업','주여정','2024-12-31',0,'02-4587-7748');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('홈플러스 고양터미널점','대형마트','220-81-60348','이제훈','10450','경기도 고양시 일산동구 중앙로 1036','고양터미널점 B2','소매업','대형마켓, 판매업','이사라','2025-12-31',0,'02-4568-7841');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('모닝글로리 연희점',	'문구점','105-81-63968','허상일','03708',	'서울특별시 서대문구 연희맛로 28','모닝글로리 연희점','소매업','문구,팬시용품','정지소','2024-12-31',0,'02-333-2400');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('모닝글로리 경복궁점','문구점','105-81-63968','허상일','03044','서울특별시 종로구 자하문로2길 3','1층 모닝글로리 경복궁','소매업','문구,팬시용품','진도준','2022-12-31',1,'02-736-1023');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('모닝글로리 식사점','문구점','105-81-63968','허상일','10323','경기도 고양시 일산동구 위시티3로 60','모닝글로리 식사점', '소매업','문구,팬시용품','송혜교','2024-12-31',0,'031-966-4040');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('텐바이텐 대학로점','문구점','211-87-00620','최은희','03086','서울특별시 종로구 대학로12길 31','자유빌딩 1층','소매업','문구,팬시용품','송중기','2024-12-31',0,'02-741-9010');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('텐바이텐 신제주점','문구점','211-87-00620','최은희','63123','제주특별자치도 제주시 연동7길 26','1층 텐바이텐','소매업','문구,팬시용품','장원영','2025-12-31',0,'0507-1357-1693');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('교보문고 광화문점','서점','102-81-11670','안병현','03154','서울특별시 종로구 종로 1','교보생명빌딩 지하1층','도소매업','대형서점','이영지','2025-12-31',0,'1544-1900');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('교보문고 영등포점','서점','102-81-11670','안병현','07305','서울특별시 영등포구 영중로 15','타임스퀘어 멀티플렉스 2층','도소매업','대형서점','김광현','2026-12-31',0,'1544-1903');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('교보문고 은평 바로드림센터','서점','102-81-11670','안병현','03306',	'서울특별시 은평구 통일로 1050',	'롯데몰 은평점 3층',	'도소매업','대형서점','최정',	'2026-12-31',0,'1544-1906');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('예쓰이십사','서점','229-81-37000','김석환','98542','서울시 영등포구 은행로 11','5층~6층(여의도동,일신빌딩)','도소매업','대형서점,인터넷판매업','김강민','2025-12-31',0,'02-8988-4152');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('창신동문구완구','문구점','102-85-4567','최예솔','03121','서울특별시 종로구 종로52길 21-1','3층 302호','도매업','문구 도소매','최주환','2025-12-31',0,'02-743-7424');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('하나제이','문구점','102-78-12345','박병철','10212','경기도 고양시 일산서구 송산로 559-16','하나빌딩 101호','도매업','문구 도매',	'최민준','2026-12-31',0,'031-911-2870');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('홍익아트문구센터','문구점','102-85-445789','윤소희','10414','경기도 고양시 일산동구 장백로 178','뉴욕프라자상가 110호','소매업','문구소매','박정권','2022-12-31',1,'031-1420-7770');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('탱크유통','문구점','211-87-22365','진성준','25803','강원도 동해시 동회길 8','탱크유통','도매업','문구 도매','정근우','2025-12-31',0,'0507-1319-2293');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('문구야놀자','문구점','102-87-78456','김구월','21016',	'인천광역시 계양구 양지로 138',	'블루빌 1층',	'소매업','문구,팬시용품','양현종','2026-12-31',0,'070-888-6618'	);
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('드림디포 구월점','문구점','214-86-77209','장낙전','36321','인천광역시 남동구 용천로 68','써니프라자 지하1층','도소매업','문구,팬시용품','이대호','2025-12-31',0,'032-472-0009');
+insert into accounts (account_name,account_type,account_idno,acc_owner,acc_zipcode,acc_address,	acc_address2,acc_conditions,acc_category,acc_manager,acc_enddate,acc_state,acc_telnum)
+values	('천삼백케이','문구점','211-87-15370','이윤석','107884','서울시 구로구 디지털로 26길 72','2층',	'도소매업','문구 도소매,인터넷판매업','박세리','2025-12-31',0,'02-4574-7845');
+
+------------------------------------------------------------------------------
+
+/* Item 상품 테이블 */
+
+CREATE TABLE `item` (
+   `item_no`   int  not null  primary key  auto_increment,
+   `factory_no`   int   NOT NULL,
+   `item_Name`   varchar(1000)   NULL,
+   `stock_Unit`   int   NULL,
+   `item_Check`   varchar(10)   NULL   COMMENT '상품을  생산하는지 안하는지',
+   `hs_Code`   varchar(1000)   NULL   COMMENT 'ex) 바코드 공통 번호'
+);
+
+ALTER TABLE item ADD FOREIGN KEY(factory_no) REFERENCES factory(factory_no);
+
+ALTER TABLE item auto_increment = 100;
+
+INSERT INTO item VALUES(null, 701, "모나미 유성펜 0.7mm", 12, "생산", 223104);
+INSERT INTO item VALUES(null, 701, "알파 트리핏500 유성펜 1.0mm", 12, "생산", 410227);
+INSERT INTO item VALUES(null, 701, "유니 제트스트림 유성펜 SXN-150 0.7mm", 12, "생산", 140299);
+
+INSERT INTO item VALUES(null, 702, "알파 언더라인m 형광펜 5색", 3, "생산", 493778);
+INSERT INTO item VALUES(null, 702, "알파 언더라인m 형광펜 3색", 5, "생산", 493776);
+INSERT INTO item VALUES(null, 702, "알파 언더라인m 형광펜", 12, "생산 중단", 493770);
+
+INSERT INTO item VALUES(null, 703, "파버카스텔 TK-Fine Executive 샤프 0.5mm", 12, "생산", 1253283);
+INSERT INTO item VALUES(null, 703, "알파 제도샤프 0.5mm 블랙", 12, "생산", 282922);
+INSERT INTO item VALUES(null, 703, "동아 샤프 프로매틱 0.5mm", 12, "생산", 517826);
+
+INSERT INTO item VALUES(null, 704, "펜탈 아인슈타인 샤프심 0.5mm", 10, "생산", 523329);
+INSERT INTO item VALUES(null, 704, "제노 샤프심 0.5mm", 20, "생산", 1872882);
+INSERT INTO item VALUES(null, 704, "파버카스텔 연필 블랙 HB", 12, "생산", 1078765);
+
+INSERT INTO item VALUES(null, 705, "하고로모 탄산분필 백색", 72, "생산", 1634584);
+INSERT INTO item VALUES(null, 705, "하고로모 탄산분필 10색 혼합", 12, "생산", 1286076);
+INSERT INTO item VALUES(null, 705, "하고로모 분필케이스", 5, "생산", 1428850);
+
+INSERT INTO item VALUES(null, 706, "알파 스테플러 33호 침용", 3, "생산", 100400);
+INSERT INTO item VALUES(null, 706, "화신 스테플러 33호 침용", 3, "생산", 281589);
+INSERT INTO item VALUES(null, 706, "알파 스테플러침 33호", 10, "생산", 100459);
+
+INSERT INTO item VALUES(null, 707, "알파 OPP 박스테이프 투명 48mmx40M", 4, "생산", 1783866);
+INSERT INTO item VALUES(null, 707, "프랑스 마패드 포커스 컷터칼", 20, "생산", 902211);
+INSERT INTO item VALUES(null, 707, "화신 사무용가위 베스트 17.5cm", 10, "생산", 516720);
+
+INSERT INTO item VALUES(null, 708, "바이하츠 점보 실버클립", 10, "생산", 243513);
+INSERT INTO item VALUES(null, 708, "바이하츠 점보 칼라클립", 10, "생산", 243519);
+INSERT INTO item VALUES(null, 708, "알파 논스키드 클립", 10, "생산중단", 243512);
+
+INSERT INTO item VALUES(null, 709, "화일보관함 A4(소)", 20, "생산", 1795971);
+INSERT INTO item VALUES(null, 709, "멀티 L홀더 A4", 10, "생산", 1854375);
+INSERT INTO item VALUES(null, 709, "문화 문서보존용 표지 F298-7 연갈색 A4", 100, "생산", 331827);
+
+
+------------------------------------------------------------------------------
+
+/* Orders, Orders_detail 수주, 수주상세 테이블 */
+
+CREATE TABLE `Orders` (
+   `Suju_No`   int  not null  primary key  auto_increment,
+   `emp_no`   int   NOT NULL,
+   `account_no`   int   NOT NULL,
+   `balju_No`   int   NULL,
+   `Suju_Date`   date   NULL,
+   `Last_Date`   date   NULL,
+   `Order_Note`   varchar(1000)   NULL
+);
+
+ALTER TABLE Orders ADD FOREIGN KEY(emp_no) REFERENCES emp(emp_no);
+ALTER TABLE Orders ADD FOREIGN KEY(account_no) REFERENCES accounts(account_no);
+
+CREATE TABLE `Orders_detail` (
+   `Suju_No`   int  NOT NULL,
+   `item_no`   int   NOT NULL,
+   `Suju_Amount`   int   NULL,
+   primary key(Suju_No, item_no)
+);
+
+ALTER TABLE Orders_detail ADD FOREIGN KEY(Suju_No) REFERENCES orders(Suju_No);
+ALTER TABLE Orders_detail ADD FOREIGN KEY(item_no) REFERENCES item(item_no);
+
+------------------------------------------------------------------------------
+
+/* Subul, 수불부 관련 테이블 */
+
+CREATE TABLE `subul` (
+   `subul_num`   int  not null  primary key  auto_increment COMMENT 'auto_increment',
+   `item_no`   int   NOT NULL,
+   `emp_no`   int   NOT NULL,
+   `serial_no`   int   NULL,
+   `date`   datetime   NULL,
+   `amount`   int   NULL,
+   `gubun`   varchar(50)   NULL   COMMENT '생산, 출하, 불량, 실사재고, 실사누락, 임시실사',
+   `subul_note`   varchar(50)   NULL
+);
+
+ALTER TABLE subul ADD FOREIGN KEY(item_no) REFERENCES item(item_no);
+ALTER TABLE subul ADD FOREIGN KEY(emp_no) REFERENCES emp(emp_no);
+
+------------------------------------------------------------------------------
+
+/* Production_order 생산지시 테이블 관련 */
+
+CREATE TABLE `Production_order` (
+   `Suju_No`   int  auto_increment NOT NULL,
+   `item_no`   int   NOT NULL,
+   `emp_no`   int   NOT NULL,
+   `Finish_Date`   date   NULL   COMMENT '관리자 승인 = 작업완료일',
+   `Suju_Date`   date   NULL   COMMENT '수주일자',
+   `Prod_Amount`   int   NULL   COMMENT '= 수주수량',
+   `Prod_State`   varchar(100)   NULL   COMMENT '관리자 승인  전, 진행상태표시',
+   `Factory_Code`   int   NULL,
+   primary key(Suju_No, item_no)
+);
+
+ALTER TABLE Production_order ADD FOREIGN KEY(Suju_No) REFERENCES orders(Suju_No);
+ALTER TABLE Production_order ADD FOREIGN KEY(item_no) REFERENCES item(item_no);
+ALTER TABLE Production_order ADD FOREIGN KEY(emp_no) REFERENCES emp(emp_no);
+
+------------------------------------------------------------------------------
+
+/* Output 생산실적 관련 테이블 */
+
+CREATE TABLE `Output` (
+   `prod_no`   int  not null  primary key  auto_increment  COMMENT 'sequence. = 제조오더번호. AI.',
+   `item_no`   INT   NOT NULL,
+   `emp_no`   INT   NOT NULL,
+   `factory_no`   INT   NOT NULL   COMMENT '=입고창고',
+   `item_name`   VARCHAR(100)   NULL,
+   `finish_date`   dateTime   NULL   COMMENT '=작업완료일?',
+   `prod_amount`   INT   NULL   COMMENT '생산지시에서 가져옴',
+   `poor_quantity`   INT   NULL,
+   `yield`   FLOAT   NULL   COMMENT '투입 수량 대비 완성된 양품의 비율'
+);
+
+ALTER TABLE Output ADD FOREIGN KEY(item_no) REFERENCES item(item_no);
+ALTER TABLE Output ADD FOREIGN KEY(emp_no) REFERENCES emp(emp_no);
+ALTER TABLE Output ADD FOREIGN KEY(factory_no) REFERENCES factory(factory_no);
+
+------------------------------------------------------------------------------
+
+/* Storages 창고 관련 테이블 */
+
+CREATE TABLE `storages` (
+   `factory_no`   INT   NOT NULL,
+   `item_no`   INT   NOT NULL,
+   `stock_count`   INT   NULL,
+   primary key(factory_no, item_no)
+);
+
+ALTER TABLE storages ADD FOREIGN KEY(factory_no) REFERENCES factory(factory_no);
+ALTER TABLE storages ADD FOREIGN KEY(item_no) REFERENCES item(item_no);
+
+------------------------------------------------------------------------------
+
+/* COMM 공통 테이블 */ 
+
+CREATE TABLE `COMM` (
+   `BCD`   int   NOT NULL,
+   `MCD`   int   NOT NULL,
+   `COMM_DETAIL`   varchar(100)   NOT NULL
+);
+

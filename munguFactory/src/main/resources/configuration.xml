@@ -3,5 +3,10 @@
 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-
+	<typeAliases>
+		<!-- output -->
+		<!-- <typeAlias type="com.oracle.munguFactory.dto.OutputDTO" alias="OutputDTO"/> -->
+		
+		
+	</typeAliases>
 </configuration>
