@@ -1,0 +1,160 @@
+
+
+
+
+/* 사원 */
+CREATE TABLE EMP (
+	EMP_NO INT NOT NULL comment '사원 번호', 
+	EMP_NAME VARCHAR(1000) comment '사원 이름', 
+	EMP_ID VARCHAR(1000) comment '사원 아이디', 
+	EMP_PASSWORD VARCHAR(1000) comment '사원 비밀번호', 
+	EMP_ADDRESS VARCHAR(10000) comment '사원 주소', 
+	EMP_GENDER VARCHAR(1000) comment '사원 성별', 
+	EMP_HIRE_DATE TIMESTAMP(6) comment '사원 입사일',
+	EMP_EMAIL VARCHAR(1000) comment '사원 이메일', 
+	DEPT_NO INT comment '부서 번호', 
+	POSIT_NO INT comment '직급 번호', 
+	AUTH_NO INT comment '권한 번호'
+);
+
+CREATE UNIQUE INDEX PK_EMP
+	ON EMP (
+		EMP_NO ASC
+	);
+
+ALTER TABLE EMP
+	ADD
+		CONSTRAINT PK_EMP
+		PRIMARY KEY (
+			EMP_NO
+		);
+
+/* 직급 */
+CREATE TABLE POSIT (
+	POSIT_NO INT NOT NULL comment '직급 번호', 
+	POSIT_NAME VARCHAR(1000) comment '직급 명' 
+);
+
+CREATE UNIQUE INDEX PK_POSITION
+	ON POSIT (
+		POSIT_NO ASC
+	);
+
+ALTER TABLE POSIT
+	ADD
+		CONSTRAINT PK_POSITION
+		PRIMARY KEY (
+			POSIT_NO
+		);
+
+CREATE TABLE DEPT (
+	DEPT_NO INT NOT NULL comment '부서 번호', 
+	DEPT_NAME VARCHAR(1000) comment '부서 이름' 
+);
+
+CREATE UNIQUE INDEX PK_DEPT
+	ON DEPT (
+		DEPT_NO ASC
+	);
+
+ALTER TABLE DEPT
+	ADD
+		CONSTRAINT PK_DEPT
+		PRIMARY KEY (
+			DEPT_NO
+		);
+/* 권한 */
+CREATE TABLE AUTHORITY (
+	AUTH_NO INT NOT NULL comment '권한 번호',
+	AUTH_NAME VARCHAR(1000) comment '권한 명칭'
+);
+
+CREATE UNIQUE INDEX PK_AUTHORITY
+	ON AUTHORITY (
+		AUTH_NO ASC
+	);
+
+ALTER TABLE AUTHORITY
+	ADD
+		CONSTRAINT PK_AUTHORITY
+		PRIMARY KEY (
+			AUTH_NO
+		);
+
+ALTER TABLE EMP
+	ADD
+		CONSTRAINT FK_DEPT_TO_EMP
+		FOREIGN KEY (
+			DEPT_NO
+		)
+		REFERENCES DEPT (
+			DEPT_NO
+		);
+
+ALTER TABLE EMP
+	ADD
+		CONSTRAINT FK_POSITION_TO_EMP
+		FOREIGN KEY (
+			POSIT_NO
+		)
+		REFERENCES POSIT (
+			POSIT_NO
+		);
+
+ALTER TABLE EMP
+	ADD
+		CONSTRAINT FK_AUTHORITY_TO_EMP
+		FOREIGN KEY (
+			AUTH_NO
+		)
+		REFERENCES AUTHORITY (
+			AUTH_NO
+		);
+
+CREATE TABLE EMP_List (
+	EMP_NO INT NOT NULL comment '사원 번호', 
+	EMP_NAME VARCHAR(1000) comment '사원 이름', 
+	EMP_HIRE_DATE TIMESTAMP(6) comment '사원 입사일', 
+	DEPT_NO INT comment '부서 번호', 
+	POSIT_NO INT comment '직급 번호', 
+	AUTH_NO INT comment '권한 번호' 
+);
+
+CREATE UNIQUE INDEX PK_EMP2
+	ON EMP_List (
+		EMP_NO ASC
+	);
+
+ALTER TABLE EMP_List
+	ADD
+		CONSTRAINT PK_EMP2
+		PRIMARY KEY (
+			EMP_NO
+		);
+
+
+insert into posit values(1, '사원');
+insert into posit values(2, '계장');
+insert into posit values(3, '과장');
+insert into posit values(4, '차장');
+insert into posit values(5, '부장');
+insert into posit values(6, '이사');
+insert into posit values(7, '상무');
+insert into posit values(8, '사장');
+insert into posit values(9, '회장');
+
+
+insert into dept values(1, '사업부');
+insert into dept values(2, '영업부');
+insert into dept values(3, '기획부');
+insert into dept values(4, '개발부');
+insert into dept values(5, '작업부');
+
+insert into emp_list values('2301001', '김우석', '2023-01-05 00:00:00', '1', '9', '1');
+
+insert into emp values('2301001', '김우석', 'wskimjeju', '12341234', '10412 경기 고양시 일산동구 산두로 3-1 /111동 1910호', '남자', '2023-01-05 16:27:59.000000', 'wskimjeju@naver.com', '1', '9', '1');
+
+
+
+
+
