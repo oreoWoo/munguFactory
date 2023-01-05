@@ -33,53 +33,55 @@
                           <th>지시</th>                      
                         </tr>
                       </thead>
-                      <tbody>
-						<c:set var="num" value="${page.total-page.start+1 }"></c:set>
-						<c:forEach var="list" items="${dogList}">
-							<tr>
-								<th scope="row">${list.rn}</th>
-								<td><a
-									href="/school/dogNotice/detailContent2?noticeNo=${list.noticeNo}">${list.title }</a></td>
-								<td>${list.tname}</td>
-								<td>${list.regdate}</td>
-								<td>${list.dogName}</td>
-                          <td>
-                            <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Angular Project</strong>
-                          </td>
-                          <td>Albert Cook</td>
-                          <td>
+		                      <tbody>
+								<c:set var="num" value="${page.total-page.start+1 }"></c:set>
+								<c:forEach var="list" items="${prodList}">
+									<tr>
+										<th scope="row">${list.rn}</th>
+										<td><a
+											href="/prod/modProd?sujuNo=${list.sujuNo}">${list.sujoNo}</a></td>
+										<td>${list.itemNo}</td>
+										<td>${list.factoryCode}</td>
+										<td>${list.prodAmount}</td>
+										<td>${list.empNo}</td>
+										<td>${list.prodState}</td>
+										<td>${list.sujuDate}</td>
+										<td>${list.finishDate}</td>
+										<td>${list.dogName}</td>
+										<td>${list.dogName}</td>
+										<td><a href="/prod/jisiProd"</td>
+		                          <td>
+		                            <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Angular Project</strong>
+		                          </td>
+		                          <td>Albert Cook</td>
+		                          <td>
+		
+		                          </td>
+		                          <td></td>
+		                          <td>
+		                            <div class="dropdown">
+		                              <button
+		                                type="button"
+		                                class="btn p-0 dropdown-toggle hide-arrow"
+		                                data-bs-toggle="dropdown"
+		                              >
+		                                <i class="bx bx-dots-vertical-rounded"></i>
+		                              </button>
+		                              <div class="dropdown-menu">
+		                                <a class="dropdown-item" href="javascript:void(0);"
+		                                  ><i class="bx bx-edit-alt me-1"></i> Edit</a>
+		                                <a class="dropdown-item" href="javascript:void(0);"
+		                                  ><i class="bx bx-trash me-1"></i> Delete</a>
+		                              </div>
+		                            </div>
+		                          </td>
+		                          <td></td>
+		                          <td></td>
+		                          <td></td>
+		                          <td><span class="badge bg-label-primary me-1">Active</span></td>
+		                        </tr>
+		                      </c:forEach>
 
-                          </td>
-                          <td></td>
-                          <td>
-                            <div class="dropdown">
-                              <button
-                                type="button"
-                                class="btn p-0 dropdown-toggle hide-arrow"
-                                data-bs-toggle="dropdown"
-                              >
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                              </button>
-                              <div class="dropdown-menu">
-                                <a class="dropdown-item" href="javascript:void(0);"
-                                  ><i class="bx bx-edit-alt me-1"></i> Edit</a
-                                >
-                                <a class="dropdown-item" href="javascript:void(0);"
-                                  ><i class="bx bx-trash me-1"></i> Delete</a
-                                >
-                              </div>
-                            </div>
-                          </td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td><span class="badge bg-label-primary me-1">Active</span></td>
-                        </tr>
-                      </c:forEach>
-
-
-				
-                        
                       </tbody>
                     </table>
 				<nav aria-label="Page navigation example">
