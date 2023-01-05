@@ -150,6 +150,9 @@ insert into dept values(3, '기획부');
 insert into dept values(4, '개발부');
 insert into dept values(5, '작업부');
 
+insert into authority values(0, 'user');
+insert into authority values(1, 'admin');
+
 insert into emp_list values('2301001', '김우석', '2023-01-05 00:00:00', '1', '9', '1');
 
 insert into emp values('2301001', '김우석', 'wskimjeju', '12341234', '10412 경기 고양시 일산동구 산두로 3-1 /111동 1910호', '남자', '2023-01-05 16:27:59.000000', 'wskimjeju@naver.com', '1', '9', '1');
