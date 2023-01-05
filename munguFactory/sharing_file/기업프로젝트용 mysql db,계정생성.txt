@@ -1,0 +1,23 @@
+
+mysql db생성 + 계정생성
+
+1. 기존 생성한 root계정 접속 (학원 기준 비밀번호 mysql80)
+
+2. 쿼리작성
+
+CREATE DATABASE mungudb DEFAULT CHARACTER SET utf8;
+CREATE USER 'mungu' IDENTIFIED BY '1234';
+GRANT ALL PRIVILEGES ON mungudb.* to 'mungu';
+
+3. 첫번째 번개모양 아이콘 클릭, 하단 Action Output 메시지로 잘 생성됐나 확인 
+
+4. 상단 탭의 홈 아이콘 클릭
+
+5. MySQL Connections 옆 + 아이콘 클릭
+
+6. Connection Name : SeedIT 기업 프로젝트 MES (이름은 자유롭게 지정하시면 됩니다)
+   Username : mungu
+   Password : [Store in Vault...] 클릭 -> 1234 입력
+   하단 [Test Connection]으로 확인 후 [OK]
+
+7. 생성된 Connection으로 접속 !
