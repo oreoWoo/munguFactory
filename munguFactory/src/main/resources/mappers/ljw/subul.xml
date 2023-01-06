@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.oracle.munguFactory.mapper.ljw.subul">
-	<select id="getAllSubulList" resultType="Subul">
-		SELECT * FROM SUBUL
+<mapper namespace="com.oracle.munguFactory.mappers.ljw.subul">
+	<select id="getSubulListSize" resultType="int">
+		SELECT COUNT(*) FROM SUBUL
+	</select>
+	<select id="getSubulList" resultType="Subul" parameterType="Page">
+		SELECT s.*, e.EMP_NAME
+		FROM SUBUL s, emp e
+		WHERE s.EMP_NO=e.EMP_NO 
+		ORDER BY s.subul_num DESC
+		LIMIT 15 offset #{offset};
+	</select>
+	<select id="getFactoryList" resultType="Factory">
+		SELECT * FROM factory
 	</select>
 </mapper>

@@ -213,7 +213,7 @@
               </a>
             </li>
              <li class="menu-item">
-              <a href="#" class="menu-link">
+              <a href="/inventoryManagement" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">수불부</div>
               </a>

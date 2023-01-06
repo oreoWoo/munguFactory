@@ -2,10 +2,16 @@ package com.oracle.munguFactory.ljw.dao;
 
 import java.util.List;
 
+import com.oracle.munguFactory.dto.FactoryDTO;
+import com.oracle.munguFactory.dto.PageDTO;
 import com.oracle.munguFactory.dto.SubulDTO;
 
 public interface ljwDao {
 
-	List<SubulDTO> getAllSubulList();
+	List<SubulDTO> getSubulList(PageDTO paging);
+
+	int getSubulListSize();
+
+	List<FactoryDTO> getFactoryList();
 	
 }

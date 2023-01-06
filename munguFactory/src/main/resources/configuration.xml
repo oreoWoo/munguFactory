@@ -6,7 +6,9 @@
 	<typeAliases>
 		<!-- output -->
 		<!-- <typeAlias type="com.oracle.munguFactory.dto.OutputDTO" alias="OutputDTO"/> -->
+		<typeAlias alias="Page"  type="com.oracle.munguFactory.dto.PageDTO" />
 		<typeAlias alias="Subul"  type="com.oracle.munguFactory.dto.SubulDTO" />
+		<typeAlias alias="Factory"  type="com.oracle.munguFactory.dto.FactoryDTO" />
 		
 	</typeAliases>
 </configuration>
