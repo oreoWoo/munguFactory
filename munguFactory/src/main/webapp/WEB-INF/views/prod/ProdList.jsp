@@ -49,7 +49,7 @@
 										<td>${list.finishDate}</td>
 										<td>${list.dogName}</td>
 										<td>${list.dogName}</td>
-										<td><a href="/prod/jisiProd"</td>
+									<!-- 	<td><a href="/prod/jisiProd"</td> -->
 		                          <td>
 		                            <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Angular Project</strong>
 		                          </td>
