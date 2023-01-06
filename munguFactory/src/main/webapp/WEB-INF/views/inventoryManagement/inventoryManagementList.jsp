@@ -25,42 +25,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-			</tr>
-			<tr>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-			</tr>
-			<tr>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-			</tr>
-			<tr>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-				<td>222</td>
-			</tr>
+			<c:forEach var="subul" items="${subulList }">
+				<tr>
+					<td>${subul.subul_num }</td>
+					<td>${subul.serial_no }</td>
+					<td>${subul.item_no }</td>
+					<td>${subul.amount }</td>
+					<td>${subul.gubun }</td>
+					<td>${subul.date }</td>
+					<td>${subul.date }</td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 	<nav aria-label="Page navigation ajaxContents">
