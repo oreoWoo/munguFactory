@@ -32,10 +32,10 @@ public class ProdController {
 		prodDto.setEnd(page.getEnd());		// 시작 시 10
 		
 		//생산지시 목록
-		List<ProdDTO> listProd = ps.listProd(prodDto);
+		//List<ProdDTO> listProd = ps.listProd(prodDto);
 		
 		model.addAttribute("totalProdCnt",totalProdCnt);
-		model.addAttribute("listProd",listProd);
+		//model.addAttribute("listProd",listProd);
 		model.addAttribute("page",page);
 		
 		return "prod/ProdList";

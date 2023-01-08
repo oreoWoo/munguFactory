@@ -10,5 +10,7 @@
 		<typeAlias alias="Subul"  type="com.oracle.munguFactory.dto.SubulDTO" />
 		<typeAlias alias="Factory"  type="com.oracle.munguFactory.dto.FactoryDTO" />
 		
+		<!-- stockTaking -->
+		<typeAlias alias="StockTaking"  type="com.oracle.munguFactory.dto.StockTakingDTO" />
 	</typeAliases>
 </configuration>
