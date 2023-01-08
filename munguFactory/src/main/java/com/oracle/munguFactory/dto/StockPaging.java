@@ -1,4 +1,4 @@
-package com.oracle.munguFactory.lwh.model;
+package com.oracle.munguFactory.dto;
 
 import lombok.Data;
 

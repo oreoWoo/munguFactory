@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="stockTaking">
+
+	<select id="selectFactoryList" resultType="com.oracle.munguFactory.dto.FactoryDTO">
+	
+		SELECT 	factory_no AS factoryNo
+				, factory_name AS factoryName
+				, factory_use
+		FROM factory
+		WHERE factory_use = '1'
+		
+	</select>
+
+	<select id="selectItemList" resultType="com.oracle.munguFactory.dto.ItemDTO">
+	
+		SELECT 	item_no AS itemNo
+				, factory_no AS factoryNo
+				, item_Name AS itemName
+				, item_Check
+		FROM item
+		WHERE item_Check = '생산'
+		
+	</select>
+		
+	<select id="selectStockTakingList" resultType="StockTaking">
+		SELECT 	sb.date
+				, f.factory_name
+				, sb.item_no
+				, i.item_name
+				, s.stock_count
+				, sb.inventory_count
+				, sb.amount
+				, sb.emp_no
+				, sb.subul_note 
+				, sb.gubun
+		FROM subul sb
+		LEFT JOIN item i ON sb.item_no = i.item_no
+		LEFT JOIN factory f ON i.factory_no = f.factory_no
+		LEFT JOIN storages s ON sb.item_no = s.item_no
+		WHERE sb.gubun='재고실사' 
+		<if test="factory_no != null">
+			AND f.factory_no = #{factory_no}
+		</if>
+		AND sb.date BETWEEN #{startDate} AND #{endDate}
+		
+	</select>
+
+</mapper>
