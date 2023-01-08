@@ -16,5 +16,6 @@ public class SubulDTO {
 	private String gubun;			// 구분
 	private String subul_note;		// 비고
 	
-	
+//	읽기전용
+	private String emp_name;
 }
