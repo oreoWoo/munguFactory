@@ -10,7 +10,7 @@ public interface ljwService {
 
 	List<SubulDTO> getSubulList(PageDTO paging);
 
-	int getSubulListSize();
+	int getSubulListSize(PageDTO searchOptions);
 
 	List<FactoryDTO> getFactoryList();
 

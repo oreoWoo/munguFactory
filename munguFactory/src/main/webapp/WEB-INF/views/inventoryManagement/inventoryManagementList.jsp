@@ -16,8 +16,10 @@
 			<tr>
 				<th>등록번호</th>
 				<th>고유번호</th>
-				<th>물품번호</th>
+				<th>물품명</th>
 				<th>수량</th>
+				<th>생산공장</th>
+				<th>저장창고</th>
 				<th>구분</th>
 				<th>담당자</th>
 				<th>날짜</th>
@@ -28,11 +30,13 @@
 				<tr>
 					<td>${subul.subul_num }</td>
 					<td>${subul.serial_no }</td>
-					<td>${subul.item_no }</td>
+					<td>${subul.item_name }</td>
 					<td>${subul.amount }</td>
+					<td>${subul.factory_name }</td>
+					<td>${subul.factory_name }창고</td>
 					<td>${subul.gubun }</td>
 					<td>${subul.emp_name }</td>
-					<td>${subul.date }</td>
+					<td>${subul.subul_date }</td>
 				</tr>
 			</c:forEach>
 		</tbody>

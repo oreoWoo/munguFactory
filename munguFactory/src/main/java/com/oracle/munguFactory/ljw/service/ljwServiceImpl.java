@@ -22,8 +22,8 @@ public class ljwServiceImpl implements ljwService {
 	}
 
 	@Override
-	public int getSubulListSize() {
-		return dao.getSubulListSize();
+	public int getSubulListSize(PageDTO searchOptions) {
+		return dao.getSubulListSize(searchOptions);
 	}
 
 	@Override
