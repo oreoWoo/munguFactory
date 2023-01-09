@@ -31,11 +31,11 @@ public class ljwDaoImpl implements ljwDao {
 	}
 
 	@Override
-	public int getSubulListSize() {
+	public int getSubulListSize(PageDTO searchOptions) {
 		log.info("getSubulListSize() start...");
 		int result = 0;
 		try {
-			result = session.selectOne("getSubulListSize");
+			result = session.selectOne("getSubulListSize",searchOptions);
 		} catch (Exception e) {
 			System.out.println("getAllSubulList e.getMessage() : "+e.getMessage());
 		}

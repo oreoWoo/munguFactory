@@ -1,7 +1,5 @@
 package com.oracle.munguFactory.dto;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
@@ -17,6 +15,7 @@ public class PageDTO {
 	private int end;
 	private int total;
 	
+	public PageDTO() {};
 	public PageDTO(int total, int currentPage) {
 		this.total = total;
 		this.currentPage=currentPage;
@@ -32,9 +31,23 @@ public class PageDTO {
 	}
 	
 	//subulPage search options
-	private String searchOption;
-	private String searchString;
+	private String	searchOption;
+	private String	searchString;
+	private String	gubun;
 	private int		factory_no;
-	private int serial_no;
-	private Date date;
+	private int		serial_no;
+	private String	subul_date;
+	public void setPageDTO(int total, int currentPage) {
+		this.total = total;
+		this.currentPage=currentPage;
+		offset = (currentPage-1) * rowPage;
+		end = offset + rowPage;
+		totalPage = (int)Math.ceil((double)total/rowPage);
+		
+		startPage = currentPage - (currentPage-1)%pageBlock;
+		endPage = startPage + pageBlock -1;
+		if(endPage>totalPage) {
+			endPage=totalPage;
+		}
+	}
 }
