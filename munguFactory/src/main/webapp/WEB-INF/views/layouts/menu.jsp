@@ -196,7 +196,7 @@
               <span class="menu-header-text">공정관리</span>
             </li>
             <li class="menu-item">
-              <a href="/listOutput" class="menu-link">
+              <a href="/outputList" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">생산실적</div>
               </a>

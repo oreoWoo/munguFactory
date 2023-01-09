@@ -19,6 +19,14 @@
 	    letter-spacing: inherit;
 	    width: 80px;
 	}
+	
+	
+	
+	input[type="number"]::-webkit-outer-spin-button,
+	input[type="number"]::-webkit-inner-spin-button {
+	    -webkit-appearance: none;
+	    margin: 0;
+	}
 </style>
 </head>
 <body>
@@ -29,45 +37,51 @@
                     <div class="card-body">
                       <form id="output" name="frm" action="registerOutput" method="post">
                         <div class="row mb-3" style="translate: 20px;">
-                          <label class="col-sm-2 col-form-label" for="basic-default-name">생산번호</label>
-                          <div class="col-sm-10">
-                            <input type="text" class="form-control" id="basic-default-name" style="width:210px;"/>
-                          </div>
-                        </div>
-                        <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label" for="basic-default-phone">공장코드</label>
                           <div class="col-sm-10">
-                            <select name="factory">
-                            	<c:forEach var="output" items="${factoryList}">
-                            		<option value="${factory.factory_no}">${factory.factory_name}</option>
-                            	</c:forEach>
-                            </select>
+                          	<input type="number"
+                              id="meeting-time"
+                              class="form-control phone-mask input"
+                              aria-label="658 799 8941"
+                              aria-describedby="basic-default-phone"
+                              style="width:210px;"
+                          />
                           </div>
                         </div>
-                        <div class="row mb-3" style="translate: 20px;">
+<!--                         <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label" for="basic-default-company">품번</label>
                           <div class="col-sm-10">
                             <input type="text" class="form-control" id="basic-default-company" style="width:210px;"/>
                           </div>
+                        </div> -->
+                        <div class="row mb-3" style="translate: 20px;">
+                          <label class="col-sm-2 col-form-label" for="basic-default-message">품번</label>
+                          <input type="number"
+                              id="meeting-time"
+                              class="form-control phone-mask input"
+                              aria-label="658 799 8941"
+                              aria-describedby="basic-default-phone"
+                              style="width:210px; translate: 12px;"
+                          />
                         </div>
                         <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label" for="basic-default-message">품명</label>
-                          <div class="col-sm-10">
-                            <input type="text" id="basic-default-phone"
+                          <input type="text"
+                              id="meeting-time"
                               class="form-control phone-mask"
                               aria-label="658 799 8941"
                               aria-describedby="basic-default-phone"
-                              style="width:210px;"
-                            />
-                          </div>
+                              style="width:210px; translate: 12px;"
+                          />
                         </div>
                         <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label" for="basic-default-email">사원번호</label>
-                          <div class="col-sm-10">
-                            <div class="input-group input-group-merge" style="width:210px;">
-                              <input type="text" id="basic-default-email" class="form-control"/>
-                            </div>
-                          </div>
+						  <input type="number" id="fn_emp_no" name="fn_emp_no"
+                              class="form-control phone-mask num_only"
+                              aria-label="658 799 8941"
+                              aria-describedby="basic-default-phone"
+                              style="width:210px; translate: 12px;" required
+                            />
                         </div>
                         <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label" for="basic-default-message">작업일시</label>
@@ -92,7 +106,7 @@
                               class="form-control phone-mask num_only"
                               aria-label="658 799 8941"
                               aria-describedby="basic-default-phone"
-                              style="width:210px;"
+                              style="width:210px;" required
                             />
                           </div>
                         </div>
@@ -111,41 +125,38 @@
                         <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label text-right font-weight-bold num_only" for="basic-default-message">수율</label>
                           <div class="col-sm-10">
-                            <input type="text"
-                              id="fn_yield"
-                              name="fn_yield"
-                              value=""
-                              class="form-control phone-mask num_only"
-                              aria-label="658 799 8941"
+                            <input type="text" id="fn_yield" name="fn_yield" class="form-control phone-mask num_only" aria-label="658 799 8941"
                               aria-describedby="basic-default-phone"
-                              style="width:210px;"
+                              style="width:210px;" required
                             />
                           </div>
                         </div>
                         <div class="row justify-content-end">
                           <div class="col-sm-10">
-                            <input type="submit" class="btn btn-primary" style="translate: -45px;">
+                            <input type="submit" class="btn btn-primary" style="translate: -45px;" required>
                           </div>
                         </div>
                       </form>
                     </div>
                   </div>
                 </div>
+                
 </body>
 <script type="text/javascript">
 
+
+	// 수율 계산
 	$(function() {
 			$('input.num_only').on('keyup', function() {
 				
 				var prod_amount   = parseInt($("#fn_prod_amount").val() || 0);
 				var poor_quantity = parseInt($("#fn_poor_quantity").val() || 0);
-				
+
 				var yield = (poor_quantity / prod_amount) * 100;
 				
 				$("#fn_yield").val(yield+'%');
 			});
 		});
-	
 
 
 </script>
