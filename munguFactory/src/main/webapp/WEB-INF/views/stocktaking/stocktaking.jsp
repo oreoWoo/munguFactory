@@ -137,6 +137,7 @@ function initPage () {
 	initSearchDate();
 }
 
+// 공장 선택 옵션 만들어주기
 function makeFactorySelect() {
 	
 	let innerHtml = `<option value="">공장선택</option>`;
@@ -148,6 +149,7 @@ function makeFactorySelect() {
 	return innerHtml;
 }
 
+// 날짜 폼
 function initSearchDate () {
 	let today = new Date();
 	let aWeekAgo = new Date(today);
@@ -202,6 +204,7 @@ function addRow() {
 }
 
 
+// 검색목록 테이블 랜더링
 function makeTable (data) {
 	
 	let reqNo = 1;
@@ -236,6 +239,7 @@ function selectStockTakingList() {
 	let startDate = $('#startDate').val();
 	let endDate = $('#endDate').val();
 	
+	//선택된 공장 번호 가져오기
 	let factory_no = $('#searchFactory option:selected').val()
 	
 	$.ajax({
