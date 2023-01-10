@@ -35,7 +35,11 @@
             </div>
             <div class="row mb-3" style="translate: 20px;">
               <label class="col-sm-2 col-form-label" for="basic-default-phone">공장코드</label>
-              <label class="col-sm-2 col-form-label" for="basic-default-name">${output.factory_no}</label>
+              	<select name="factory_no" style="translate: 10px; width:100px;">
+              		<c:forEach var="fac" items="${factoryList}">
+              			<option value="${fac.factory_no}">${fac.factory_no}</option>
+              		</c:forEach>
+              	</select>
             </div>
             <div class="row mb-3" style="translate: 20px;">
               <label class="col-sm-2 col-form-label" for="basic-default-company">품번</label>
@@ -47,14 +51,15 @@
             </div>
             <div class="row mb-3" style="translate: 20px;">
               <label class="col-sm-2 col-form-label" for="basic-default-email">사원번호</label>
-              <label class="col-sm-2 col-form-label" for="basic-default-name">${output.emp_no}</label>
+              <select name="emp_no" style="translate: 12px; width: auto;">
+              	<c:forEach var="emp" items="${empList}">
+              		<option value="${emp.emp_no}">${emp.emp_no}</option>
+              	</c:forEach>
+               </select>
             </div>
             <div class="row mb-3" style="translate: 20px;">
               <label class="col-sm-2 col-form-label" for="basic-default-message">작업일시</label>
-              <label class="col-sm-2 col-form-label" for="basic-default-name" style="width: 250px;">
-              	${output.finish_date}
-              	<%-- <fmt:formatDate type="both" value="${output.finish_date}" type="both"/> --%>
-              </label>
+              <label class="col-sm-2 col-form-label" for="basic-default-name" style="width: 250px;">${output.finish_date}</label>
             </div>
             <div class="row mb-3" style="translate: 20px;">
               <label class="col-sm-2 col-form-label" for="basic-default-message">생산수량</label>
@@ -70,8 +75,7 @@
             </div>
             <div class="row justify-content-end" style="translate: -40px;">
               <div class="col-sm-10">
-                <input type="button" value="수정" class="btn btn-primary" style="translate: -45px;" onclick="location.href='updateOutputForm?prod_no=${output.prod_no}'">
-                <input type="button" value="삭제" class="btn btn-primary" style="translate: -45px;" onclick="location.href='deleteOutput?prod_no=${output.prod_no}'">
+                <input type="button" value="수정" class="btn btn-primary" style="translate: -45px;" onclick="location.href='updateOutput?prod_no=${output.prod_no}'">
               </div>
             </div>
           </form>
@@ -79,20 +83,4 @@
       </div>
     </div>
 </body>
-<script type="text/javascript">
-
-	// 수율 계산
-	$(function() {
-			$('input.num_only').on('keyup', function() {
-				
-				var prod_amount   = parseInt($("#fn_prod_amount").val() || 0);
-				var poor_quantity = parseInt($("#fn_poor_quantity").val() || 0);
-				
-				var yield = (poor_quantity / prod_amount) * 100;
-				
-				$("#fn_yield").val(yield+'%');
-			});
-		});
-
-</script>
 </html>
