@@ -21,9 +21,10 @@ public class ItemAdminController {
 	@RequestMapping(value = "/ItemAdminList")
 	public String ItemAdminList(ItemDTO itemDto, Model model) {
 		List<ItemDTO> ItemAdminList = itemservice.itemAdminList();
-		model.addAttribute("itemAdminList", ItemAdminList);
+		System.out.println("ItemAdminList itemAdminList -> " + ItemAdminList);
 		
-		return "item/itemAdminList";
+		model.addAttribute("itemAdminList", ItemAdminList);
+		return "item/ItemAdminList";
 	}
 
 }

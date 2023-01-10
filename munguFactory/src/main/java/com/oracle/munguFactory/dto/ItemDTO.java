@@ -4,11 +4,11 @@ import lombok.Data;
 
 @Data
 public class ItemDTO {
-	private int itemNo; 		//품번
-	private int factoryNo;		//공장코드
-	private String itemName;	//품명
-	private int stockUnit;		//재고단위
-	private String itemCheck;	//생산여부
-	private String hsCode;		//HS코드
+	private int item_no; 		//품번
+	private int factory_no;		//공장코드
+	private String item_name;	//품명
+	private int stock_unit;		//재고단위
+	private String item_check;	//생산여부
+	private String hs_code;		//HS코드
 
 }
