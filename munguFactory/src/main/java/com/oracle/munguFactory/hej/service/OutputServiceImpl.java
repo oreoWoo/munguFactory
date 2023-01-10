@@ -11,9 +11,11 @@ import com.oracle.munguFactory.dto.ItemDTO;
 import com.oracle.munguFactory.dto.OutputDTO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OutputServiceImpl implements OutputService {
 
 	private final OutputDAO od;
@@ -78,6 +80,23 @@ public class OutputServiceImpl implements OutputService {
 	@Override
 	public List<FactoryDTO> factorySelect() {
 		return od.getFactoryList();
+	}
+
+	// 사원 목록
+	@Override
+	public List<EmpDTO> empSelect() {
+		return od.getEmpList();
+	}
+
+
+	// 생산실적 수정
+	@Override
+	public int updateOutput(OutputDTO output) {
+		log.info("~~ EmpServiceImpl update ~~");
+		
+		int updateCnt = 0;
+		updateCnt = od.updateOutput(output);
+		return updateCnt;
 	}
 
 

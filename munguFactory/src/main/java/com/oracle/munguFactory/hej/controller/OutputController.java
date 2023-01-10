@@ -54,7 +54,10 @@ public class OutputController {
 	public String writeFormOutput(Model model) {
 		
 		List<FactoryDTO> factoryList = os.factorySelect();	// 공장코드 GET
+		List<EmpDTO> 	 empList 	 = os.empSelect();		// 사원번호 GET
+		
 		model.addAttribute("factoryList", factoryList);
+		model.addAttribute("empList", empList);
 		
 		return "output/outputRegister";
 	}
@@ -63,7 +66,7 @@ public class OutputController {
 	@PostMapping(value = "registerOutput")
 	public String registerOutput(OutputDTO output, Model model) {
 		System.out.println("~~ OutputController Start registerOutput ~~");
-	
+		System.out.println("output data ->" + output);
 		int result = os.insertOutput(output);
 		
 		if(result > 0) return "redirect:outputList";
@@ -90,7 +93,39 @@ public class OutputController {
 		
 		int result = os.deleteOutput(prod_no);
 		
-		return "redirect:listOutput";
+		return "redirect:outputList";
+	}
+	
+	
+	
+	// 생산실적 수정 페이지
+	@GetMapping(value = "updateOutputForm")
+	public String updateOutputForm(int prod_no, Model model) {
+		log.info("~~ OutputController Start outputDetail ~~");
+		
+		OutputDTO output = os.outputDetail(prod_no);
+		
+		List<FactoryDTO> factoryList = os.factorySelect();	// 공장코드 GET
+		List<EmpDTO> 	 empList 	 = os.empSelect();		// 사원번호 GET
+		
+		model.addAttribute("output", output);
+
+		model.addAttribute("factoryList", factoryList);
+		model.addAttribute("empList", empList);
+		
+		return "output/outputUpdate";
+	}
+	
+	// 찐 생산실적 수정 (공장번호, 사원번호)
+	@GetMapping(value = "updateOutput")
+	public String updateOutput(OutputDTO output, Model model) {
+		log.info("~~ updateOutput Start ~~");
+		
+		int updateCnt = os.updateOutput(output);
+		model.addAttribute("updateCnt", updateCnt);
+		//model.addAttribute("kk3", "Message Test");
+		
+		return "forward:outputList";
 	}
 	
 }
