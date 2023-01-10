@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.munguFactory.mapper.kdj.prod">
+	<select id="totalProdCnt" resultType="int">
+	   SELECT 
+	   		Count(*) 
+	   FROM  
+	   	 	production_order
+	</select>
+
+	<select id="prodList" resultType="Prod" parameterType="Prod" >
+		SELECT  *   FROM
+   			  (SELECT  *   FROM 
+					(SELECT 
+					        @ROWNUM:=@ROWNUM + 1 AS ROWNUM, 
+					                      Suju_No as sujuNo
+							          	 ,item_no as itemNo
+							             ,emp_no as empNo
+							             ,Finish_Date as finishDate
+							             ,Prod_Date as prodDate
+							             ,Prod_Amount as prodAmount
+								         ,Prod_State as prodState
+								         ,Factory_no as factoryNo
+					    FROM
+					        production_order P, (SELECT @ROWNUM:=0) TMP
+					    ORDER BY Suju_No DESC) SUB
+                       ORDER BY SUB.ROWNUM ASC)the
+                        <![CDATA[where ROWNUM >#{start} and ROWNUM <=#{end}]]>
+                      
+	</select>
+	<select id="ModContent" resultType="int">
+		select 
+				p.* , i.item_name  
+		from 
+				production_order p, item i
+		where p.item_no = i.item_no
+		
+	</select>
+</mapper>
