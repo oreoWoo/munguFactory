@@ -50,6 +50,29 @@
 		display : inline-block;
 	}
 	
+	.insertStockTbl {
+		text-align: center;
+	}
+	
+	.itemName {
+		width: 305px;
+	}
+	
+	.DBCnt {
+		width : 80px;
+	}
+	
+	.factorySelect {
+		width : 125px;
+	}
+	
+	.itemSelect {
+		width : 125px;
+	}
+	
+	.realStockCnt {
+		width : 90px;
+	}
 </style>
 </head>
 <body>
@@ -67,8 +90,38 @@
 			<div class="col-sm-6" style="text-align : right;">
 				<button type="button" class="btn rounded-pill btn-info" onclick="addRow()"><strong>+</strong></button>
 			</div>
-		
+			
 		</div>
+		
+		<form action="${pageContext.request.contextPath }/stocktaking/insertStockTaking" name="insertForm" method="post">
+			<div class="card">
+				<div class="table-responsive text-nowrap">
+					<table class="table table-bordered insertStockTbl">
+						<thead>
+							<tr>
+								<th>실사일자</th>
+								<th>공장</th>
+								<th>품번</th>
+								<th>품명</th>
+								<th>창고수량</th>
+								<th>실사수량</th>
+								<!-- <th>차이량</th> -->
+								<th>승인자</th>
+								<th>비고</th>
+								<th>상태</th>
+							</tr>
+						</thead>
+						<tbody class="table-border-bottom-0"  id="insertStockTbl">
+							
+						</tbody>
+					
+					</table>
+				
+				</div>
+			
+			</div>
+		</form>
+		
 		
 		<div class="card">
 			<div class="table-responsive text-nowrap">
@@ -110,8 +163,8 @@
 let factoryList = [
 	<c:forEach items="${factoryList}" var="factory">
 		{ 
-			factory_no : '${factory.factoryNo}' 
-			, factory_name : '${factory.factoryName}'
+			factory_no : '${factory.factory_no}' 
+			, factory_name : '${factory.factory_name}'
 		},
 	</c:forEach>
 ];
@@ -165,7 +218,7 @@ function initSearchDate () {
 
 function addRow() {
 	
-	let table = document.getElementById('realStockTbl');
+	let table = document.getElementById('insertStockTbl');
 	let trCnt = document.getElementsByTagName('tr').length;
 	console.log(trCnt);
 	
@@ -174,38 +227,146 @@ function addRow() {
 	let month = today.getMonth()+1;
 	let date = today.getDate();
 	
-	let sysdate = year + '/' + month + '/' + date
+	let sysdate = year + '-' + month + '-' + date
 	console.log(sysdate);
 	
 	let newRow = table.insertRow(0);
 	
-	let newCell1 = newRow.insertCell(0);
-	let newCell2 = newRow.insertCell(1);
-	let newCell3 = newRow.insertCell(2);
-	let newCell4 = newRow.insertCell(3);
-	let newCell5 = newRow.insertCell(4);
-	let newCell6 = newRow.insertCell(5);
-	let newCell7 = newRow.insertCell(6);
-	let newCell8 = newRow.insertCell(7);
-	let newCell9 = newRow.insertCell(8);
-	let newCell10 = newRow.insertCell(9);
+	let newCellDate= newRow.insertCell(0);
+	let newCellFacotry = newRow.insertCell(1);
+	let newCellItem = newRow.insertCell(2);
+	let newCellItemName = newRow.insertCell(3);
+	let newCellDBCnt = newRow.insertCell(4);
+	let newCellStockCnt = newRow.insertCell(5);
+	//let newCellDiff = newRow.insertCell(6);
+	let newCellMember = newRow.insertCell(6);
+	let newCellMemo = newRow.insertCell(7);
+	let newCellStat = newRow.insertCell(8);
 	
-	newCell1.innerText = trCnt;
-	newCell2.innerText = sysdate;
-	newCell3.innerHTML = "<select id='defaultSelect' class='form-select'>"+makeFactorySelect()+"</select>"
-	newCell4.innerHTML = "<select id='defaultSelect' class='form-select'></select>"
-	newCell5.innerHTML = "<input type='text' name='itemName' id='itemName' class='form-control' value=''>";
-	newCell6.innerHTML = "<input type='number' min='0' name='realStockCnt' id='realStockCnt' class='form-control' value=''>";
-	newCell7.innerHTML = "<input type='number' min='0' name='dfCnt' id='dfCnt' class='form-control' value=''>";
-	//newCell8.innerText = 로그인한 사원의 이름 불러오기
-	newCell9.innerHTML = "<input type='text' name='memo' id='memo' class='form-control' value=''>";
-	newCell10.innerHTML = "<button type='button' class='btn btn-secondary'>임시저장</button> <button type='button' class='btn btn-primary'>승인</button>"
+	newCellDate.innerText = sysdate;
+	newCellFacotry.innerHTML = "<select id='factorySelect' class='form-select factorySelect' name='factory_no' onchange='getFactoryNo(this.value)'>"+makeFactorySelect()+"</select>";
+	newCellItem.innerHTML = "<select id='itemSelect' class='form-select itemSelect' name='item_no' onchange='getItemNo(this.value)'></select>";
+	newCellItemName.innerHTML = "<input type='text' name='item_name' id='itemName' class='form-control itemName' value='' readOnly='readOnly' placeholder='품번을 선택해주세요.'>";
+	newCellDBCnt.innerHTML = "<input type='number' min='0' name='db_amount' id='DBCnt' class='form-control DBCnt' value=''readOnly='readOnly'>";
+	newCellStockCnt.innerHTML = "<input type='number' min='0' name='amount' id='realStockCnt' class='form-control realStockCnt' value=''>";
+	//newCellDiff.innerHTML = "<input type='number' min='0' name='dfCnt' id='dfCnt' class='form-control' value=''>"
+	newCellMember.innerHTML = "<input type='text' name='emp_no' id='emp_no' value='2301001' readOnly='readOnly'>"
+	newCellMemo.innerHTML = "<input type='text' name='subul_note' id='memo' class='form-control' value=''>";
+	newCellStat.innerHTML = "<button type='button' class='btn btn-primary' onclick='insertSubulStockTaking()'>승인</button>"
+	// <button type='button' class='btn btn-secondary'>임시저장</button>
+}
+
+
+function isAllEnter() {
 	
+	if(!$('#factorySelect>option:selected').val()) {
+		alert('공장을 선택해주세요.');
+		return false;
+	}
+	
+	if(!$('#itemSelect>option:selected').val()) {
+		alert('품번을 선택해주세요.');
+		return false;
+	}
+	
+	if(!$('#realStockCnt').val()) {
+		alert('수량을 입력해주세요.');
+		return false;
+	}
+	
+	return true;
+}
+
+function insertSubulStockTaking(){
+	
+	if(!isAllEnter()) {
+   		return false;
+   	} 
+	
+	let isConfirm = confirm('재고실사값을 등록하시겠습니까?');
+	
+	if(isConfirm){
+		
+		insertForm.submit();
+		alert('등록이 완료되었습니다.')
+		
+	} else {
+		alert('등록이 취소되었습니다.')
+	}
+}
+
+
+// 공장코드~~
+function getFactoryNo(value) {
+	
+	$('#factorySelect').val(value);
+	console.log('선택된 값 : ' + value);
+	
+	let factory_no = value;
+	
+	$.ajax({
+		
+		url:"${pageContext.request.contextPath }/stocktaking/itemSelect",
+		data: {factory_no},
+		dataType: "json",
+		success: function(result) {
+			
+			console.log(result);
+			makeItemSelect(result)
+		}
+		
+		
+	})
+	
+}
+
+
+function makeItemSelect(data) {
+	
+	$('#itemSelect').empty();
+	
+	let innerHtml = `<option value="">품번선택</option>`;
+
+	if(data != null) {
+		for(let datum of data) {
+			innerHtml += `<option value="\${datum.itemNo}">\${datum.itemNo}</option>`
+			
+		}
+	} 
+	
+	$('#itemSelect').append(innerHtml);
+}
+
+
+// 상품코드
+
+function getItemNo(value) {
+	
+	$('#itemSelect').val(value);
+	console.log("상품번호: " + value);
+	let item_no = value;
+	
+	$.ajax({
+		
+		url:"${pageContext.request.contextPath }/stocktaking/selectItemInfo",
+		data: {item_no},
+		dataType: "json",
+		success: function(result){
+			for (let i = 0; result.length; i++){
+				$('#itemName').val(result[i].item_name);
+				$('#DBCnt').val(result[i].stock_count);
+			}
+			
+		}
+		
+	});
 }
 
 
 // 검색목록 테이블 랜더링
 function makeTable (data) {
+	
+	console.log("makeTable : " + data);
 	
 	let reqNo = 1;
 	let innerHtml = ``
@@ -213,20 +374,19 @@ function makeTable (data) {
 	for(let datum of data) {
 		innerHtml += `
 			<tr>
-				<td>\${reqNo}</td>
+				<td>\${datum.subul_num}</td>
 				<td>\${datum.date}</td>
 				<td>\${datum.factory_name}</td>
 				<td>\${datum.item_no}</td>
 				<td>\${datum.item_name}</td>
 				<td>\${datum.stock_count}</td>
-				<td>\${datum.inventory_count}</td>
+				<td>\${datum.db_amount}</td>
 				<td>\${datum.amount}</td>
 				<td>\${datum.emp_no}</td>
 				<td>\${datum.subul_note}</td>
 				<td>\${datum.gubun}</td>
 			</tr>
 		`;
-		reqNo++;
 	}
 	
 	$('#realStockTbl').html(innerHtml);

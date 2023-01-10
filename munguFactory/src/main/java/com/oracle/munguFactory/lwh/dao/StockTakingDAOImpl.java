@@ -23,13 +23,33 @@ public class StockTakingDAOImpl implements StockTakingDAO {
 	}
 
 	@Override
-	public List<ItemDTO> selectItemList() {
-		return session.selectList("stockTaking.selectItemList");
+	public List<ItemDTO> selectItemList(StockTakingDTO stockTakingDTO) {
+		return session.selectList("stockTaking.selectItemList", stockTakingDTO);
 	}
 
 	@Override
 	public List<StockTakingDTO> selectStockTakingList(StockTakingDTO stockTakingDTO) {
 		return session.selectList("stockTaking.selectStockTakingList", stockTakingDTO);
+	}
+
+	@Override
+	public List<StockTakingDTO> selectSubulList() {
+		return session.selectList("selectSubulList");
+	}
+
+	@Override
+	public List<StockTakingDTO> selectItemInfo(StockTakingDTO stockTakingDTO) {
+		return session.selectList("selectItemInfo", stockTakingDTO);
+	}
+
+	@Override
+	public int insertStockTaking(StockTakingDTO stockTakingDTO) {
+		return session.insert("insertStockTaking", stockTakingDTO);
+	}
+
+	@Override
+	public int updateStockCnt(StockTakingDTO stockTakingDTO) {
+		return session.update("updateStockCnt", stockTakingDTO);
 	}
 
 }
