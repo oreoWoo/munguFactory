@@ -52,6 +52,7 @@
 		</if>
 		AND sb.date BETWEEN #{startDate} AND #{endDate}
 		ORDER BY sb.subul_num desc
+		LIMIT #{rowPage} OFFSET #{start}
 	</select>
 	
 	<select id="selectSubulList" resultType="StockTaking">
@@ -82,5 +83,12 @@
 		WHERE item_no = #{item_no}
 		AND factory_no = #{factory_no}
 	</update>
+	
+	<select id="totalStockTakingCnt" resultType="int"> 
+		SELECT count(*) 
+		FROM subul
+		WHERE gubun = '재고실사'
+	
+	</select>
 
 </mapper>

@@ -22,4 +22,6 @@ public interface StockTakingService {
 	List<StockTakingDTO> selectItemInfo(StockTakingDTO stockTakingDTO);
 
 	int insertStockTaking(StockTakingDTO stockTakingDTO);
+
+	int totalStockTakingCnt();
 }

@@ -150,7 +150,12 @@
 			</div>
 	
 	</div>
-
+	
+	<nav aria-label="Page navigation">
+    	<ul class="pagination justify-content-center" id="stockTakingPaginationUl">
+    	
+		</ul>
+	</nav>
 		
 
 	
@@ -159,6 +164,8 @@
 </body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
+
+let currentPage = 1;
 
 let factoryList = [
 	<c:forEach items="${factoryList}" var="factory">
@@ -250,7 +257,7 @@ function addRow() {
 	newCellDBCnt.innerHTML = "<input type='number' min='0' name='db_amount' id='DBCnt' class='form-control DBCnt' value=''readOnly='readOnly'>";
 	newCellStockCnt.innerHTML = "<input type='number' min='0' name='amount' id='realStockCnt' class='form-control realStockCnt' value=''>";
 	//newCellDiff.innerHTML = "<input type='number' min='0' name='dfCnt' id='dfCnt' class='form-control' value=''>"
-	newCellMember.innerHTML = "<input type='text' name='emp_no' id='emp_no' value='2301001' readOnly='readOnly'>"
+	newCellMember.innerHTML = "<input type='text' name='emp_no' id='emp_no' class='form-control' value='2301001' readOnly='readOnly'>"
 	newCellMemo.innerHTML = "<input type='text' name='subul_note' id='memo' class='form-control' value=''>";
 	newCellStat.innerHTML = "<button type='button' class='btn btn-primary' onclick='insertSubulStockTaking()'>승인</button>"
 	// <button type='button' class='btn btn-secondary'>임시저장</button>
@@ -393,6 +400,61 @@ function makeTable (data) {
 	
 }
 
+function changePage(e, page) {
+	// a태그 기본 작동을 막기 위한 함수(클릭 시 상단으로 올라가버린다거나 하는 ...)
+	e.preventDefault();
+	// 선택한 페이지 넘버값을 받아서 전역변수 currentPage에 담는다.
+	currentPage = page;
+	// 목록 가져오기
+	selectStockTakingList();
+}
+
+function makePaginationLi(pageData){
+	
+	let innerHTML = ``;
+	
+	innerHTML += `
+		<li class="page-item prev">
+		`
+	    if(pageData.startPage == 1) {
+			innerHTML += `<a class="page-link" href="javascript:void(0)" onclick="return false;">`
+		    // 첫 1~5페이지에서 [<] 키가 작동하지 않도록함 
+	    } else {
+	    	innerHTML += ` <a class="page-link" href="javascript:void(0)" onclick="changePage(event,\${pageData.startPage - 1})">`
+	    }
+	    
+		innerHTML += `
+	           <i class="tf-icon bx bx-chevrons-left"></i>
+	       </a>
+		</li>
+		`
+		
+		for( let i = pageData.startPage; i <= pageData.endPage ; i++) {
+			innerHTML += `
+				<li class="page-item">
+					<a class="page-link" href="javascript:void(0)" onclick="changePage(event,\${i})">\${i}</a>
+				</li>
+			`
+		}
+		
+		innerHTML += `<li class="page-item">`
+		if(pageData.endPage == pageData.totalPage){
+			innerHTML += `<a class="page-link" href="javascript:void(0)" onclick="return false;">`
+			// 마지막 PageBlock에서  [>] 버튼이 작동하지 않도록 함
+		} else {
+			innerHTML += `<a class="page-link" href="javascript:void(0)" onclick="changePage(event,\${pageData.endPage + 1})">`
+		}
+		
+		innerHTML += `
+				<i class="tf-icon bx bx-chevrons-right"></i>
+			</a>
+		</li>
+	   `
+		//
+		$('#stockTakingPaginationUl').html(innerHTML)
+	
+}
+
 
 function selectStockTakingList() {
 	
@@ -410,7 +472,8 @@ function selectStockTakingList() {
 		},
 		dataType: "json",
 		success: function(result){
-			makeTable(result);
+			makeTable(result.stockTakingList);
+			makePaginationLi(result.page);
 		}
 		
 	})

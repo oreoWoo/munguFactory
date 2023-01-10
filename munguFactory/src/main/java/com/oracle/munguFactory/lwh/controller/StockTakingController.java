@@ -1,6 +1,8 @@
 package com.oracle.munguFactory.lwh.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.munguFactory.dto.ItemDTO;
+import com.oracle.munguFactory.dto.StockPaging;
 import com.oracle.munguFactory.dto.StockTakingDTO;
 import com.oracle.munguFactory.lwh.service.StockTakingService;
 
@@ -37,9 +40,21 @@ public class StockTakingController {
 	
 	@ResponseBody
 	@GetMapping(value = "/search")
-	public List<StockTakingDTO> selectStockTakingList(StockTakingDTO stockTakingDTO) {
+	public Map<String,Object> selectStockTakingList(StockTakingDTO stockTakingDTO) {
+		
+		Map<String,Object> resultMap = new HashMap<String, Object>();
+		
+		int totalStockTakingCnt = st.totalStockTakingCnt();
+		
+		StockPaging page = new StockPaging(totalStockTakingCnt, stockTakingDTO.getCurrentPage());
+		
+		stockTakingDTO.setStart(page.getStart());
+		stockTakingDTO.setRowPage(page.getRowPage());
+		
+		resultMap.put("stockTakingList", st.selectStockTakingList(stockTakingDTO));
+		resultMap.put("page", page);
 		//목록 검색
-		return st.selectStockTakingList(stockTakingDTO);
+		return resultMap;
 	}
 	
 	

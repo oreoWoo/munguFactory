@@ -60,4 +60,9 @@ public class StockTakingServiceImpl implements StockTakingService {
 		
 	}
 
+	@Override
+	public int totalStockTakingCnt() {
+		return st.totalStockTakingCnt();
+	}
+
 }
