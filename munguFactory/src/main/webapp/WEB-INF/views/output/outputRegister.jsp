@@ -35,25 +35,17 @@
                 <div class="col-xl" style="width:500px; justify-content: center;">
                   <div class="card mb-2" style="translate: 460px 100px; width:400px;">
                     <div class="card-body">
-                      <form id="output" name="frm" action="registerOutput" method="post">
+                      <form action="registerOutput" id="output" name="frm" method="post">
                         <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label" for="basic-default-phone">공장코드</label>
                           <div class="col-sm-10">
-                          	<input type="number"
-                              id="meeting-time"
-                              class="form-control phone-mask input"
-                              aria-label="658 799 8941"
-                              aria-describedby="basic-default-phone"
-                              style="width:210px;"
-                          />
+                          	<select name="factory_no" style="translate: 0 4.5px;">
+                          		<c:forEach var="fac" items="${factoryList}">
+                          			<option value="${fac.factory_no}">${fac.factory_no}</option>
+                          		</c:forEach>
+                          	</select>
                           </div>
                         </div>
-<!--                         <div class="row mb-3" style="translate: 20px;">
-                          <label class="col-sm-2 col-form-label" for="basic-default-company">품번</label>
-                          <div class="col-sm-10">
-                            <input type="text" class="form-control" id="basic-default-company" style="width:210px;"/>
-                          </div>
-                        </div> -->
                         <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label" for="basic-default-message">품번</label>
                           <input type="number"
@@ -76,12 +68,11 @@
                         </div>
                         <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label" for="basic-default-email">사원번호</label>
-						  <input type="number" id="fn_emp_no" name="fn_emp_no"
-                              class="form-control phone-mask num_only"
-                              aria-label="658 799 8941"
-                              aria-describedby="basic-default-phone"
-                              style="width:210px; translate: 12px;" required
-                            />
+                          	<select name="emp_no" style="translate: 12px; width: auto;">
+                          		<c:forEach var="emp" items="${empList}">
+                          			<option value="${emp.emp_no}">${emp.emp_no}</option>
+                          		</c:forEach>
+                          	</select>
                         </div>
                         <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label" for="basic-default-message">작업일시</label>
@@ -122,7 +113,7 @@
                             />
                           </div>
                         </div>
-                        <div class="row mb-3" style="translate: 20px;">
+<!--                         <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label text-right font-weight-bold num_only" for="basic-default-message">수율</label>
                           <div class="col-sm-10">
                             <input type="text" id="fn_yield" name="fn_yield" class="form-control phone-mask num_only" aria-label="658 799 8941"
@@ -130,7 +121,7 @@
                               style="width:210px;" required
                             />
                           </div>
-                        </div>
+                        </div> -->
                         <div class="row justify-content-end">
                           <div class="col-sm-10">
                             <input type="submit" class="btn btn-primary" style="translate: -45px;" required>

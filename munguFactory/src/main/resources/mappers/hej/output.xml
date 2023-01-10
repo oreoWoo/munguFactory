@@ -7,7 +7,7 @@
 		SELECT COUNT(*) FROM output
 	</select>
 
-	<!-- id -> dao에서 확인 -->
+	<!-- 생산실적 목록 -->
 	<select id="outputList" resultType="Output" parameterType="Output">
       SELECT  *   FROM
         (SELECT  *   FROM 
@@ -27,7 +27,6 @@
              ORDER BY prod_no DESC) SUB
                  ORDER BY SUB.ROWNUM ASC)the
                   <![CDATA[where ROWNUM >#{start} and ROWNUM <=#{end}]]>
-      
 	</select>
 	
 	<!-- 공장 목록 -->
@@ -35,11 +34,15 @@
 		SELECT * FROM factory
 	</select>
 	
-	<!-- insert문... INSERT output(item_no) VALUES(SELECT item_no FROM item WHERE item_name=#{item_name}) -->
+	<!-- 사원 목록 -->
+	<select id="empList" resultType="Emp">
+		SELECT * FROM emp
+	</select>
+	
 	<!-- 생산실적 등록 -->
 	<insert id="insertOutput" parameterType="Output">
 		INSERT INTO output(factory_no, item_no, item_name, emp_no, finish_date, prod_amount, poor_quantity, yield)
-		VALUES(#{factory_no}, #{item_no}, #{item_name}, #{emp_no}, #{finish_date}, #{prod_amount}, #{poor_quantity}, #{yield})
+		VALUES(#{factory_no}, #{item_no}, #{item_name}, #{emp_no}, #{finish_date}, #{prod_amount}, #{poor_quantity},  (#{poor_quantity}/#{prod_amount})*100)
 	</insert>
 	
 	<!-- 생산실적 상세 정보 -->	
