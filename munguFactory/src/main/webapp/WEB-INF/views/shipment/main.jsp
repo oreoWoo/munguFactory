@@ -33,7 +33,7 @@
 		$("#pageNum").val(pageNum);
 		var formData = $(".searchPlace").serialize();
 		$.ajax({
-			url		: '/shipmentAjaxChk',
+			url		: 'aaa/shipmentAjaxChk2',
 			type 	: "POST", 
 			data	: formData,
 			dataType: 'text',
@@ -56,7 +56,7 @@
 			success	: function(data){
 				var html = $('<div>').html(data);
 				var sethtml = html.find("div#setAccountList").html();
-				$(".ajaxContents tbody").prepend("<tr><td>신규등록</td><td></td><td></td><td></td><td></td><td></td>"+
+				$(".ajaxContents tbody").prepend("<tr class='insertShipment'><td>신규등록</td><td></td><td></td><td></td><td></td><td></td>"+
 					"<td><button type='button' class='btn btn-outline-primary' onclick='ajaxInsertShipment()'>등록</button></td></tr>");
 				$('.ajaxContents tbody .insertShipment td').eq(1).append(sethtml);
 			}
@@ -90,8 +90,8 @@
 				</select>
 				<input type="text" class="form-control" name="searchString" placeholder="검색어를 입력해주세요.">
 				<button type="button" class="btn btn-outline-primary" onclick="ajaxChk(1)"><span class="tf-icons bx bx-pie-chart-alt"></span>&nbsp;검색</button>
-				<button type="button" class="btn btn-outline-primary" onclick="ajaxInsertShipment()"><span class="tf-icons bx bx-pie-chart-alt"></span>&nbsp;추가</button>
 				<button type="reset" class="btn btn-outline-primary"><span class="tf-icons bx bx-pie-chart-alt"></span>&nbsp;초기화</button>
+				<button type="button" class="btn btn-outline-primary" onclick="ajaxInsertShipment()"><span class="tf-icons bx bx-pie-chart-alt"></span>&nbsp;추가</button>
 			</div>
 		</form>
 	</div>

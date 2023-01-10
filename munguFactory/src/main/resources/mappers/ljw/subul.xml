@@ -60,6 +60,9 @@
 	<select id="getFactoryList" resultType="Factory">
 		SELECT * FROM factory ORDER BY factory_name
 	</select>
+	<select id="ljwGetAccountList" resultType="Accounts">
+		SELECT * FROM accounts ORDER BY account_name
+	</select>
 
 
 </mapper>

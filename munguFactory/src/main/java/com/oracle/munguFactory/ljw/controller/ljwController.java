@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.oracle.munguFactory.dto.AccountsDTO;
 import com.oracle.munguFactory.dto.PageDTO;
 import com.oracle.munguFactory.dto.SubulDTO;
 import com.oracle.munguFactory.ljw.service.ljwService;
@@ -41,7 +40,8 @@ public class ljwController {
 		model.addAttribute("factoryList",service.getFactoryList());
 		return "shipment/main";
 	}
-	@PostMapping("/shipmentAjaxChk")
+	
+	@PostMapping("/aaa/shipmentAjaxChk2")
 	public String shipmentAjaxChk(@RequestParam(defaultValue = "1") int pageNum,PageDTO searchOptions, Model model) {
 		log.info("shipmentAjaxChk() start...");
 		searchOptions.setPageDTO(service.getSubulListSize(searchOptions), pageNum);
@@ -52,7 +52,7 @@ public class ljwController {
 	}
 	@GetMapping("/ajaxInsertShipment")
 	public String ajaxInsertShipment(Model model) {
-		List<AccountsDTO> accountList = service.getAccountList(); 
+		model.addAttribute("accountList", service.getAccountList());
 		return "shipment/shipmentList";
 	}
 }
