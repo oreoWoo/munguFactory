@@ -12,4 +12,5 @@ public interface ProdService {
 	//수정 조회
 	ProdDTO ContentModProd(int sujuNo);
 
+
 }

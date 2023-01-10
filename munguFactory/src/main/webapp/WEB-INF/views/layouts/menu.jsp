@@ -171,7 +171,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="#" class="menu-link">
+                  <a href="ItemAdminList" class="menu-link">
                     <div data-i18n="Account">품목 등록</div>
                   </a>
                 </li>
@@ -196,7 +196,7 @@
               <span class="menu-header-text">공정관리</span>
             </li>
             <li class="menu-item">
-              <a href="/listOutput" class="menu-link">
+              <a href="/outputList" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">생산실적</div>
               </a>
@@ -213,7 +213,7 @@
               </a>
             </li>
              <li class="menu-item">
-              <a href="#" class="menu-link">
+              <a href="/inventoryManagement" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">수불부</div>
               </a>

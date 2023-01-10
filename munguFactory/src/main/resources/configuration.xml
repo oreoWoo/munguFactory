@@ -4,11 +4,18 @@
 
 <configuration>
 	<typeAliases>
-		<!-- output -->
-		<!-- <typeAlias type="com.oracle.munguFactory.dto.OutputDTO" alias="OutputDTO"/> -->
-		<typeAlias alias="Subul"  type="com.oracle.munguFactory.dto.SubulDTO" />
-        <typeAlias alias="Prod" type="com.oracle.munguFactory.dto.ProdDTO"/>
+
+		<typeAlias alias="Output"   type="com.oracle.munguFactory.dto.OutputDTO"/>
+		<typeAlias alias="Page"     type="com.oracle.munguFactory.dto.PageDTO" />
+		<typeAlias alias="Subul" 	type="com.oracle.munguFactory.dto.SubulDTO" />
+		<typeAlias alias="Factory"  type="com.oracle.munguFactory.dto.FactoryDTO" />
+		<typeAlias alias="Emp"      type="com.oracle.munguFactory.dto.EmpDTO"/>
+		<typeAlias alias="Prod" type="com.oracle.munguFactory.dto.ProdDTO"/>
 		
+		<!-- stockTaking -->
+		<typeAlias alias="StockTaking"  type="com.oracle.munguFactory.dto.StockTakingDTO" />
 		
+		<!-- suju -->
+		<typeAlias alias="OrdersDetail" type="com.oracle.munguFactory.dto.OrdersDetailDTO" />
 	</typeAliases>
 </configuration>
