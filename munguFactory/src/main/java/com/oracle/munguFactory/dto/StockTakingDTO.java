@@ -24,7 +24,7 @@ public class StockTakingDTO {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE_TIME)
 	private LocalDateTime date;
-	private Integer inventory_count;
+	private Integer db_amount;
 	private String factory_name;
 	private String item_name;
 	private Integer stock_count;
