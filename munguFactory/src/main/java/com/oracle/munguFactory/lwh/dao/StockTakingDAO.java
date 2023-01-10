@@ -12,8 +12,16 @@ public interface StockTakingDAO {
 	List<FactoryDTO> selectFactoryList();
 	
 	//상품목록 가져가기
-	List<ItemDTO> selectItemList();
+	List<ItemDTO> selectItemList(StockTakingDTO stockTakingDTO);
 	
 	//재고실사 검색 목록 가져가기
 	List<StockTakingDTO> selectStockTakingList(StockTakingDTO stockTakingDTO);
+
+	List<StockTakingDTO> selectSubulList();
+
+	List<StockTakingDTO> selectItemInfo(StockTakingDTO stockTakingDTO);
+
+	int insertStockTaking(StockTakingDTO stockTakingDTO);
+
+	int updateStockCnt(StockTakingDTO stockTakingDTO);
 }
