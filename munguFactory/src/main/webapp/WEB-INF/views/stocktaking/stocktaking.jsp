@@ -172,9 +172,9 @@ let factoryList = [
 let itemList = [
 	<c:forEach items="${itemList}" var="item">
 		{ 
-			item_no : '${item.itemNo}' 
-			, factory_no : '${item.factoryNo}'
-			, item_Name : '${item.itemName}'
+			item_no : '${item.item_no}' 
+			, factory_no : '${item.factory_no}'
+			, item_Name : '${item.item_name}'
 		},
 	</c:forEach>
 ]
@@ -329,7 +329,7 @@ function makeItemSelect(data) {
 
 	if(data != null) {
 		for(let datum of data) {
-			innerHtml += `<option value="\${datum.itemNo}">\${datum.itemNo}</option>`
+			innerHtml += `<option value="\${datum.item_no}">\${datum.item_no}</option>`
 			
 		}
 	} 
@@ -379,9 +379,9 @@ function makeTable (data) {
 				<td>\${datum.factory_name}</td>
 				<td>\${datum.item_no}</td>
 				<td>\${datum.item_name}</td>
-				<td>\${datum.stock_count}</td>
 				<td>\${datum.db_amount}</td>
 				<td>\${datum.amount}</td>
+				<td>\${datum.amount - datum.db_amount}</td>
 				<td>\${datum.emp_no}</td>
 				<td>\${datum.subul_note}</td>
 				<td>\${datum.gubun}</td>

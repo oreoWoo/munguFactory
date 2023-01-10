@@ -58,7 +58,6 @@ public class StockTakingController {
 	//등록
 	@PostMapping(value = "/insertStockTaking")
 	public String insertStockTaking(StockTakingDTO stockTakingDTO) {
-		System.out.println("값들어왔닝?->" + stockTakingDTO);
 		int result = st.insertStockTaking(stockTakingDTO);
 		return "redirect:/stocktaking/main";
 	}
