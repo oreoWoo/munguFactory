@@ -81,6 +81,12 @@ public class OutputServiceImpl implements OutputService {
 	}
 
 
+	@Override
+	public List<EmpDTO> empSelect() {
+		return od.getEmpList();
+	}
+
+
 	
 	
 

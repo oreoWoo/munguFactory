@@ -17,8 +17,10 @@ public interface OutputDAO {
 	int deleteOutput(OutputDTO prod_no);	// 생산실적 삭제
 
 	List<FactoryDTO> getFactoryList();		// 공장 목록
+	List<EmpDTO> 	 getEmpList();			// 사원 목록
 
 	OutputDTO outputDetail(int prod_no);	// 생산실적 상세 정보
+
 
 	
 

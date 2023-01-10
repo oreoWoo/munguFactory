@@ -112,6 +112,21 @@ public class OutputDAOImpl implements OutputDAO {
 		
 		return output;
 	}
+
+	// 사원 목록
+	@Override
+	public List<EmpDTO> getEmpList() {
+		System.out.println("- OutputDAOImpl getEmpList Start -");
+		
+		List<EmpDTO> result = null;
+		
+		try {
+			result = session.selectList("empList");
+		} catch (Exception e) {
+			System.out.println("OutputDAOImpl getEmpList Exception -> " + e.getMessage());
+		}
+		return result;
+	}
 	
 	// 생산실적 수정
 	

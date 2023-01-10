@@ -54,7 +54,10 @@ public class OutputController {
 	public String writeFormOutput(Model model) {
 		
 		List<FactoryDTO> factoryList = os.factorySelect();	// 공장코드 GET
+		List<EmpDTO> 	 empList 	 = os.empSelect();	// 사원번호 GET
+		
 		model.addAttribute("factoryList", factoryList);
+		model.addAttribute("empList", empList);
 		
 		return "output/outputRegister";
 	}
