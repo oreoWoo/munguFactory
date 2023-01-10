@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.oracle.munguFactory.dto.AccountsDTO;
 import com.oracle.munguFactory.dto.FactoryDTO;
 import com.oracle.munguFactory.dto.PageDTO;
 import com.oracle.munguFactory.dto.SubulDTO;
@@ -29,6 +30,11 @@ public class ljwServiceImpl implements ljwService {
 	@Override
 	public List<FactoryDTO> getFactoryList() {
 		return dao.getFactoryList();
+	}
+
+	@Override
+	public List<AccountsDTO> getAccountList() {
+		return dao.getAccountList();
 	}
 
 }

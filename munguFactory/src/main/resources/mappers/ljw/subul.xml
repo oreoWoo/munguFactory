@@ -4,7 +4,8 @@
 <mapper namespace="com.oracle.munguFactory.mappers.ljw.subul">
 	<select id="getSubulListSize" resultType="int" parameterType="Page">
 		SELECT COUNT(*)
-		FROM SUBUL s, emp e, item i, factory f
+		FROM emp e, item i, factory f, SUBUL s
+		LEFT JOIN orders o ON s.serial_no=o.suju_no
 		WHERE s.EMP_NO=e.EMP_NO
 		AND s.item_no=i.item_no
 		AND i.factory_no=f.factory_no
@@ -29,7 +30,9 @@
 	
 	<select id="getSubulList" resultType="Subul" parameterType="Page">
 		SELECT *
-		FROM SUBUL s, emp e, item i, factory f
+		FROM emp e, item i, factory f, SUBUL s
+		LEFT JOIN orders o ON s.serial_no=o.suju_no
+		LEFT JOIN accounts a on o.account_no=a.account_no
 		WHERE s.EMP_NO=e.EMP_NO
 		AND s.item_no=i.item_no
 		AND i.factory_no=f.factory_no
@@ -57,5 +60,9 @@
 	<select id="getFactoryList" resultType="Factory">
 		SELECT * FROM factory ORDER BY factory_name
 	</select>
+	<select id="ljwGetAccountList" resultType="Accounts">
+		SELECT * FROM accounts ORDER BY account_name
+	</select>
+
 
 </mapper>

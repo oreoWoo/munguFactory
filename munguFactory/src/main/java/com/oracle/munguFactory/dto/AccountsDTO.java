@@ -7,19 +7,19 @@ import lombok.Data;
 @Data
 public class AccountsDTO {
 	
-	private int     accountNo;         //거래처코드
-	private String  accountName;       //거래처명
-	private String  accountIdno;       //사업자등록번호
-	private String  accOwner;          //대표자명
-	private String  accZipcode;        //우편번호
-	private String  accAddress;        //주소
-	private String  accAddress2;       //상세주소
-	private String  accConditions;     //업태
-	private String  accCategory;       //업종
-	private String  accManager;        //거래처 담당자
-	private Date    accEnddate;        //거래만료일
-	private int     addState;          //거래현황
-	private String  addTelnum;         //전화번호
+	private int     account_no;         //거래처코드
+	private String  account_name;       //거래처명
+	private String  account_idno;       //사업자등록번호
+	private String  acc_owner;          //대표자명
+	private String  acc_zipcode;        //우편번호
+	private String  acc_address;        //주소
+	private String  acc_address2;       //상세주소
+	private String  acc_conditions;     //업태
+	private String  acc_category;       //업종
+	private String  acc_manager;        //거래처 담당자
+	private Date    acc_enddate;        //거래만료일
+	private int     add_state;          //거래현황
+	private String  add_telnum;         //전화번호
 	
 
 }

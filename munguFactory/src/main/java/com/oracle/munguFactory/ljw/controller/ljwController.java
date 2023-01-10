@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.oracle.munguFactory.dto.FactoryDTO;
 import com.oracle.munguFactory.dto.PageDTO;
 import com.oracle.munguFactory.dto.SubulDTO;
 import com.oracle.munguFactory.ljw.service.ljwService;
@@ -24,9 +23,7 @@ public class ljwController {
 	
 	@GetMapping("/inventoryManagement")
 	public String inventoryManagementMain(Model model) {
-		List<FactoryDTO> factoryList = service.getFactoryList();
-		System.out.println(factoryList.size());
-		model.addAttribute("factoryList",factoryList);
+		model.addAttribute("factoryList",service.getFactoryList());
 		return "inventoryManagement/main";
 	}
 	@PostMapping("/inventoryManagementListAjaxChk")
@@ -37,5 +34,25 @@ public class ljwController {
 		model.addAttribute("paging",searchOptions);
 		model.addAttribute("subulList", subulList);
 		return "inventoryManagement/inventoryManagementList";
+	}
+	@GetMapping("/Shipment")
+	public String shipmentMain(Model model) {
+		model.addAttribute("factoryList",service.getFactoryList());
+		return "shipment/main";
+	}
+	
+	@PostMapping("/aaa/shipmentAjaxChk2")
+	public String shipmentAjaxChk(@RequestParam(defaultValue = "1") int pageNum,PageDTO searchOptions, Model model) {
+		log.info("shipmentAjaxChk() start...");
+		searchOptions.setPageDTO(service.getSubulListSize(searchOptions), pageNum);
+		List<SubulDTO> subulList = service.getSubulList(searchOptions);
+		model.addAttribute("paging",searchOptions);
+		model.addAttribute("subulList", subulList);
+		return "shipment/shipmentList";
+	}
+	@GetMapping("/ajaxInsertShipment")
+	public String ajaxInsertShipment(Model model) {
+		model.addAttribute("accountList", service.getAccountList());
+		return "shipment/shipmentList";
 	}
 }

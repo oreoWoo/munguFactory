@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.oracle.munguFactory.dto.AccountsDTO;
 import com.oracle.munguFactory.dto.FactoryDTO;
 import com.oracle.munguFactory.dto.PageDTO;
 import com.oracle.munguFactory.dto.SubulDTO;
@@ -29,7 +30,6 @@ public class ljwDaoImpl implements ljwDao {
 		}
 		return result;
 	}
-
 	@Override
 	public int getSubulListSize(PageDTO searchOptions) {
 		log.info("getSubulListSize() start...");
@@ -41,7 +41,6 @@ public class ljwDaoImpl implements ljwDao {
 		}
 		return result;
 	}
-
 	@Override
 	public List<FactoryDTO> getFactoryList() {
 		log.info("getFactoryList() start...");
@@ -50,6 +49,17 @@ public class ljwDaoImpl implements ljwDao {
 			result = session.selectList("getFactoryList");
 		} catch (Exception e) {
 			log.info("getFactoryList() e.getMessage... : "+e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public List<AccountsDTO> getAccountList() {
+		List<AccountsDTO> result = null;
+		try {
+			result = session.selectList("ljwGetAccountList");
+		} catch (Exception e) {
+			log.info("getAccountList() e.getMessage... : "+e.getMessage());
 		}
 		return result;
 	}
