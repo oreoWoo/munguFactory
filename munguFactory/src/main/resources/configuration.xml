@@ -9,6 +9,7 @@
 		<typeAlias alias="Page"  type="com.oracle.munguFactory.dto.PageDTO" />
 		<typeAlias alias="Subul"  type="com.oracle.munguFactory.dto.SubulDTO" />
 		<typeAlias alias="Factory"  type="com.oracle.munguFactory.dto.FactoryDTO" />
+		<typeAlias alias="item" type="com.oracle.munguFactory.dto.ItemDTO"/>
 		
 		<!-- stockTaking -->
 		<typeAlias alias="StockTaking"  type="com.oracle.munguFactory.dto.StockTakingDTO" />
