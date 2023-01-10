@@ -15,9 +15,9 @@
 
 	<select id="selectItemList" resultType="com.oracle.munguFactory.dto.ItemDTO">
 	
-		SELECT 	item_no AS itemNo
-				, factory_no AS factoryNo
-				, item_Name AS itemName
+		SELECT 	item_no 
+				, factory_no 
+				, item_Name 
 				, item_Check
 		FROM item
 		WHERE item_Check = '생산'
