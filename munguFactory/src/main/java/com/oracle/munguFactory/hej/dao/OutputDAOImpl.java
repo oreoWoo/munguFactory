@@ -11,9 +11,11 @@ import com.oracle.munguFactory.dto.ItemDTO;
 import com.oracle.munguFactory.dto.OutputDTO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class OutputDAOImpl implements OutputDAO {
 
 	/* MyBatis DB 연동 */
@@ -127,7 +129,23 @@ public class OutputDAOImpl implements OutputDAO {
 		}
 		return result;
 	}
-	
+
 	// 생산실적 수정
+	@Override
+	public int updateOutput(OutputDTO output) {
+		log.info("- OutputDAOImpl getEmpList Start -");
+		
+		int updateCnt = 0;
+		
+		try {
+			updateCnt = session.update("updateOutput", output);
+			log.info("output -> " + updateCnt);
+		} catch (Exception e) {
+			System.out.println("OutputDAOImpl updateOutput Exception -> " + e.getMessage());
+		}
+		
+		return updateCnt;
+	}
+	
 	
 }

@@ -42,7 +42,7 @@
 	<!-- 생산실적 등록 -->
 	<insert id="insertOutput" parameterType="Output">
 		INSERT INTO output(factory_no, item_no, item_name, emp_no, finish_date, prod_amount, poor_quantity, yield)
-		VALUES(#{factory_no}, #{item_no}, #{item_name}, #{emp_no}, #{finish_date}, #{prod_amount}, #{poor_quantity},  (#{poor_quantity}/#{prod_amount})*100)
+		VALUES(#{factory_no}, #{item_no}, #{item_name}, #{emp_no}, now(), #{prod_amount}, #{poor_quantity},  (#{poor_quantity}/#{prod_amount})*100)
 	</insert>
 	
 	<!-- 생산실적 상세 정보 -->	
@@ -50,14 +50,9 @@
 		SELECT * FROM output WHERE prod_no = #{prod_no}	
 	</select>
 	
-
-<!--     <update id="tkEmpUpdate" parameterType="Emp">
-		 UPDATE emp SET ename=#{ename}, job=#{job}, mgr=#{mgr},
-					    sal=#{sal}, 
-					    hiredate=#{hiredate}, 
-		                <if test="#{comm}!=null"> 	comm=#{comm},    </if>
-		                deptno=#{deptno} 
-		 WHERE  empno=#{empno}
-   </update>	
-	 -->
+	<!-- 생산실적 수정 (공장코드, 사원번호) -->
+    <update id="updateOutput" parameterType="Output">
+		 UPDATE output SET factory_no=#{factory_no}, emp_no=#{emp_no}
+		 WHERE  prod_no=#{prod_no}
+	</update>	
 </mapper>

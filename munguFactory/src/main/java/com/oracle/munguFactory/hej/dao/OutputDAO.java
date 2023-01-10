@@ -21,6 +21,8 @@ public interface OutputDAO {
 
 	OutputDTO outputDetail(int prod_no);	// 생산실적 상세 정보
 
+	int updateOutput(OutputDTO output);		// 생산실적 수정
+
 
 	
 

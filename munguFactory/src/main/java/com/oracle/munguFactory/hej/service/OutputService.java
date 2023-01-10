@@ -24,6 +24,8 @@ public interface OutputService {
 
 	OutputDTO outputDetail(int prod_no);			// 생산실적 상세 정보
 
+	int updateOutput(OutputDTO output);				// 생산실적 수정 (공장코드,사원번호만)
+
 
 	
 
