@@ -30,11 +30,15 @@
                       
 	</select>
 	<select id="ModContent" resultType="int">
-		select 
+		<!-- select 
 				p.* , i.item_name  
 		from 
 				production_order p, item i
-		where p.item_no = i.item_no
+		where p.item_no = i.item_no -->
+		select 
+				*
+		from 
+		        production_order
 		
 	</select>
 </mapper>

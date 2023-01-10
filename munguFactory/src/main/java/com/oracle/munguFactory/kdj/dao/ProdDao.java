@@ -10,7 +10,7 @@ public interface ProdDao {
 	//List조회
 	List<ProdDTO> listProd(ProdDTO prodDto);
 	//수정 조회	
-	ProdDTO ContentModProd(int sujuNo);
+	int ContentModProd(int sujuNo);
 	
 
 }

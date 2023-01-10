@@ -31,9 +31,9 @@ public class ProdServiceImpl implements ProdService {
 	}
 
 	@Override
-	public ProdDTO ContentModProd(int sujuNo) {
+	public int ContentModProd(int sujuNo) {
 		System.out.println("ProdServiceImpl ContentProd start~! ");
-		ProdDTO prodDto = null;
+		int prodDto = 0;
 		prodDto = pd.ContentModProd(sujuNo);
 		return prodDto;
 	}

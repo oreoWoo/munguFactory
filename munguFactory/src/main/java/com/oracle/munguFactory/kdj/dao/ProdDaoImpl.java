@@ -41,26 +41,16 @@ public class ProdDaoImpl implements ProdDao {
 		return prodList;
 	}
 	@Override
-	public ProdDTO ContentModProd(int sujuNo) {
+	public int ContentModProd(int sujuNo) {
 		System.out.println("ProdDaoImpl ContentModProd start~!");
-		ProdDTO prod = new ProdDTO();
+		int modProd =0;
 		try {
-			prod = session.selectOne("ModContent", sujuNo);
+			Integer prod = session.selectOne("ModContent", sujuNo);
+			modProd=prod.intValue();
 		} catch (Exception e) {
 			System.out.println("ProdDaoImpl prodList "+ e.getMessage());
 		}
-		return prod;
+		return modProd;
 	}
-
-	/*
-	 * @Override public ProdDTO ContentProd(ProdDTO prodDto) {
-	 * System.out.println("ProdDaoImpl ContentProd start~!"); ProdDTO prod1 = new
-	 * ProdDTO(); try { prod1 = session.selectOne("ModContent", prodDto); } catch
-	 * (Exception e) { System.out.println("ProdDaoImpl ContentProd "+
-	 * e.getMessage());
-	 * 
-	 * } return prod1; }
-	 */
-	
 
 }

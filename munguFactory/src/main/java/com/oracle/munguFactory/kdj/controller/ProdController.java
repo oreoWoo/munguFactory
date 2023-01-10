@@ -47,7 +47,7 @@ public class ProdController {
 	public String detailModContent(Model model, int sujuNo) {
 		System.out.println("detailContent start ~!");
 		
-		ProdDTO prodDto =  ps.ContentModProd(sujuNo);
+		int prodDto =  ps.ContentModProd(sujuNo);
 		
 		model.addAttribute("prodDto", prodDto);
 		

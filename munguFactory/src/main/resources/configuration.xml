@@ -10,7 +10,11 @@
 		<typeAlias alias="Subul" 	type="com.oracle.munguFactory.dto.SubulDTO" />
 		<typeAlias alias="Factory"  type="com.oracle.munguFactory.dto.FactoryDTO" />
 		<typeAlias alias="Emp"      type="com.oracle.munguFactory.dto.EmpDTO"/>
+<<<<<<< HEAD
 		<typeAlias alias="Prod" type="com.oracle.munguFactory.dto.ProdDTO"/>
+=======
+		<typeAlias alias="item" type="com.oracle.munguFactory.dto.ItemDTO"/>
+>>>>>>> branch 'main' of https://github.com/Kwondongjoo/munguFactory.git
 		
 		<!-- stockTaking -->
 		<typeAlias alias="StockTaking"  type="com.oracle.munguFactory.dto.StockTakingDTO" />
