@@ -59,12 +59,17 @@ public class StockTakingDAOImpl implements StockTakingDAO {
 
 	@Override
 	public int insertTempSilsa(StockTakingDTO stockTakingDTO) {
-		return session.insert("insertTempSilsa",stockTakingDTO);
+		return session.insert("insertTempSilsa", stockTakingDTO);
 	}
 
 	@Override
 	public int updateTempSilsaGubun(StockTakingDTO stockTakingDTO) {
-		return session.update("updateTempSilsaGubun",stockTakingDTO);
+		return session.update("updateTempSilsaGubun", stockTakingDTO);
+	}
+
+	@Override
+	public int deleteTempSilsa(StockTakingDTO stockTakingDTO) {
+		return session.delete("deleteTempSilsa", stockTakingDTO);
 	}
 
 }

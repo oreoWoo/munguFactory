@@ -90,9 +90,17 @@ public class StockTakingController {
 	
 	//'임시실사' -> '재고실사' 수정
 	@ResponseBody
-	@GetMapping(value = "/updateTempSilsaGubun")
+	@PostMapping(value = "/updateTempSilsaGubun")
 	public int updateTempSilsaGubun(StockTakingDTO stockTakingDTO) {
 		int result = st.updateTempSilsaGubun(stockTakingDTO);
+		return result;
+	}
+	
+	//'임시실사' 삭제
+	@ResponseBody
+	@GetMapping(value = "/deleteTempSilsa")
+	public int deleteTempSilsa(StockTakingDTO stockTakingDTO) {
+		int result = st.deleteTempSilsa(stockTakingDTO);
 		return result;
 	}
 		
