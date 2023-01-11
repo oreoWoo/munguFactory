@@ -107,52 +107,57 @@ thead, tbody, tfoot, tr, td, th {
 	<div class="outputContainer">
 		<h1 class="display-3">생산실적</h1>
 		<!-- 생산실적 등록 -->
-		<div class="alert alert-primary" role="alert" style="width: 70px; text-align: center; translate:1220px; height:40px;"><a href="writeFormOutput">등록</a></div>
+		<div class="alert alert-primary" role="alert" style="width: 70px;text-align: center;translate: 1200px 30px;height:40px;padding: 9px 2px 0px 1px;font-weight: bold;"><a href="writeFormOutput">등록</a></div>
 
 		<!-- 생산실적 관련 정보 조회 -->
-		<!-- 	<form>
-		<select name="search">
-			<option value="s_">생산 번호 조회</option>
-			<option value="s_">품번 조회</option>
-			<option value="s_">품명 조회</option>
-			
-		</select>
-	</form> -->
-
-		<div class="table-responsive text-nowrap">
-			<table class="outputTbl" style="background: white;">
-				<thead style="background-color: #FFFAFA;">
-					<tr>
-						<th>생산번호</th>
-						<th>품번</th>
-						<th>품명</th>
-						<th>사원번호</th>
-						<th>공장코드</th>
-						<th>작업일시</th>
-						<th>생산수량</th>
-						<th>불량수량</th>
-						<th>수율</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					<c:forEach var="output" items="${outputList}">
+		<form action="listSearch" style="translate: 2px -10px;">
+			<select name="search">
+				<option value="">:: 검색 ::</option>
+				<option value="item_no">품번 조회</option>
+				<option value="item_name">품명 조회</option>
+				<option value="emp_no">사원번호 조회</option>
+				<option value="factory_no">공장코드 조회</option>
+				<!-- 기간별 조회는 나중에 추가 예정 -->
+			</select>
+			<input type="text" name="searchWord" style="height: 21.99px; translate: 0 -1px;">
+			<input type="text" style="display: none;">	<!-- 엔터키를 위해 쓴 -->
+			<input type="image" src="https://cdn-icons-png.flaticon.com/512/71/71403.png" id="btnSearch" style="width: 20px; height: 20px; translate: 5px 4px; background: #EAEAEA;">
+		</form>
+		<div class="card mb-2" style="width: 1280px;">
+			<div class="card-body table-responsive text-nowrap">
+				<table class="outputTbl" style="background: white;">
+					<thead style="background-color: #FFFAFA;">
 						<tr>
-							<td><a href="outputDetail?prod_no=${output.prod_no}">${output.prod_no}</a></td>
-							<td>${output.item_no}</td>
-							<td>${output.item_name}</td>
-							<td>${output.emp_no}</td>
-							<td>${output.factory_no}</td>
-							<td>${output.finish_date}</td>
-							<td>${output.prod_amount}</td>
-							<td>${output.poor_quantity}</td>
-							<td>${output.yield}</td>
+							<th>생산번호</th>
+							<th>품번</th>
+							<th>품명</th>
+							<th>사원번호</th>
+							<th>공장코드</th>
+							<th>작업일시</th>
+							<th>생산수량</th>
+							<th>불량수량</th>
+							<th>수율</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
+					</thead>
 	
+					<tbody>
+						<c:forEach var="output" items="${outputList}">
+							<tr>
+								<td><a href="outputDetail?prod_no=${output.prod_no}">${output.prod_no}</a></td>
+								<td>${output.item_no}</td>
+								<td>${output.item_name}</td>
+								<td>${output.emp_no}</td>
+								<td>${output.factory_no}</td>
+								<td><fmt:formatDate value="${output.finish_date}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+								<td>${output.prod_amount}</td>
+								<td>${output.poor_quantity}</td>
+								<td>${output.yield}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	
 		<!-- 페이징 처리 2트 -->
 		<nav aria-label="Page navigation example">
@@ -179,4 +184,12 @@ thead, tbody, tfoot, tr, td, th {
 		</div> --%>
 	</div>
 </body>
+<script>
+	$(document).ready(function() {
+		$("#btnSearch").click(function()) {
+			var searchWord = $("input[name=searchWord]").val().trim();
+			var colName    = $()
+		}
+	})
+</script>
 </html>
