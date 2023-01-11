@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class FactoryDTO {
-	private int		factoryNo;
-	private String 	factoryName;
-	private String 	factoryAddress1;
-	private String 	factoryAddress2;
-	private String 	factoryCall;
-	private String 	factoryUse;
+	private int		factory_no;
+	private String 	factory_name;
+	private String 	factory_address1;
+	private String 	factory_address2;
+	private String 	factory_call;
+	private String 	factory_use;
 }
