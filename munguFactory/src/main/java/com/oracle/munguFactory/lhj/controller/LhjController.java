@@ -60,8 +60,9 @@ public class LhjController {
 	public String accountAdd(AccountsDTO account, Model model) {
 		System.out.println("LhjController accountAdd Start....");
 		int insertResult = hjs.addAccount(account);
-		if( insertResult > 0 ) {
-			return "redirect:accountList";
+		if( insertResult == 1 ) {
+			model.addAttribute("inMsg",insertResult);
+			return "forward:accountList";
 		}else {
 			model.addAttribute("msg", "입력 실패! 확인해보세요");
 			return "forward:accountAddFrom";
@@ -95,11 +96,12 @@ public class LhjController {
 		int updateResult = hjs.updateAccount(account);
 		System.out.println("LhjController updateAccount "+account);
 		
-		if(updateResult > 0) {
-			return "redirect:accountList";
+		if(updateResult == 1) {
+			model.addAttribute("upMsg",updateResult);
+			return "forward:accountList";
 		}
 		else {
-			model.addAttribute("msg","입력 실패 확인해보세요");
+			model.addAttribute("upnoMsg",updateResult);
 			System.out.println("LhjController updateAccount updateResult-->"+updateResult);
 			return "forward:accountUpdateForm";
 		}
@@ -109,9 +111,17 @@ public class LhjController {
 	@RequestMapping("/accountDelete")
 	public String accountDelete(int account_no, Model model) {
 		System.out.println("LhjController accountDelete Start.....");
-		AccountsDTO account = hjs.accountDelete(account_no);
+		int account = hjs.accountDelete(account_no);
 		model.addAttribute("account",account);
-		return "forward:accountList";
+		if(account > 0) {
+			model.addAttribute("delMsg",account);
+			return	"forward:accountList";
+		}else {
+			model.addAttribute("delnMsg","삭제에 실패하였습니다. 다시 확인해보세요");
+			return "forward:accountUpdateForm";
+		}
+		
+	
 	}
 	
 	//------거래처 검색-------------------------------------------------------

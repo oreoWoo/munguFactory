@@ -114,10 +114,54 @@
 	<p>
 	<p>
 	<div style="margin-bottom: 50px;">
-	<input  class="btn btn-primary" type="submit" value="등록" style="margin-left: 560px;">
+	<input  class="btn btn-primary" type="button" value="등록" style="margin-left: 560px;"
+			data-bs-toggle="modal" data-bs-target="#modalToggle">
 	<input type="button" class="btn btn-primary"  style="margin-left: 30px;"
 		   onclick="location.href='/accountList'" value="목록">
 	</div>
+	
+	<!-- 등록 Modal -->
+                        <div
+                          class="modal fade"
+                          id="modalToggle"
+                          aria-labelledby="modalToggleLabel"
+                          tabindex="-1"
+                          style="display: none"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalToggleLabel">신규 거래처 등록</h5>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body">해당 거래처를 등록하시겠습니까?</div>
+                              <div class="modal-footer">
+                             	 <input
+                             	  value="등록"
+                             	  type="submit"
+                                  class="btn btn-primary"
+                                  data-bs-target="#modalToggle"
+                                  data-bs-toggle="modal"
+                                  data-bs-dismiss="modal"
+                                >
+                                <button
+                                  type="button"
+                                  class="btn btn-primary"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                                                  취소
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
 	</form>
 	</div>
 </div>

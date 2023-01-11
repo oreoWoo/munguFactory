@@ -72,9 +72,9 @@ public class LhjServiceImpl implements LhjService {
 	
 	//---------거래처 정보 삭제---------------------------------------
 	@Override
-	public AccountsDTO accountDelete(int account_no) {
+	public int accountDelete(int account_no) {
 		System.out.println("LhjServiceImpl accountDelete Start....");
-		AccountsDTO account = null;
+		int account = 0;
 		account = hjd.accountDelete(account_no);
 		return account;
 	}

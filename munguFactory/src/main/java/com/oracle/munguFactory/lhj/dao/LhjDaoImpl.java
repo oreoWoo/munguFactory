@@ -102,7 +102,7 @@ public class LhjDaoImpl implements LhjDao {
 	
 	//---------------거래처 삭제-------------------------------------
 	@Override
-	public AccountsDTO accountDelete(int account_no) {
+	public int accountDelete(int account_no) {
 		System.out.println("LhjDaoImpl accountDelete Start...");
 		int result =0;
 		try {
@@ -110,7 +110,7 @@ public class LhjDaoImpl implements LhjDao {
 		} catch (Exception e) {
 			System.out.println("LhjDaoImpl accountDelete e.getMessage()-->"+e.getMessage());
 		}
-		return null;
+		return result;
 	}
 
 	//--------------거래처 검색 리스트--------------------------------------------------

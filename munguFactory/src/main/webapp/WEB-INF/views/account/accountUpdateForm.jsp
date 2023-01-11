@@ -5,6 +5,7 @@
 <html>
 <head>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
@@ -19,9 +20,8 @@
 	}
 	
 	
-	
-	
 </script>
+
 </head>
 <body>
 <div class="container-xxl flex-grow-1 container-p-y" style="width: 1600px;">
@@ -127,13 +127,57 @@
 	</table>
 	<p>
 	<p>
-	<input  class="btn btn-primary" type="submit" value="수정" style="margin-left: 500px;">
+	
+	<input  class="btn btn-primary" type="button" value="수정" style="margin-left: 500px;"
+			data-bs-toggle="modal" data-bs-target="#modalToggle2">
 	<input type="button" class="btn btn-primary"  style="margin-left: 30px;"
 		   onclick="location.href='/accountList'" value="목록">
 	<input type="button" class="btn btn-primary"  style="margin-left: 30px;"
 		   data-bs-toggle="modal" data-bs-target="#modalToggle" value="삭제" >
+	<!-- 수정 Modal -->
+                        <div
+                          class="modal fade"
+                          id="modalToggle2"
+                          aria-labelledby="modalToggleLabel"
+                          tabindex="-1"
+                          style="display: none"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalToggleLabel">${account.account_no} ${account.account_name}</h5>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body">해당 거래처 정보를 수정하시겠습니까?</div>
+                              <div class="modal-footer">
+                             	 <input
+                             	  type="submit"
+                                  class="btn btn-primary"
+                                  data-bs-target="#modalToggle2"
+                                  data-bs-toggle="modal"
+                                  data-bs-dismiss="modal"
+                                  value="수정"
+                                >
+                                <button
+                                  type="button"
+                                  class="btn btn-primary"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                                                  취소
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
 	</form>
-	<!-- Modal 1-->
+	<!-- 삭제 Modal-->
                         <div
                           class="modal fade"
                           id="modalToggle"
@@ -157,7 +201,7 @@
                               <div class="modal-footer">
                              	 <button
                                   class="btn btn-primary"
-                                  data-bs-target="#modalToggle2"
+                                  data-bs-target="#modalToggle"
                                   data-bs-toggle="modal"
                                   data-bs-dismiss="modal"
                                   onclick="location.href='/accountDelete?account_no=${account.account_no}'"  
@@ -165,10 +209,10 @@
                                                                  삭제
                                 </button>
                                 <button
+                                  type="button"
                                   class="btn btn-primary"
-                                  data-bs-target="#modalToggle2"
-                                  data-bs-toggle="modal"
                                   data-bs-dismiss="modal"
+                                  aria-label="Close"
                                 >
                                                                   취소
                                 </button>
@@ -176,6 +220,7 @@
                             </div>
                           </div>
                         </div>
+                        
 </div>
 </div>
 </div>

@@ -13,7 +13,7 @@ public interface LhjDao {
 	AccountsDTO          accountUpdateForm(int account_no);		 //거래처 정보 수정 페이지
 	int                  updateAccount(AccountsDTO account);	 //거래처 정보 수정
 	int                  addAccount(AccountsDTO account);		 //거래처 신규등록
-	AccountsDTO          accountDelete(int account_no);			 //거래처 정보삭제
+	int          accountDelete(int account_no);			 //거래처 정보삭제
 	List<AccountsDTO>    accountSearchList(String searchString); //검색된 거래처리스트
 	int                  searchAccount(String searchAccount);	 //검색된 거래처 갯수 조회
 
