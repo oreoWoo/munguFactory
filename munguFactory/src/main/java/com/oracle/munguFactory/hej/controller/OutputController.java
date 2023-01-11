@@ -86,17 +86,6 @@ public class OutputController {
 		
 		return "output/outputDetail";
 	}
-		
-	// 생산실적 삭제
-	@RequestMapping(value = "deleteOutput")
-	public String deleteOutput(OutputDTO prod_no, Model model) {
-		
-		int result = os.deleteOutput(prod_no);
-		
-		return "redirect:outputList";
-	}
-	
-	
 	
 	// 생산실적 수정 페이지
 	@GetMapping(value = "updateOutputForm")
@@ -117,15 +106,28 @@ public class OutputController {
 	}
 	
 	// 찐 생산실적 수정 (공장번호, 사원번호)
-	@GetMapping(value = "updateOutput")
+	@PostMapping(value = "updateOutput")
 	public String updateOutput(OutputDTO output, Model model) {
 		log.info("~~ updateOutput Start ~~");
+		System.out.println("[UPDATE] output data -> " + output);
 		
 		int updateCnt = os.updateOutput(output);
 		model.addAttribute("updateCnt", updateCnt);
-		//model.addAttribute("kk3", "Message Test");
 		
 		return "forward:outputList";
 	}
+	
+	
+	// 생산실적 삭제
+	@RequestMapping(value = "deleteOutput")
+	public String deleteOutput(OutputDTO prod_no, Model model) {
+		log.info("~~ deleteOutput Start ~~");
+		
+		int result = os.deleteOutput(prod_no);
+		
+		return "redirect:outputList";
+	}
+	
+	//
 	
 }
