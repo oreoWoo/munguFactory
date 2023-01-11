@@ -5,6 +5,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+
+	$(function(){
+		if(${upMsg == 1}){
+			 alert ("거래처 정보가 수정되었습니다");
+		}
+		if(${delMsg == 1}){
+			 alert ("거래처 정보가 삭제되었습니다");
+		}
+		if(${inMsg == 1}){
+			 alert ("거래처 정보가 등록 되었습니다");
+		}
+		
+	});
+
+</script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
