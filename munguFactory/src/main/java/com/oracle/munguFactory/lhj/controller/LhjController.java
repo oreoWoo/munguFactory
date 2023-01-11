@@ -138,7 +138,6 @@ public class LhjController {
 		model.addAttribute("accountList",account);
 		model.addAttribute("page",page);
 		
-		
 		return "account/accountList";
 	}
 	
