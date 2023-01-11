@@ -11,7 +11,14 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/datepicker-ko.js"></script>
 
+<script type="text/javascript">
 
+$(function(){
+	if(${upMsg} == 0) {
+		alert("수정에 실패하였습니다.");
+	}
+});
+</script>
 </head>
 <body>
 		

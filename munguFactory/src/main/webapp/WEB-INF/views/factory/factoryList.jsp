@@ -11,8 +11,29 @@
 	$(function(){
 		if(${delMsg} == 0) {
 			alert("삭제가 불가능한 공장입니다.");
+		} else {
+			alert("삭제 완료되었습니다.");
 		}
 	});
+</script>
+
+
+<script type="text/javascript">
+
+$(function(){
+	if(${upMsg} == 1) {
+		alert("수정이 완료되었습니다.");
+	}
+});
+</script>
+
+<script type="text/javascript">
+
+$(function(){
+	if(${insertMsg} == 1) {
+		alert("등록이 완료되었습니다.");
+	}
+});
 </script>
 </head>
 <body>
