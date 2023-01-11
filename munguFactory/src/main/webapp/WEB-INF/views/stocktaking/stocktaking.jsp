@@ -393,7 +393,7 @@ function getItemNo(value) {
 		data: {item_no},
 		dataType: "json",
 		success: function(result){
-			for (let i = 0; result.length; i++){
+			for (let i = 0; i<result.length; i++){
 				$('#itemName').val(result[i].item_name);
 				$('#DBCnt').val(result[i].stock_count);
 			}
@@ -403,51 +403,82 @@ function getItemNo(value) {
 	});
 }
 
+// '임시실사' 데이터 수정 함수
 function updateTempSilsa(target) {
 	
 	let targetTr = $(target).closest('tr');
 	console.log(targetTr);
 	
 	let subul_num = targetTr.find('.subul_num').val();
+	let amount = targetTr.find('.amount').val();
 	console.log(subul_num);
 	
 }
 
+//'임시실사' 데이터 삭제 함수
 function deleteTempSilsa(target) {
 	
 	let targetTr = $(target).closest('tr');
 	
 	let subul_num = targetTr.find('.subul_num').val();
 	
-/* 	$.ajax({
-		
-			
-		
-	}); */
+	let deleteConfirm = confirm('해당 임시실사 데이터를 삭제하시겠습니까?');
 	
+	if (deleteConfirm) {
+		
+		$.ajax({
+			
+			url:"${pageContext.request.contextPath }/stocktaking/deleteTempSilsa",
+			data:{subul_num},
+			dataType:"json",
+			success: function(result){
+				
+				if (result == 1) {
+					alert('삭제가 완료되었습니다.')
+					selectStockTakingList();
+				}
+
+			}
+			
+		}); 
+		
+		
+	} else {
+		
+		alert('삭제가 취소되었습니다.');
+		return false;
+		
+	}
+ 	
 	
 }
 
-
+//'임시실사' 데이터 승인 함수
 function updateTempSilsaGubun(target) {
 	
 	let targetTr = $(target).closest('tr');
 	
 	let subul_num = targetTr.find('.subul_num').val();
+	let amount = targetTr.find('.amount').val();
+	let item_no = targetTr.find('.item_no').val();
+	let factory_no = targetTr.find('.factory_no').val();
 	
-	let deleteConfirm = confirm('해당 임시실사 데이터를 승인하시겠습니까?');
+	let updateConfirm = confirm('해당 임시실사 데이터를 승인하시겠습니까?');
 	
- 	if(deleteConfirm) {
+ 	if(updateConfirm) {
 		
  		$.ajax({
 			
 			url:"${pageContext.request.contextPath }/stocktaking/updateTempSilsaGubun",
-			data: {subul_num},
+			data: {subul_num, amount, item_no, factory_no},
+			type: 'post',
 			dataType:"json",
 			success: function(result) {
-				if (result == 1)
-				alert('승인 완료 되었습니다.');
-				selectStockTakingList();
+				if (result == 1){
+					alert('승인 완료 되었습니다.');
+					selectStockTakingList();
+				}
+			
 			}
 		
 	});
@@ -461,6 +492,8 @@ function updateTempSilsaGubun(target) {
 	 
 	
 }
+
+
 
 // 검색목록 테이블 랜더링
 function makeTable (data) {
@@ -480,7 +513,7 @@ function makeTable (data) {
 					\${datum.date}
 				</td>
 				<td>
-					<input type="hidden"  class="factory_name" value="\${datum.factory_name}">
+					<input type="hidden"  class="factory_no" value="\${datum.factory_no}">
 					\${datum.factory_name}
 				</td>
 				<td>
@@ -547,6 +580,7 @@ function changePage(e, page) {
 
 }
 
+// 페이징 만듦
 function makePaginationLi(pageData){
 	
 	let innerHTML = ``;

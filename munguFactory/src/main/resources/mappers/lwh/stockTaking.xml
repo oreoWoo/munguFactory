@@ -33,6 +33,7 @@
 	<select id="selectStockTakingList" resultType="StockTaking">
 		SELECT 	sb.date
 				, sb.subul_num
+				, f.factory_no
 				, f.factory_name
 				, sb.item_no
 				, i.item_name
@@ -110,4 +111,10 @@
 	
 	</update>
 
+	<delete id="deleteTempSilsa">
+		DELETE FROM subul
+		WHERE subul_num = #{subul_num}
+		
+	</delete>
+	
 </mapper>
