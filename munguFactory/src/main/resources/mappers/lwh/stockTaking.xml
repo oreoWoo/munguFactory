@@ -47,6 +47,7 @@
 		LEFT JOIN factory f ON i.factory_no = f.factory_no
 		LEFT JOIN storages s ON sb.item_no = s.item_no
 		WHERE sb.gubun='재고실사' 
+		OR sb.gubun='임시실사'
 		<if test="factory_no != null">
 			AND f.factory_no = #{factory_no}
 		</if>
@@ -59,13 +60,18 @@
 		SELECT subul_num
 		FROM subul
 		WHERE gubun = '재고실사'
+		OR gubun = '임시실사'
 		ORDER BY subul_num desc
 		LIMIT 1
 	
 	</select>
 	
 	<select id="selectItemInfo" resultType="StockTaking">
-		SELECT i.item_no, i.item_name, i.factory_no, i.item_check, s.stock_count
+		SELECT	i.item_no
+			  , i.item_name
+			  , i.factory_no
+			  , i.item_check
+			  , s.stock_count
 		FROM item i
 		LEFT JOIN storages s ON i.item_no = s.item_no
 		WHERE i.item_no = #{item_no}
@@ -88,7 +94,14 @@
 		SELECT count(*) 
 		FROM subul
 		WHERE gubun = '재고실사'
+		OR gubun = '임시실사'
 	
 	</select>
+	
+	<insert id="insertTempSilsa">
+		INSERT INTO subul (item_no, emp_no, serial_no, date, amount, gubun, subul_note, db_amount) 
+		VALUES (#{item_no}, #{emp_no}, null, now(), #{amount}, '임시실사', #{subul_note}, #{db_amount})
+	
+	</insert>
 
 </mapper>

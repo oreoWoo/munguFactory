@@ -54,7 +54,7 @@ public class StockTakingServiceImpl implements StockTakingService {
 			
 			return 1;
 		} catch (Exception e) {
-			System.out.println("insert Error : " + e.getMessage());
+			System.out.println("stockTakingInsert Error : " + e.getMessage());
 			return 0;
 		}
 		
@@ -63,6 +63,18 @@ public class StockTakingServiceImpl implements StockTakingService {
 	@Override
 	public int totalStockTakingCnt() {
 		return st.totalStockTakingCnt();
+	}
+
+	@Override
+	public int insertTempSilsa(StockTakingDTO stockTakingDTO) {
+		
+		try {
+			st.insertTempSilsa(stockTakingDTO);
+			return 1;
+		} catch (Exception e) {
+			System.out.println("tempSilsaInsert Error : " + e.getMessage());
+			return 0;
+		}
 	}
 
 }

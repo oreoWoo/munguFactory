@@ -73,6 +73,14 @@
 	.realStockCnt {
 		width : 90px;
 	}
+	
+	.emp_no {
+		width : 90px;
+	}
+	
+	.dropdown .gubunText {
+		color : blue;
+	}
 </style>
 </head>
 <body>
@@ -167,6 +175,7 @@
 
 let currentPage = 1;
 
+
 let factoryList = [
 	<c:forEach items="${factoryList}" var="factory">
 		{ 
@@ -223,6 +232,7 @@ function initSearchDate () {
 
 }
 
+// 행 추가 랜더링 함수
 function addRow() {
 	
 	let table = document.getElementById('insertStockTbl');
@@ -257,13 +267,13 @@ function addRow() {
 	newCellDBCnt.innerHTML = "<input type='number' min='0' name='db_amount' id='DBCnt' class='form-control DBCnt' value=''readOnly='readOnly'>";
 	newCellStockCnt.innerHTML = "<input type='number' min='0' name='amount' id='realStockCnt' class='form-control realStockCnt' value=''>";
 	//newCellDiff.innerHTML = "<input type='number' min='0' name='dfCnt' id='dfCnt' class='form-control' value=''>"
-	newCellMember.innerHTML = "<input type='text' name='emp_no' id='emp_no' class='form-control' value='2301001' readOnly='readOnly'>"
+	newCellMember.innerHTML = "<input type='text' name='emp_no' id='emp_no' class='form-control emp_no' value='2301001' readOnly='readOnly'>"
 	newCellMemo.innerHTML = "<input type='text' name='subul_note' id='memo' class='form-control' value=''>";
-	newCellStat.innerHTML = "<button type='button' class='btn btn-primary' onclick='insertSubulStockTaking()'>승인</button>"
-	// <button type='button' class='btn btn-secondary'>임시저장</button>
+	newCellStat.innerHTML = "<button type='button' class='btn btn-secondary' onclick='return insertTempSilsa(this.form);'>저장</button> <button type='button' class='btn btn-primary' onclick='insertSubulStockTaking()'>승인</button>"
+	
 }
 
-
+// 값을 모두 입력했는지 Validation 체크 함수
 function isAllEnter() {
 	
 	if(!$('#factorySelect>option:selected').val()) {
@@ -284,6 +294,7 @@ function isAllEnter() {
 	return true;
 }
 
+// 수불부에 '재고실사'로 등록하기
 function insertSubulStockTaking(){
 	
 	if(!isAllEnter()) {
@@ -295,19 +306,43 @@ function insertSubulStockTaking(){
 	if(isConfirm){
 		
 		insertForm.submit();
-		alert('등록이 완료되었습니다.')
+		alert('등록이 완료되었습니다.');
 		
 	} else {
-		alert('등록이 취소되었습니다.')
+		alert('등록이 취소되었습니다.');
 	}
 }
 
 
-// 공장코드~~
+// 수불부에 '임시실사'로 등록하기
+// 왠지 같은 함수에서 처리할 수 있을거 같음...보완 필요
+function insertTempSilsa(frm) {
+	
+
+	if(!isAllEnter()) {
+   		return false;
+   	} 
+	
+	let isConfirm = confirm('임시실사값을 등록하시겠습니까?');
+	
+	if(isConfirm){
+		
+		frm.action='${pageContext.request.contextPath }/stocktaking/insertTempSilsa'
+		frm.submit();
+		alert('등록이 완료되었습니다.');
+		return true;
+		
+		
+	} else {
+		alert('등록이 취소되었습니다.');
+	}
+	
+}
+
+// 상품 select 랜더링을 위한 공장 코드 value가져오기
 function getFactoryNo(value) {
 	
 	$('#factorySelect').val(value);
-	console.log('선택된 값 : ' + value);
 	
 	let factory_no = value;
 	
@@ -318,7 +353,6 @@ function getFactoryNo(value) {
 		dataType: "json",
 		success: function(result) {
 			
-			console.log(result);
 			makeItemSelect(result)
 		}
 		
@@ -327,7 +361,7 @@ function getFactoryNo(value) {
 	
 }
 
-
+// 공장 코드 선택에 따른 상품 select 랜더링
 function makeItemSelect(data) {
 	
 	$('#itemSelect').empty();
@@ -369,11 +403,19 @@ function getItemNo(value) {
 	});
 }
 
+function updateTempSilsa(target) {
+	
+	let targetTr = $(target).closest('tr');
+	console.log(targetTr);
+	
+	let subul_num = targetTr.find('.subul_num').val();
+	console.log(subul_num);
+	
+}
+
 
 // 검색목록 테이블 랜더링
 function makeTable (data) {
-	
-	console.log("makeTable : " + data);
 	
 	let reqNo = 1;
 	let innerHtml = ``
@@ -381,17 +423,63 @@ function makeTable (data) {
 	for(let datum of data) {
 		innerHtml += `
 			<tr>
-				<td>\${datum.subul_num}</td>
-				<td>\${datum.date}</td>
-				<td>\${datum.factory_name}</td>
-				<td>\${datum.item_no}</td>
-				<td>\${datum.item_name}</td>
-				<td>\${datum.db_amount}</td>
-				<td>\${datum.amount}</td>
-				<td>\${datum.amount - datum.db_amount}</td>
-				<td>\${datum.emp_no}</td>
-				<td>\${datum.subul_note}</td>
-				<td>\${datum.gubun}</td>
+				<td>
+					<input type="hidden" class="subul_num" value="\${datum.subul_num}">
+				\${datum.subul_num}
+				</td>
+				<td>
+					<input type="hidden" class="date" value="\${datum.date}">
+					\${datum.date}
+				</td>
+				<td>
+					<input type="hidden"  class="factory_name" value="\${datum.factory_name}">
+					\${datum.factory_name}
+				</td>
+				<td>
+					<input type="hidden" class="item_no" value="\${datum.item_no}">
+					\${datum.item_no}
+				</td>
+				<td>
+					<input type="hidden"  class="item_name" value="\${datum.item_name}">
+					\${datum.item_name}
+				</td>
+				<td>
+					<input type="hidden" class="db_amount" value="\${datum.db_amount}">
+					\${datum.db_amount}
+				</td>
+				<td>
+					<input type="hidden" class="amount" value="\${datum.amount}">
+					\${datum.amount}
+				</td>
+				<td>
+					<input type="hidden" class="diff_amount" value="\${datum.amount - datum.db_amount}">
+					\${datum.amount - datum.db_amount}
+				</td>
+				<td>
+					<input type="hidden" class="emp_no" value="\${datum.emp_no}">
+					\${datum.emp_no}
+				</td>
+				<td>
+					<input type="hidden" class="subul_note" value="\${datum.subul_note}">
+					\${datum.subul_note}
+				</td>
+				<td class="gubun"> `;
+					if(datum.gubun == '임시실사') {
+						
+						innerHtml += `<div class="dropdown"> 
+							<a class="btn p-0 dropdown-toggle hide-arrow gubunText" data-bs-toggle="dropdown">\${datum.gubun}</a>
+							<div class="dropdown-menu">
+	                            <a class="dropdown-item" onclick="updateTempSilsa(this)" ><i class="bx bx-edit-alt me-1"></i> 수정 </a>
+	                            <a class="dropdown-item" onclick=""><i class="bx bx-trash me-1"></i> 삭제 </a>
+                          </div>
+						</div> `;
+						
+					} else {
+						innerHtml += `
+						\${datum.gubun} `;
+					}
+				innerHtml += `
+				</td>
 			</tr>
 		`;
 	}
@@ -401,12 +489,13 @@ function makeTable (data) {
 }
 
 function changePage(e, page) {
-	// a태그 기본 작동을 막기 위한 함수(클릭 시 상단으로 올라가버린다거나 하는 ...)
+	// a태그 기본 작동을 막기 위한 함수
 	e.preventDefault();
 	// 선택한 페이지 넘버값을 받아서 전역변수 currentPage에 담는다.
 	currentPage = page;
 	// 목록 가져오기
 	selectStockTakingList();
+
 }
 
 function makePaginationLi(pageData){
@@ -417,10 +506,10 @@ function makePaginationLi(pageData){
 		<li class="page-item prev">
 		`
 	    if(pageData.startPage == 1) {
-			innerHTML += `<a class="page-link" href="javascript:void(0)" onclick="return false;">`
+			innerHTML += `<a class="page-link" onclick="return false;">`
 		    // 첫 1~5페이지에서 [<] 키가 작동하지 않도록함 
 	    } else {
-	    	innerHTML += ` <a class="page-link" href="javascript:void(0)" onclick="changePage(event,\${pageData.startPage - 1})">`
+	    	innerHTML += ` <a class="page-link" onclick="changePage(event,\${pageData.startPage - 1})">`
 	    }
 	    
 		innerHTML += `
@@ -432,17 +521,17 @@ function makePaginationLi(pageData){
 		for( let i = pageData.startPage; i <= pageData.endPage ; i++) {
 			innerHTML += `
 				<li class="page-item">
-					<a class="page-link" href="javascript:void(0)" onclick="changePage(event,\${i})">\${i}</a>
+					<a class="page-link" onclick="changePage(event,\${i})">\${i}</a>
 				</li>
 			`
 		}
 		
 		innerHTML += `<li class="page-item">`
 		if(pageData.endPage == pageData.totalPage){
-			innerHTML += `<a class="page-link" href="javascript:void(0)" onclick="return false;">`
+			innerHTML += `<a class="page-link" onclick="return false;">`
 			// 마지막 PageBlock에서  [>] 버튼이 작동하지 않도록 함
 		} else {
-			innerHTML += `<a class="page-link" href="javascript:void(0)" onclick="changePage(event,\${pageData.endPage + 1})">`
+			innerHTML += `<a class="page-link" onclick="changePage(event,\${pageData.endPage + 1})">`
 		}
 		
 		innerHTML += `
@@ -468,7 +557,7 @@ function selectStockTakingList() {
 		
 		url:"${pageContext.request.contextPath }/stocktaking/search",
 		data: {
-			startDate, endDate, factory_no
+			startDate, endDate, factory_no, currentPage
 		},
 		dataType: "json",
 		success: function(result){
@@ -476,7 +565,7 @@ function selectStockTakingList() {
 			makePaginationLi(result.page);
 		}
 		
-	})
+	});
 	
 }
 </script>
