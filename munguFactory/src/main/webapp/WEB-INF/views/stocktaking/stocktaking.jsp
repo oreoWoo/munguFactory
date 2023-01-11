@@ -413,6 +413,54 @@ function updateTempSilsa(target) {
 	
 }
 
+function deleteTempSilsa(target) {
+	
+	let targetTr = $(target).closest('tr');
+	
+	let subul_num = targetTr.find('.subul_num').val();
+	
+/* 	$.ajax({
+		
+			
+		
+	}); */
+	
+	
+}
+
+
+function updateTempSilsaGubun(target) {
+	
+	let targetTr = $(target).closest('tr');
+	
+	let subul_num = targetTr.find('.subul_num').val();
+	
+	let deleteConfirm = confirm('해당 임시실사 데이터를 승인하시겠습니까?');
+	
+ 	if(deleteConfirm) {
+		
+ 		$.ajax({
+			
+			url:"${pageContext.request.contextPath }/stocktaking/updateTempSilsaGubun",
+			data: {subul_num},
+			dataType:"json",
+			success: function(result) {
+				if (result == 1)
+				alert('승인 완료 되었습니다.');
+				selectStockTakingList();
+			}
+		
+	});
+		
+	} else {
+		
+		alert('승인이 취소되었습니다.');
+		return false;
+		
+	}
+	 
+	
+}
 
 // 검색목록 테이블 랜더링
 function makeTable (data) {
@@ -469,8 +517,9 @@ function makeTable (data) {
 						innerHtml += `<div class="dropdown"> 
 							<a class="btn p-0 dropdown-toggle hide-arrow gubunText" data-bs-toggle="dropdown">\${datum.gubun}</a>
 							<div class="dropdown-menu">
+								<a class="dropdown-item" onclick="updateTempSilsaGubun(this)"><i class='bx bx-check'></i>  승인 </a>
 	                            <a class="dropdown-item" onclick="updateTempSilsa(this)" ><i class="bx bx-edit-alt me-1"></i> 수정 </a>
-	                            <a class="dropdown-item" onclick=""><i class="bx bx-trash me-1"></i> 삭제 </a>
+	                            <a class="dropdown-item" onclick="deleteTempSilsa(this)"><i class="bx bx-trash me-1"></i> 삭제 </a>
                           </div>
 						</div> `;
 						

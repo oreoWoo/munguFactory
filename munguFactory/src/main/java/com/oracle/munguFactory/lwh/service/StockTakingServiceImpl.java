@@ -77,4 +77,17 @@ public class StockTakingServiceImpl implements StockTakingService {
 		}
 	}
 
+	@Override
+	public int updateTempSilsaGubun(StockTakingDTO stockTakingDTO) {
+
+		try {
+			st.updateTempSilsaGubun(stockTakingDTO);
+			return 1;
+		} catch (Exception e) {
+			System.out.println("updateTempSilsaGubun Error : " + e.getMessage());
+			return 0;
+		}
+		
+	}
+
 }

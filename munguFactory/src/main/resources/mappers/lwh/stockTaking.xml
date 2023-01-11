@@ -103,5 +103,11 @@
 		VALUES (#{item_no}, #{emp_no}, null, now(), #{amount}, '임시실사', #{subul_note}, #{db_amount})
 	
 	</insert>
+	
+	<update id="updateTempSilsaGubun">
+		UPDATE subul SET gubun = '재고실사'
+		WHERE subul_num = #{subul_num}
+	
+	</update>
 
 </mapper>

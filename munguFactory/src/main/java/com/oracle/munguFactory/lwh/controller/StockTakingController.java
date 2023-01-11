@@ -87,4 +87,13 @@ public class StockTakingController {
 		int result = st.insertTempSilsa(stockTakingDTO);
 		return "redirect:/stocktaking/main";
 	}
+	
+	//'임시실사' -> '재고실사' 수정
+	@ResponseBody
+	@GetMapping(value = "/updateTempSilsaGubun")
+	public int updateTempSilsaGubun(StockTakingDTO stockTakingDTO) {
+		int result = st.updateTempSilsaGubun(stockTakingDTO);
+		return result;
+	}
+		
 }

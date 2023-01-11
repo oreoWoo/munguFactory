@@ -28,4 +28,6 @@ public interface StockTakingDAO {
 	int totalStockTakingCnt();
 
 	int insertTempSilsa(StockTakingDTO stockTakingDTO);
+
+	int updateTempSilsaGubun(StockTakingDTO stockTakingDTO);
 }
