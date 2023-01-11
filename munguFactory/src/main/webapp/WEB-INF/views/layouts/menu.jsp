@@ -153,7 +153,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="#" class="menu-link">
+                  <a href="/factoryList" class="menu-link">
                     <div data-i18n="Notifications">공장 등록</div>
                   </a>
                 </li>

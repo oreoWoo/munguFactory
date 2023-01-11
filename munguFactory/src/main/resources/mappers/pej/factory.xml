@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.munguFactory.mappers.pej.factory">
+
+	<select id="totalFactory" resultType="int">
+		select Count(*) FROM factory
+	</select>
+	
+	<select id="factoryList1" parameterType="Factory" resultType="Factory">
+		select *
+		from 
+		(select * from Factory ORDER BY Factory_no)
+		orders limit #{pageBlock} offset #{start}
+	</select>
+	
+	<select id="factoryList2" resultType="Factory">
+		SELECT *
+		FROM factory
+	</select>
+	
+	<insert id="insertFactory" parameterType="Factory">
+		INSERT INTO FACTORY (factory_name, factory_address1, factory_address2, factory_call, factory_use)
+		VALUES (#{factory_name}, #{factory_address1}, #{factory_address2}, #{factory_call}, #{factory_use})
+	</insert>
+	
+	<select id="factoryInfo" parameterType="int" resultType="Factory">
+		SELECT * 
+		FROM factory
+		WHERE factory_no = #{factory_no}
+	</select>
+	
+	<select id="factoryInfoEdit" parameterType="int" resultType="Factory">
+		SELECT * 
+		FROM factory
+		WHERE factory_no = #{factory_no}
+	</select>
+	
+	<delete id="deleteFactory" parameterType="int">
+		delete 
+		from factory
+		where factory_no=#{factory_no}
+	</delete>
+	
+	<select id="factorySearchTotal" parameterType="string" resultType="int">
+		 select Count(*)
+	     from factory
+	     where factory_name like CONCAT('%',#{searchString},'%')
+	</select>
+	
+	<select id="factorySearchList" parameterType="string" resultType="Factory">
+	   select *
+	   from factory
+	   where factory_name like CONCAT('%',#{searchString},'%')
+	</select>
+	
+	<update id="updateFactory" parameterType="Factory">
+		UPDATE factory 
+      	SET factory_name=#{factory_name},
+	   		factory_address1=#{factory_address1}, 
+	   		factory_address2=#{factory_address2}, 
+	   		factory_call=#{factory_call}, 
+	  		factory_use=#{factory_use}
+     	WHERE factory_no = #{factory_no}
+	</update>
+
+</mapper>
