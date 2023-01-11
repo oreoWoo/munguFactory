@@ -19,6 +19,7 @@
 		<typeAlias alias="StockTaking"  type="com.oracle.munguFactory.dto.StockTakingDTO" />
 		
 		<!-- suju -->
-		<typeAlias alias="OrdersDetail" type="com.oracle.munguFactory.dto.OrdersDetailDTO" />
+		<typeAlias alias="OrdersDetail"  type="com.oracle.munguFactory.dto.OrdersDetailDTO" />
+		<typeAlias alias="Orders"  type="com.oracle.munguFactory.dto.OrdersDTO" />
 	</typeAliases>
 </configuration>
