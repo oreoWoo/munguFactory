@@ -47,14 +47,18 @@
 		LEFT JOIN item i ON sb.item_no = i.item_no
 		LEFT JOIN factory f ON i.factory_no = f.factory_no
 		LEFT JOIN storages s ON sb.item_no = s.item_no
-		WHERE sb.gubun='재고실사' 
-		OR sb.gubun='임시실사'
+		WHERE (sb.gubun='재고실사' OR sb.gubun='임시실사')
+		AND f.factory_use = '1'
 		<if test="factory_no != null">
 			AND f.factory_no = #{factory_no}
+		</if>
+		<if test="gubun != null">
+			AND sb.gubun = #{gubun}
 		</if>
 		AND sb.date BETWEEN #{startDate} AND #{endDate}
 		ORDER BY sb.subul_num desc
 		LIMIT #{rowPage} OFFSET #{start}
+		
 	</select>
 	
 	<select id="selectSubulList" resultType="StockTaking">

@@ -22,7 +22,7 @@
 		text-align: center;
 	}
 	
-	.selectFactory {
+	.selectFactory, .selectGubun{
 		width : 120px;
 	}
 	
@@ -45,6 +45,7 @@
 	}
 	.form-select {
 		display : inline-block;
+		cursor : pointer;
 	}
 	.form-control {
 		display : inline-block;
@@ -81,6 +82,12 @@
 	.dropdown .gubunText {
 		color : blue;
 	}
+	
+	.dropdown-item {
+		cursor: pointer;
+	}
+	
+	
 </style>
 </head>
 <body>
@@ -89,8 +96,13 @@
 		<div class="searchStock row">
 			<div class="col-sm-6">
 				<select class='form-select selectFactory' id="searchFactory"></select>
+<!-- 				<select class='form-select selectGubun' id="searchGubun">
+					<option value="">구분선택</option>
+					<option value="재고실사">재고실사</option>
+					<option value="임시실사">임시실사</option>
+				</select> -->
 				<input class="form-control" type="date" value="" id="startDate">
-				<input class="form-control" type="date" value="" id="endDate">
+				<input class="form-control" type="date" value="" id="endDate" max="">
 				
 				<button type="button" class="btn btn-info searchBtn" onclick="selectStockTakingList()">검색</button>
 			</div>
@@ -173,8 +185,8 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 
+// 전역변수들 모음 
 let currentPage = 1;
-
 
 let factoryList = [
 	<c:forEach items="${factoryList}" var="factory">
@@ -199,6 +211,8 @@ $(function () {
 	initPage();
 })
 
+
+// 항상 실행해야할 함수
 function initPage () {
 	//검색폼 - 공장 셀렉트 업데이트
 	$('#searchFactory').html(makeFactorySelect());
@@ -206,6 +220,7 @@ function initPage () {
 	initSearchDate();
 }
 
+// 검색 관련
 // 공장 선택 옵션 만들어주기
 function makeFactorySelect() {
 	
@@ -231,6 +246,8 @@ function initSearchDate () {
 	$('#endDate').val(endDate);
 
 }
+
+
 
 // 행 추가 랜더링 함수
 function addRow() {
@@ -323,9 +340,9 @@ function insertTempSilsa(frm) {
    		return false;
    	} 
 	
-	let isConfirm = confirm('임시실사값을 등록하시겠습니까?');
+	let insertConfirm = confirm('임시실사값을 등록하시겠습니까?');
 	
-	if(isConfirm){
+	if(insertConfirm){
 		
 		frm.action='${pageContext.request.contextPath }/stocktaking/insertTempSilsa'
 		frm.submit();
@@ -550,7 +567,7 @@ function makeTable (data) {
 						innerHtml += `<div class="dropdown"> 
 							<a class="btn p-0 dropdown-toggle hide-arrow gubunText" data-bs-toggle="dropdown">\${datum.gubun}</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" onclick="updateTempSilsaGubun(this)"><i class='bx bx-check'></i>  승인 </a>
+								<a class="dropdown-item" onclick="updateTempSilsaGubun(this)"><i class='bx bx-check me-1'></i>  승인 </a>
 	                            <a class="dropdown-item" onclick="updateTempSilsa(this)" ><i class="bx bx-edit-alt me-1"></i> 수정 </a>
 	                            <a class="dropdown-item" onclick="deleteTempSilsa(this)"><i class="bx bx-trash me-1"></i> 삭제 </a>
                           </div>
@@ -635,12 +652,16 @@ function selectStockTakingList() {
 	
 	//선택된 공장 번호 가져오기
 	let factory_no = $('#searchFactory option:selected').val()
+	let gubun = $('#searchGubun option:selected').val()
+	
+	console.log(factory_no);
+	console.log(gubun);
 	
 	$.ajax({
 		
 		url:"${pageContext.request.contextPath }/stocktaking/search",
 		data: {
-			startDate, endDate, factory_no, currentPage
+			startDate, endDate, factory_no, currentPage //전역변수 //, gubun
 		},
 		dataType: "json",
 		success: function(result){
