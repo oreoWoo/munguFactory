@@ -56,10 +56,11 @@ public class PejController {
 	public String insertFactory(FactoryDTO factoryDTO, Model model) {
 		System.out.println("PejController insertFactory Start");
 		int insertResult = ps.insertFactory(factoryDTO);
-		if (insertResult > 0) {
-			return "redirect:/factoryList";
+		if (insertResult == 1) {
+			model.addAttribute("insertMsg", insertResult);
+			return "forward:factoryList";
 		} else {
-			model.addAttribute("msg", "입력에 실패하였습니다.");
+			model.addAttribute("insertMsg", insertResult);
 			return "forward:createFactory";
 		}
 	}
@@ -85,8 +86,14 @@ public class PejController {
 		System.out.println("PejController deleteFactory Start");
 		int factoryDTO = ps.deleteFactory(factory_no);
 		System.out.println("PejController deleteFactory factoryDTO->" +factoryDTO);
-		model.addAttribute("delMsg", factoryDTO);
-		return "forward:/factoryList";
+		
+		if (factoryDTO == 0) {
+			model.addAttribute("delMsg", factoryDTO);
+			return "forward:factoryList";
+		} else {
+			model.addAttribute("delMsg", factoryDTO);
+			return "forward:factoryList";
+		}
 	}
 	
 	@RequestMapping("/factorySearch")
@@ -118,11 +125,11 @@ public class PejController {
 		System.out.println("PejController updateFactory Start");
 		int updateFactoryCount = ps.updateFactory(factory);
 		System.out.println("PejController updateFactory updateFactoryCount-> "+updateFactoryCount);
-		if (updateFactoryCount > 0) {
-			model.addAttribute("msg", "수정이 완료되었습니다.");
-			return "redirect:factoryList";
+		if (updateFactoryCount == 1) {
+			model.addAttribute("upMsg", updateFactoryCount);
+			return "forward:factoryList";
 		} else {
-			model.addAttribute("msg", "수정에 실패하였습니다.");
+			model.addAttribute("upMsg", updateFactoryCount);
 			return "forward:factoryInfo";
 		}
 	}

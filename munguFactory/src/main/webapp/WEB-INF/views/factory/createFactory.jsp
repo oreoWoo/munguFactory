@@ -28,10 +28,19 @@ function addressSet(main){
 }
 
 function changUse(obj) {
-    alert(obj.value); // 선택된 option의 value가 출력된다!
+    /* alert(obj.value); // 선택된 option의 value가 출력된다! */
     $("#factory_use").val(obj.value);
 	}
 	
+</script>
+
+<script type="text/javascript">
+
+$(function(){
+	if(${insertMsg} == 0) {
+		alert("등록에 실패하였습니다.");
+	}
+});
 </script>
 </head>
 <body>
@@ -160,9 +169,9 @@ function changUse(obj) {
                             </div>
                           </div>
                         </div>
-                        <div class="row justify-content-end">
+                        <div class="row justify-content-end" style="margin-left: 500px">
                           <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary">Send</button>
+                            <button type="submit" class="btn btn-primary">생성</button>
                           </div>
                         </div>
                       </form>
