@@ -130,7 +130,7 @@ $(function(){
                                 placeholder="DetailedAddress"
                                 aria-label="DetailedAddress"
                                 aria-describedby="basic-icon-default-company2"
-                                onkeyup="addressSet()"
+                                onkeyup="addressSet(factory_address1.value)"
                               />
                             </div>
                           </div>
