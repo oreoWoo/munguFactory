@@ -45,7 +45,7 @@
 				</c:if>
 			</tbody>
 		</table>
-		<nav aria-label="Page navigation ajaxContents">
+		<nav aria-label="Page navigation" class="ajaxContents">
 			<ul class="pagination justify-content-center ajaxContents">
 				<c:if test="${paging!=null }">
 					<c:if test="${paging.startPage > paging.pageBlock }">
@@ -69,11 +69,22 @@
 	</div>
 <div id="setAccountList">
 	<script type="text/javascript">
-		function ajaxGetSujuList(){
-			alert("function도 가져가네!");
-		}
+		$(".ajaxGetSujuList").change(function(){
+			$.ajax({
+				url		: '/ajaxGetSujuList',
+				data	: {account_no	:	$(this).val()},
+				type 	: "GET",
+				dataType: 'text',
+				success	: function(data){
+					var html = $('<div>').html(data);
+					var sethtml = html.find("div#setSujuList").html();
+					$('.ajaxContents tbody .insertShipment td').slice(2).html("");
+					$('.ajaxContents tbody .insertShipment td').eq(2).append(sethtml);
+				}
+			});
+		});
 	</script>
-	<select onchange="ajaxGetSujuList()">
+	<select class="form-select ajaxGetSujuList">
 		<c:if test="${accountList!=null }">
 		<c:forEach var="acc" items="${accountList }">
 			<option value="${acc.account_no }">${acc.account_name }</option>
@@ -82,22 +93,136 @@
 	</select>
 </div>
 <div id="setSujuList">
-	<select onchange="ajaxGetItemList()">
-		<c:if test="${orderList!=null }">
-		<c:forEach var="ord" items="${orderList }">
-			<option>${ord.suju_no }</option>
-		</c:forEach>
-		</c:if>
-	</select>
+	<c:if test="${orderList==null || orderList.size()==0}">
+		없음
+		<script type="text/javascript">
+			$(function(){
+				alert("출하 가능한 수주내역이 없습니다.");
+			});
+		</script>
+	</c:if>
+	<c:if test="${orderList!=null && orderList.size()!=0}">
+		<script type="text/javascript">
+			$(".ajaxGetItemList").change(function(){
+				$.ajax({
+					url		: '/ajaxGetItemList',
+					data	: {suju_no	:	$(this).val()},
+					type 	: "GET",
+					dataType: 'text',
+					success	: function(data){
+						var html = $('<div>').html(data);
+						var sethtml = html.find("div#setItemList").html();
+						var sethtml2 = html.find("div#setItemList2").html();
+						$('.ajaxContents tbody .insertShipment td').slice(3).html("");
+						$('.ajaxContents tbody .insertShipment td').eq(6).append(sethtml2);
+						$('.ajaxContents tbody .insertShipment td').eq(3).append(sethtml);
+					}
+				});
+			});
+		</script>
+		<select class="form-select ajaxGetItemList">
+			<option style="display: none;">수주선택</option>
+			<c:forEach var="ord" items="${orderList }">
+				<option>${ord.suju_no }</option>
+			</c:forEach>
+		</select>
+	</c:if>
 </div>
 <div id="setItemList">
-	<select onchange="ajaxGetAmount()">
-		<c:if test="${itemList!=null }">
-		<c:forEach var="itm" items="${itemList }">
-			<option value="${itm.item_no }">${itm.item_name }</option>
-		</c:forEach>
-		</c:if>
-	</select>
+	<c:if test="${OrdersDetailList==null || OrdersDetailList.size()==0 }">
+		없음
+		<script type="text/javascript">
+			$(function(){
+				alert("출하 가능한 상품이 없습니다.");
+			});
+		</script>
+	</c:if>
+	<c:if test="${OrdersDetailList!=null && OrdersDetailList.size()!=0 }">
+		<select class="form-select ajaxGetOrdersDetail">
+			<option style="display: none;">상품선택</option>
+			<c:forEach var="itm" items="${OrdersDetailList }">
+				<option value="${itm.item_no }">${itm.item_name }</option>
+			</c:forEach>
+		</select>
+		<script type="text/javascript">
+			$(".ajaxGetOrdersDetail").change(function(){
+				$.ajax({
+					url		: '/ajaxGetOrdersDetail',
+					data	: {	suju_no	:	$(".ajaxGetItemList").val(),
+								item_no	:	$(this).val()},
+					type 	: "GET",
+					dataType: 'text',
+					success	: function(data){
+						var html = $('<div>').html(data);
+						var sethtml = html.find("div#setOrdersDetail").html();
+						var sethtml2 = html.find("div#insertShipmentButton").html();
+						$('.ajaxContents tbody .insertShipment td').slice(4).html("");
+						$('.ajaxContents tbody .insertShipment td').eq(6).append(sethtml2);
+						$('.ajaxContents tbody .insertShipment td').eq(4).append(sethtml);
+					}
+				});
+			});
+		</script>
+	</c:if>
+</div>
+<div id="setOrdersDetail">
+	<c:if test="${OrdersDetail==null}">
+		없음
+		<script type="text/javascript">
+			$(function(){
+				alert("출하 가능한 상품이 없습니다.");
+			});
+		</script>
+	</c:if>
+	<c:if test="${OrdersDetail!=null}">
+		<c:choose>
+			<c:when test="${OrdersDetail.suju_amount>OrdersDetail.stock_count }">
+				<ul>
+					<li><b class="boldRed">재고 : ${OrdersDetail.stock_count }</b></li>
+					<li><b class="boldRed">주문량 : ${OrdersDetail.suju_amount }</b></li>
+				</ul>
+			</c:when>
+			<c:otherwise>
+				<input type="hidden" value="${OrdersDetail.suju_amount}" id="suju_amount">
+				<ul>
+					<li><b class="boldGreen">재고 : ${OrdersDetail.stock_count }</b></li>
+					<li><b class="boldGreen">주문량 : ${OrdersDetail.suju_amount }</b></li>
+				</ul>
+			</c:otherwise>
+		</c:choose>
+		<script type="text/javascript">
+			if($(".boldRed").length){
+				alert("재고가 부족하여 출하가 불가능합니다!");
+				$('.insertShipmentButton').attr("disabled","disabled").text("출하불가");
+			} else {
+				$('.insertShipmentButton').removeAttr("disabled").text("출하");
+			}
+			function ajaxInsertShipment(){
+				if(confirm("출하 등록 후 수정이 불가능 합니다. \n정확히 확인 후 등록하여 주세요. \n등록하시겠습니까?")){
+					$.ajax({
+						url		: '/ajaxInsertShipment',
+						data	: {	serial_no	:	$(".ajaxGetItemList").val(),
+									item_no		:	$(".ajaxGetOrdersDetail").val(),
+									amount		:	$("#suju_amount").val()},
+						type 	: "POST",
+						dataType: 'text',
+						success	: function(data){
+							if(data>0){
+								alert("등록성공!");
+							} else {
+								alert("등록에 실패했습니다..");
+							}
+							ajaxChk(1);
+						}
+					});
+				} else {
+				}
+			}
+		</script>
+	</c:if>
+</div>
+<div id="insertShipmentButton">
+	<button type='button' class='btn btn-outline-primary insertShipmentButton' disabled='disabled' onclick='ajaxInsertShipment()'>출하불가</button>
 </div>
 </body>
 </html>
