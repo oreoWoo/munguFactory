@@ -7,8 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div class="SujuContainer">
 	<h1>Suju List</h1>
-	<a href="" class="">등록</a>
+	<a href="SujuCreate" class="">등록</a>
 	<a href="">상세</a>
+</div>	
 </body>
 </html>

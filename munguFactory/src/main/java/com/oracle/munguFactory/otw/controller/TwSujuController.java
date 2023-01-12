@@ -11,4 +11,10 @@ public class TwSujuController {
 		
 		return "suju/sujulist";
 	}
+	
+	@RequestMapping("/SujuCreate")
+	public String SujuCreate() {
+		
+		return "suju/sujuCreate";
+	}
 }
