@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.munguFactory.mappers.ljw.subul">
+	<select id="getSubulListSize" resultType="int" parameterType="Page">
+		SELECT COUNT(*)
+		FROM emp e, item i, factory f, SUBUL s
+		LEFT JOIN orders o ON s.serial_no=o.suju_no
+		WHERE s.EMP_NO=e.EMP_NO
+		AND s.item_no=i.item_no
+		AND i.factory_no=f.factory_no
+		<if test="searchOption!=null">
+			<choose>
+				<when test="searchOption.equals('전체')">
+					AND (e.emp_name like concat('%',#{searchString},'%')
+					or i.item_name like concat('%',#{searchString},'%')
+					or s.serial_no like concat('%',#{searchString},'%')
+					or s.subul_num like concat('%',#{searchString},'%'))
+				</when>
+				<when test="searchOption.equals('담당자')">AND e.emp_name like concat('%',#{searchString},'%')</when>
+				<when test="searchOption.equals('물품명')">AND i.item_name like concat('%',#{searchString},'%')</when>
+				<when test="searchOption.equals('고유번호')">AND s.serial_no like concat('%',#{searchString},'%')</when>
+				<when test="searchOption.equals('등록번호')">AND s.subul_num like concat('%',#{searchString},'%')</when>
+			</choose>
+		</if>
+		<if test='gubun!=null and !gubun.equals("")'>AND s.gubun=#{gubun}</if>
+		<if test="factory_no!=null and factory_no!=0">AND i.factory_no=#{factory_no}</if>
+		<if test="subul_date!=null and !subul_date.equals('')">AND s.subul_date like concat('%',#{subul_date},'%')</if>
+	</select>
+	
+	<select id="getSubulList" resultType="Subul" parameterType="Page">
+		SELECT *
+		FROM emp e, item i, factory f, SUBUL s
+		LEFT JOIN orders o ON s.serial_no=o.suju_no
+		LEFT JOIN accounts a on o.account_no=a.account_no
+		WHERE s.EMP_NO=e.EMP_NO
+		AND s.item_no=i.item_no
+		AND i.factory_no=f.factory_no
+		<if test="searchOption!=null">
+			<choose>
+				<when test="searchOption.equals('전체')">
+					AND (e.emp_name like concat('%',#{searchString},'%')
+					or i.item_name like concat('%',#{searchString},'%')
+					or s.serial_no like concat('%',#{searchString},'%')
+					or s.subul_num like concat('%',#{searchString},'%'))
+				</when>
+				<when test="searchOption.equals('담당자')">AND e.emp_name like concat('%',#{searchString},'%')</when>
+				<when test="searchOption.equals('물품명')">AND i.item_name like concat('%',#{searchString},'%')</when>
+				<when test="searchOption.equals('고유번호')">AND s.serial_no like concat('%',#{searchString},'%')</when>
+				<when test="searchOption.equals('등록번호')">AND s.subul_num like concat('%',#{searchString},'%')</when>
+			</choose>
+		</if>
+		<if test='gubun!=null and !gubun.equals("")'>AND s.gubun=#{gubun}</if>
+		<if test="factory_no!=null and factory_no!=0">AND i.factory_no=#{factory_no}</if>
+		<if test="subul_date!=null and !subul_date.equals('')">AND s.subul_date like concat('%',#{subul_date},'%')</if>
+		ORDER BY s.subul_num DESC
+		LIMIT 15 offset #{offset};
+	</select>
+	
+	<select id="getFactoryList" resultType="Factory">
+		SELECT * FROM factory ORDER BY factory_name
+	</select>
+	<select id="ljwGetAccountList" resultType="Accounts">
+		SELECT * FROM accounts ORDER BY account_name
+	</select>
+
+
+</mapper>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="stockTaking">
+
+	<select id="selectFactoryList" resultType="Factory">
+	
+		SELECT 	factory_no 
+				, factory_name 
+				, factory_use
+		FROM factory
+		WHERE factory_use = '1'
+		
+	</select>
+
+	<select id="selectItemList" resultType="com.oracle.munguFactory.dto.ItemDTO">
+	
+		SELECT 	item_no 
+				, factory_no 
+				, item_Name 
+				, item_Check
+		FROM item
+		WHERE item_Check = '생산'
+		<if test="factory_no != null">
+		AND factory_no = #{factory_no}
+		</if>
+		<if test="item_no != null">
+		AND item_no = #{item_no}
+		</if>
+		
+	</select>
+		
+	<select id="selectStockTakingList" resultType="StockTaking">
+		SELECT 	sb.date
+				, sb.subul_num
+				, f.factory_no
+				, f.factory_name
+				, sb.item_no
+				, i.item_name
+				, s.stock_count
+				, sb.db_amount
+				, sb.amount
+				, sb.emp_no
+				, sb.subul_note 
+				, sb.gubun
+		FROM subul sb
+		LEFT JOIN item i ON sb.item_no = i.item_no
+		LEFT JOIN factory f ON i.factory_no = f.factory_no
+		LEFT JOIN storages s ON sb.item_no = s.item_no
+		WHERE (sb.gubun='재고실사' OR sb.gubun='임시실사')
+		AND f.factory_use = '1'
+		<if test="factory_no != null">
+			AND f.factory_no = #{factory_no}
+		</if>
+		<if test="gubun != null">
+			AND sb.gubun = #{gubun}
+		</if>
+		AND sb.date BETWEEN #{startDate} AND #{endDate}
+		ORDER BY sb.subul_num desc
+		LIMIT #{rowPage} OFFSET #{start}
+		
+	</select>
+	
+	<select id="selectSubulList" resultType="StockTaking">
+		SELECT subul_num
+		FROM subul
+		WHERE gubun = '재고실사'
+		OR gubun = '임시실사'
+		ORDER BY subul_num desc
+		LIMIT 1
+	
+	</select>
+	
+	<select id="selectItemInfo" resultType="StockTaking">
+		SELECT	i.item_no
+			  , i.item_name
+			  , i.factory_no
+			  , i.item_check
+			  , s.stock_count
+		FROM item i
+		LEFT JOIN storages s ON i.item_no = s.item_no
+		WHERE i.item_no = #{item_no}
+	
+	</select>
+	
+	<insert id="insertStockTaking">
+		INSERT INTO subul (item_no, emp_no, serial_no, date, amount, gubun, subul_note, db_amount) 
+		VALUES (#{item_no}, #{emp_no}, null, now(), #{amount}, '재고실사', #{subul_note}, #{db_amount})
+	
+	</insert>
+	
+	<update id="updateStockCnt">
+		UPDATE storages SET stock_count = #{amount}
+		WHERE item_no = #{item_no}
+		AND factory_no = #{factory_no}
+	</update>
+	
+	<select id="totalStockTakingCnt" resultType="int"> 
+		SELECT count(*) 
+		FROM subul
+		WHERE gubun = '재고실사'
+		OR gubun = '임시실사'
+	
+	</select>
+	
+	<insert id="insertTempSilsa">
+		INSERT INTO subul (item_no, emp_no, serial_no, date, amount, gubun, subul_note, db_amount) 
+		VALUES (#{item_no}, #{emp_no}, null, now(), #{amount}, '임시실사', #{subul_note}, #{db_amount})
+	
+	</insert>
+	
+	<update id="updateTempSilsaGubun">
+		UPDATE subul SET gubun = '재고실사'
+		WHERE subul_num = #{subul_num}
+	
+	</update>
+
+	<delete id="deleteTempSilsa">
+		DELETE FROM subul
+		WHERE subul_num = #{subul_num}
+		
+	</delete>
+	
+</mapper>
