@@ -45,7 +45,7 @@ public class StockTakingController {
 		Map<String,Object> resultMap = new HashMap<String, Object>();
 		
 		//수불부 - '재고실사' 전체 갯수
-		int totalStockTakingCnt = st.totalStockTakingCnt();
+		int totalStockTakingCnt = st.totalStockTakingCnt(stockTakingDTO);
 		
 		//페이징
 		StockPaging page = new StockPaging(totalStockTakingCnt, stockTakingDTO.getCurrentPage());
