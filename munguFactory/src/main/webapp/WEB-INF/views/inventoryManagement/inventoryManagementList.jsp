@@ -43,7 +43,7 @@
 					<td>${subul.emp_name }</td>
 					<td>
 						<fmt:formatDate value="${subul.subul_date }" pattern="yy-MM-dd [E]"/><br/>
-						<fmt:formatDate value="${subul.subul_date }" pattern="HH시mm분"/>
+						<fmt:formatDate value="${subul.subul_date }" pattern="HH시 mm분"/>
 					</td>
 				</tr>
 			</c:forEach>
