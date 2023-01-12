@@ -10,6 +10,7 @@
 				, factory_use
 		FROM factory
 		WHERE factory_use = '1'
+		ORDER BY factory_name ASC
 		
 	</select>
 
@@ -31,7 +32,7 @@
 	</select>
 		
 	<select id="selectStockTakingList" resultType="StockTaking">
-		SELECT 	sb.date
+		SELECT 	sb.subul_date
 				, sb.subul_num
 				, f.factory_no
 				, f.factory_name
@@ -47,15 +48,15 @@
 		LEFT JOIN item i ON sb.item_no = i.item_no
 		LEFT JOIN factory f ON i.factory_no = f.factory_no
 		LEFT JOIN storages s ON sb.item_no = s.item_no
-		WHERE (sb.gubun='재고실사' OR sb.gubun='임시실사')
-		AND f.factory_use = '1'
+		WHERE f.factory_use = '1'
 		<if test="factory_no != null">
 			AND f.factory_no = #{factory_no}
 		</if>
-		<if test="gubun != null">
-			AND sb.gubun = #{gubun}
+		<if test='gubun!=null and !gubun.equals("")'>
+			AND sb.gubun=#{gubun}
 		</if>
-		AND sb.date BETWEEN #{startDate} AND #{endDate}
+
+		AND date_format(sb.subul_date, '%Y-%m-%d') &gt;= #{startDate} AND date_format(sb.subul_date, '%Y-%m-%d') &lt;= #{endDate}
 		ORDER BY sb.subul_num desc
 		LIMIT #{rowPage} OFFSET #{start}
 		
@@ -84,7 +85,7 @@
 	</select>
 	
 	<insert id="insertStockTaking">
-		INSERT INTO subul (item_no, emp_no, serial_no, date, amount, gubun, subul_note, db_amount) 
+		INSERT INTO subul (item_no, emp_no, serial_no, subul_date, amount, gubun, subul_note, db_amount) 
 		VALUES (#{item_no}, #{emp_no}, null, now(), #{amount}, '재고실사', #{subul_note}, #{db_amount})
 	
 	</insert>
@@ -96,15 +97,25 @@
 	</update>
 	
 	<select id="totalStockTakingCnt" resultType="int"> 
-		SELECT count(*) 
-		FROM subul
-		WHERE gubun = '재고실사'
-		OR gubun = '임시실사'
+		SELECT 	count(*)
+		FROM subul sb
+		LEFT JOIN item i ON sb.item_no = i.item_no
+		LEFT JOIN factory f ON i.factory_no = f.factory_no
+		LEFT JOIN storages s ON sb.item_no = s.item_no
+		WHERE f.factory_use = '1'
+		<if test="factory_no != null">
+			AND f.factory_no = #{factory_no}
+		</if>
+		<if test='gubun!=null and !gubun.equals("")'>
+			AND sb.gubun=#{gubun}
+		</if>
+		AND date_format(sb.subul_date, '%Y-%m-%d') &gt;= #{startDate} AND date_format(sb.subul_date, '%Y-%m-%d') &lt;= #{endDate}
+		ORDER BY sb.subul_num desc
 	
 	</select>
 	
 	<insert id="insertTempSilsa">
-		INSERT INTO subul (item_no, emp_no, serial_no, date, amount, gubun, subul_note, db_amount) 
+		INSERT INTO subul (item_no, emp_no, serial_no, subul_date, amount, gubun, subul_note, db_amount) 
 		VALUES (#{item_no}, #{emp_no}, null, now(), #{amount}, '임시실사', #{subul_note}, #{db_amount})
 	
 	</insert>

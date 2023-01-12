@@ -45,7 +45,7 @@ public class StockTakingController {
 		Map<String,Object> resultMap = new HashMap<String, Object>();
 		
 		//수불부 - '재고실사' 전체 갯수
-		int totalStockTakingCnt = st.totalStockTakingCnt();
+		int totalStockTakingCnt = st.totalStockTakingCnt(stockTakingDTO);
 		
 		//페이징
 		StockPaging page = new StockPaging(totalStockTakingCnt, stockTakingDTO.getCurrentPage());
@@ -64,6 +64,7 @@ public class StockTakingController {
 	@GetMapping(value = "/itemSelect")
 	public List<ItemDTO> selectItemList(StockTakingDTO stockTakingDTO) {
 		// 선택한 공장에 대한 상품 목록
+		System.out.println("품번선택하러 왔다우" + stockTakingDTO.getFactory_no());
 		return st.selectItemList(stockTakingDTO);
 	}
 	
