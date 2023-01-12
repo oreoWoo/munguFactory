@@ -49,7 +49,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	<nav aria-label="Page navigation ajaxContents">
+	<nav aria-label="Page navigation" class="ajaxContents">
 		<ul class="pagination justify-content-center ajaxContents">
 			<c:if test="${paging.startPage > paging.pageBlock }">
 				<li class="page-item prev">
