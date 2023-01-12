@@ -2,8 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oracle.munguFactory.mapper.jhy">
-	<select id="itemAdminList" parameterType="item" resultType="item">
+	<!-- ItemAdminList -->
+	<select id="jhy_itemAdminList" parameterType="item" resultType="item">
 		SELECT item_no, hs_code, item_name, item_check
 		FROM item
 	</select>
+	
+	<!-- ItemAdminSelect -->
+	<select id="jhy_itemAdminSelect" parameterType="int" resultType="item">
+		SELECT i.item_no, i.hs_code, f.factory_name, i.item_name, i.stock_unit, i.item_check
+		FROM item i, factory f
+		WHERE item_no = #{item_no}
+		AND i.factory_no = f.factory_no
+	</select>
+	
+	<!-- ItemAdminInsert -->
+	<select id="jhy_getFactoryList" parameterType="item" resultType="item">
+		SELECT factory_no, factory_name FROM factory
+	</select>
+	<insert id="jhy_itemAdminInsert" parameterType="item">
+		INSERT INTO item(hs_code, factory_no, item_name, stock_unit, item_check) 
+		VALUES(#{hs_code}, #{factory_no}, #{item_name}, #{stock_unit}, #{item_check})
+	</insert>
+	
+	<!-- ItemAdminUpdate -->
+	<select id="jhy_itemAdminUpSelect" parameterType="item" resultType="item">
+		SELECT i.item_no, i.hs_code, i.factory_no, f.factory_name, i.item_name, i.stock_unit, i.item_check
+		FROM item i, factory f
+		WHERE i.factory_no = f.factory_no
+		AND i.item_no = #{item_no}
+	</select>
+	
+	<update id="jhy_itemAdminUpdate" parameterType="item">
+		UPDATE item 
+		SET factory_no = #{factory_no}, item_name = #{item_name}, stock_unit = #{stock_unit}, item_check = #{item_check}, hs_code = #{hs_code}
+		WHERE item_no = #{item_no}
+	</update>
 </mapper>
