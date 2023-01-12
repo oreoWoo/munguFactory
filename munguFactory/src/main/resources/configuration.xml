@@ -14,6 +14,7 @@
 		<typeAlias alias="Emp"      type="com.oracle.munguFactory.dto.EmpDTO"/>
 		<typeAlias alias="item" type="com.oracle.munguFactory.dto.ItemDTO"/>
 		<typeAlias alias="Accounts"	type="com.oracle.munguFactory.dto.AccountsDTO"/>
+		<typeAlias alias="Orders"	type="com.oracle.munguFactory.dto.OrdersDTO"/>
 		
 		<!-- stockTaking -->
 		<typeAlias alias="StockTaking"  type="com.oracle.munguFactory.dto.StockTakingDTO" />
@@ -21,5 +22,11 @@
 		<!-- suju -->
 		<typeAlias alias="OrdersDetail"  type="com.oracle.munguFactory.dto.OrdersDetailDTO" />
 		<typeAlias alias="Orders"  type="com.oracle.munguFactory.dto.OrdersDTO" />
+		
+		<!-- emp -->
+		<typeAlias alias="Dept"  type="com.oracle.munguFactory.dto.DeptDTO" />
+	    <typeAlias alias="Posit"  type="com.oracle.munguFactory.dto.PositDTO" />
+	    <typeAlias alias="Auth"  type="com.oracle.munguFactory.dto.AuthorityDTO" />
+	    <typeAlias alias="EmpList"  type="com.oracle.munguFactory.dto.EmpListDTO" />
 	</typeAliases>
 </configuration>

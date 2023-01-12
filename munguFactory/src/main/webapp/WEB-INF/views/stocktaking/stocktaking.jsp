@@ -96,19 +96,21 @@
 		<div class="searchStock row">
 			<div class="col-sm-6">
 				<select class='form-select selectFactory' id="searchFactory"></select>
-<!-- 				<select class='form-select selectGubun' id="searchGubun">
-					<option value="">구분선택</option>
+				
+				<select class='form-select selectGubun' id="searchGubun">
+					<option value="">상태선택</option>
 					<option value="재고실사">재고실사</option>
 					<option value="임시실사">임시실사</option>
-				</select> -->
-				<input class="form-control" type="date" value="" id="startDate">
+				</select>  
+				
+				<input class="form-control" type="date" value="" id="startDate" max="">
 				<input class="form-control" type="date" value="" id="endDate" max="">
 				
 				<button type="button" class="btn btn-info searchBtn" onclick="selectStockTakingList()">검색</button>
 			</div>
 			
 			<div class="col-sm-6" style="text-align : right;">
-				<button type="button" class="btn rounded-pill btn-info" onclick="addRow()"><strong>+</strong></button>
+				<button type="button" class="btn rounded-pill btn-info" id="plusBtn" onclick="addRow()"><strong>+</strong></button>
 			</div>
 			
 		</div>
@@ -116,7 +118,7 @@
 		<form action="${pageContext.request.contextPath }/stocktaking/insertStockTaking" name="insertForm" method="post">
 			<div class="card">
 				<div class="table-responsive text-nowrap">
-					<table class="table table-bordered insertStockTbl">
+					<table class="table table-bordered insertStockTbl" id="stockInsertTbl">
 						<thead>
 							<tr>
 								<th>실사일자</th>
@@ -125,7 +127,6 @@
 								<th>품명</th>
 								<th>창고수량</th>
 								<th>실사수량</th>
-								<!-- <th>차이량</th> -->
 								<th>승인자</th>
 								<th>비고</th>
 								<th>상태</th>
@@ -218,7 +219,16 @@ function initPage () {
 	$('#searchFactory').html(makeFactorySelect());
 	//검색폼 - 날짜 일주일전~오늘
 	initSearchDate();
+	pageHere();
 }
+
+//페이지 강조처리
+function pageHere() {
+	
+	$('.pgnum'+currentPage).addClass('active');
+	
+}
+
 
 // 검색 관련
 // 공장 선택 옵션 만들어주기
@@ -229,7 +239,7 @@ function makeFactorySelect() {
 	factoryList.forEach((item) => {
 		innerHtml += `<option value="\${item.factory_no}">\${item.factory_name}</option>`
 	})
-
+	
 	return innerHtml;
 }
 
@@ -243,8 +253,11 @@ function initSearchDate () {
 	let endDate = today.getFullYear()+'-'+('0'+(today.getMonth()+1)).slice(-2)+'-'+('0'+today.getDate()).slice(-2);
 	
 	$('#startDate').val(startDate);
+	$('#startDate').prop('max',endDate);
 	$('#endDate').val(endDate);
+	$('#endDate').prop('max', endDate);
 
+	
 }
 
 
@@ -254,15 +267,9 @@ function addRow() {
 	
 	let table = document.getElementById('insertStockTbl');
 	let trCnt = document.getElementsByTagName('tr').length;
-	console.log(trCnt);
 	
 	let today = new Date();
-	let year = today.getFullYear();
-	let month = today.getMonth()+1;
-	let date = today.getDate();
-	
-	let sysdate = year + '-' + month + '-' + date
-	console.log(sysdate);
+	let sysdate = today.getFullYear()+'-'+('0'+(today.getMonth()+1)).slice(-2)+'-'+('0'+today.getDate()).slice(-2);
 	
 	let newRow = table.insertRow(0);
 	
@@ -279,7 +286,7 @@ function addRow() {
 	
 	newCellDate.innerText = sysdate;
 	newCellFacotry.innerHTML = "<select id='factorySelect' class='form-select factorySelect' name='factory_no' onchange='getFactoryNo(this.value)'>"+makeFactorySelect()+"</select>";
-	newCellItem.innerHTML = "<select id='itemSelect' class='form-select itemSelect' name='item_no' onchange='getItemNo(this.value)'></select>";
+	newCellItem.innerHTML = "<select id='itemSelect' class='form-select itemSelect' name='item_no' onchange='getItemNo(this.value)' disabled><option value=''>품번선택</option></select>";
 	newCellItemName.innerHTML = "<input type='text' name='item_name' id='itemName' class='form-control itemName' value='' readOnly='readOnly' placeholder='품번을 선택해주세요.'>";
 	newCellDBCnt.innerHTML = "<input type='number' min='0' name='db_amount' id='DBCnt' class='form-control DBCnt' value=''readOnly='readOnly'>";
 	newCellStockCnt.innerHTML = "<input type='number' min='0' name='amount' id='realStockCnt' class='form-control realStockCnt' value=''>";
@@ -287,6 +294,10 @@ function addRow() {
 	newCellMember.innerHTML = "<input type='text' name='emp_no' id='emp_no' class='form-control emp_no' value='2301001' readOnly='readOnly'>"
 	newCellMemo.innerHTML = "<input type='text' name='subul_note' id='memo' class='form-control' value=''>";
 	newCellStat.innerHTML = "<button type='button' class='btn btn-secondary' onclick='return insertTempSilsa(this.form);'>저장</button> <button type='button' class='btn btn-primary' onclick='insertSubulStockTaking()'>승인</button>"
+	
+	if($('#stockInsertTbl >tbody tr').length == 1) {
+		$('#plusBtn').hide();
+	}
 	
 }
 
@@ -356,7 +367,7 @@ function insertTempSilsa(frm) {
 	
 }
 
-// 상품 select 랜더링을 위한 공장 코드 value가져오기
+// 상품 select 랜더링을 위한 공장 코드 value가져오고 -> 품번 option 만드는 함수 호출
 function getFactoryNo(value) {
 	
 	$('#factorySelect').val(value);
@@ -370,6 +381,7 @@ function getFactoryNo(value) {
 		dataType: "json",
 		success: function(result) {
 			
+			console.log("공장코드를 받아서 뽑아온 품번목록이랍니다" + result)
 			makeItemSelect(result)
 		}
 		
@@ -381,11 +393,15 @@ function getFactoryNo(value) {
 // 공장 코드 선택에 따른 상품 select 랜더링
 function makeItemSelect(data) {
 	
+	console.log("makeItemSelect의 data예요"+data);
+	
 	$('#itemSelect').empty();
 	
 	let innerHtml = `<option value="">품번선택</option>`;
 
 	if(data != null) {
+		
+		$('#itemSelect').removeAttr('disabled');
 		for(let datum of data) {
 			innerHtml += `<option value="\${datum.item_no}">\${datum.item_no}</option>`
 			
@@ -401,7 +417,6 @@ function makeItemSelect(data) {
 function getItemNo(value) {
 	
 	$('#itemSelect').val(value);
-	console.log("상품번호: " + value);
 	let item_no = value;
 	
 	$.ajax({
@@ -424,11 +439,30 @@ function getItemNo(value) {
 function updateTempSilsa(target) {
 	
 	let targetTr = $(target).closest('tr');
+	let targetTd = targetTr.children();
 	console.log(targetTr);
 	
 	let subul_num = targetTr.find('.subul_num').val();
 	let amount = targetTr.find('.amount').val();
-	console.log(subul_num);
+	let factory_no = targetTr.find('.factory_no').val();
+	let item_no = targetTr.find('.item_no').val();
+	let db_amount = targetTr.find('.db_amount').val();
+	let subul_note = targetTr.find('.subul_note').val();
+	
+	for(let i = 2; i<10 ; i++) {
+		targetTd.eq(i).empty();
+	}
+	 
+	targetTd.eq(2).append("<select id='updateFactorySelect' class='form-select factorySelect' name='factory_no' onchange='getFactoryNo(this.value)'>"+makeFactorySelect()+"</select>");
+	targetTd.eq(3).append("<select id='itemSelect' class='form-select itemSelect' name='item_no' onchange='getItemNo(this.value)'><option value=''>품번선택</option></select>");
+	targetTd.eq(4).append("<input type='text' name='item_name' id='itemName' class='form-control itemName' value='' readOnly='readOnly' placeholder='품번을 선택해주세요.'>");
+	targetTd.eq(5).append("<input type='number' min='0' name='db_amount' id='DBCnt' class='form-control DBCnt' value=''readOnly='readOnly'>");
+	targetTd.eq(6).append("<input type='number' min='0' name='amount' id='realStockCnt' class='form-control realStockCnt' value='"+amount+"'>");
+	targetTd.eq(7).append("-");	
+	targetTd.eq(8).append("<input type='text' name='emp_no' id='emp_no' class='form-control emp_no' value='2301001' readOnly='readOnly'>");
+	targetTd.eq(9).append("<input type='text' name='subul_note' id='memo' class='form-control' value='"+subul_note+"'>");
+	
+	$('#updateFactorySelect').find('option[value='+factory_no+']').attr('selected', 'selected');
 	
 }
 
@@ -526,8 +560,8 @@ function makeTable (data) {
 				\${datum.subul_num}
 				</td>
 				<td>
-					<input type="hidden" class="date" value="\${datum.date}">
-					\${datum.date}
+					<input type="hidden" class="subul_date" value="\${datum.subul_date}">
+					\${datum.subul_date}
 				</td>
 				<td>
 					<input type="hidden"  class="factory_no" value="\${datum.factory_no}">
@@ -620,7 +654,7 @@ function makePaginationLi(pageData){
 		
 		for( let i = pageData.startPage; i <= pageData.endPage ; i++) {
 			innerHTML += `
-				<li class="page-item">
+				<li class="page-item pgnum\${i}">
 					<a class="page-link" onclick="changePage(event,\${i})">\${i}</a>
 				</li>
 			`
@@ -654,14 +688,11 @@ function selectStockTakingList() {
 	let factory_no = $('#searchFactory option:selected').val()
 	let gubun = $('#searchGubun option:selected').val()
 	
-	console.log(factory_no);
-	console.log(gubun);
-	
 	$.ajax({
 		
 		url:"${pageContext.request.contextPath }/stocktaking/search",
 		data: {
-			startDate, endDate, factory_no, currentPage //전역변수 //, gubun
+			startDate, endDate, factory_no, gubun, currentPage //전역변수 //
 		},
 		dataType: "json",
 		success: function(result){

@@ -43,13 +43,13 @@
 					<td>${subul.emp_name }</td>
 					<td>
 						<fmt:formatDate value="${subul.subul_date }" pattern="yy-MM-dd [E]"/><br/>
-						<fmt:formatDate value="${subul.subul_date }" pattern="HH시mm분"/>
+						<fmt:formatDate value="${subul.subul_date }" pattern="HH시 mm분"/>
 					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-	<nav aria-label="Page navigation ajaxContents">
+	<nav aria-label="Page navigation" class="ajaxContents">
 		<ul class="pagination justify-content-center ajaxContents">
 			<c:if test="${paging.startPage > paging.pageBlock }">
 				<li class="page-item prev">

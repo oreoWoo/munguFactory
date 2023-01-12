@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mysql.CorpTest.EmpMapper">
+	
+	<insert id="wsEmpInsert" parameterType="Emp">
+		insert into emp 
+		values (#{emp_no}, #{emp_name}, #{emp_id}, #{emp_password}, #{emp_address}, #{emp_gender}, #{emp_hire_date}, #{emp_email} ,#{dept_no} ,#{posit_no}, #{auth_no});
+
+	</insert>
+
+	<insert id="emplistSave" parameterType="EmpList">
+		INSERT INTO emp_list
+			(emp_no, auth_no, dept_no, emp_hire_date, emp_name, posit_no) 
+		VALUES
+			(#{emp_no},#{auth_no},#{dept_no},#{emp_hire_date},#{emp_name},#{posit_no})
+	</insert>
+
+	
+	<select id="getAllUserInfo_All" resultType="Emp">
+	 	select * from emp e, authority a , dept d , posit p where e.auth_no = a.auth_no and e.dept_no = d.dept_no and e.posit_no = p.posit_no  order by e.emp_name
+ 	</select>
+ 	
+ 	<select id="getAllUserInfo_Paging" parameterType="Page"  resultType="Emp">
+
+		SELECT EMP_NAME, emp_id, e.emp_no, emp_gender, auth_name, posit_name, dept_name
+		FROM 
+		(
+		    SELECT q.* 
+		    FROM ( select e.emp_name, e.emp_id, e.emp_no, e.emp_gender, a.auth_name, p.posit_name, d.dept_name from emp e, authority a , dept d , posit p where e.auth_no = a.auth_no and e.dept_no = d.dept_no and e.posit_no = p.posit_no order by e.emp_name
+		) q
+		)e   
+		limit 10 offset #{start}
+ 	</select>
+ 	
+ 	<select id="getUserInfo_deptnum" parameterType="int" resultType="Emp">
+		select * from emp where dept_no = #{dept_no}
+	</select>
+	
+	<select id="getUserInfo" parameterType="int" resultType="Emp">
+		select * from emp where emp_no = #{emp_no}
+	</select>
+	
+ 	
+ 	<select id="getAllUserInfo_Paging_Deptnum" parameterType="Map"  resultType="Emp">
+		 	SELECT e.* 
+		FROM 
+		(
+		    SELECT q.* 
+		    FROM ( 
+            select e.emp_name, e.emp_id, e.emp_no, e.emp_gender, a.auth_name, p.posit_name, d.dept_name 
+            from emp e, authority a , dept d , posit p
+            where e.auth_no = a.auth_no and e.dept_no = d.dept_no and e.posit_no = p.posit_no  and e.dept_no = #{dept_no} order by e.emp_name
+		) q
+	) e
+    limit 10 offset #{start}
+ 	</select>
+ 	
+ 	<select id="checkEmpId" parameterType="String" resultType="Emp">
+		select * from emp where emp_id = #{emp_id}
+	</select>
+	
+	<select id="chkEmpData" parameterType="int" resultType="EmpList">
+		select * from emp_list where emp_no = #{emp_no}
+	</select>
+	
+	<select id="chkLogin" parameterType="String" resultType="Emp">
+		select * 
+		from emp e, authority a , dept d , posit p 
+		where e.auth_no = a.auth_no and e.dept_no = d.dept_no and e.posit_no = p.posit_no  and e.emp_id = #{emp_id}
+	</select>
+ 	
+ 	<select id="updateEmpInfoWithAdmin" parameterType="Emp">
+		UPDATE emp SET emp_name = #{emp_name}, emp_password = #{emp_password}, emp_address = #{emp_address}, emp_email = #{emp_email}, auth_no = #{auth_no}, dept_no = #{dept_no}, posit_no = #{posit_no} WHERE emp_no = #{emp_no}
+	</select>
+	
+	
+	<update id="changePw" parameterType="Map">
+		UPDATE Emp e SET e.emp_password = #{emp_password} WHERE e.emp_no = #{emp_no}
+	</update>
+	
+</mapper>

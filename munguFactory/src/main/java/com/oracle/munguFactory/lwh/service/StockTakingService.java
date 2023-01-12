@@ -23,7 +23,7 @@ public interface StockTakingService {
 
 	int insertStockTaking(StockTakingDTO stockTakingDTO);
 
-	int totalStockTakingCnt();
+	int totalStockTakingCnt(StockTakingDTO stockTakingDTO);
 
 	int insertTempSilsa(StockTakingDTO stockTakingDTO);
 

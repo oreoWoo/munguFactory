@@ -61,8 +61,8 @@ public class StockTakingServiceImpl implements StockTakingService {
 	}
 
 	@Override
-	public int totalStockTakingCnt() {
-		return st.totalStockTakingCnt();
+	public int totalStockTakingCnt(StockTakingDTO stockTakingDTO) {
+		return st.totalStockTakingCnt(stockTakingDTO);
 	}
 
 	@Override
