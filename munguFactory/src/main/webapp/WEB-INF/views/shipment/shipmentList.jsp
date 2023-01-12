@@ -191,7 +191,7 @@
 			</c:otherwise>
 		</c:choose>
 		<script type="text/javascript">
-			if($(".boldRed").length){
+			if(${OrdersDetail.suju_amount>50 }{
 				alert("재고가 부족하여 출하가 불가능합니다!");
 				$('.insertShipmentButton').attr("disabled","disabled").text("출하불가");
 			} else {
@@ -215,7 +215,6 @@
 							ajaxChk(1);
 						}
 					});
-				} else {
 				}
 			}
 		</script>

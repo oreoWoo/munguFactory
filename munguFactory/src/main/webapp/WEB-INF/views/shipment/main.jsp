@@ -7,42 +7,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-.shipmentContainer{
-	background-color:white;
-	width: 90%;
-	margin :3% 5% 5% 5%;
-	padding: 2%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-content: center;
-}
-.searchPlace{
-	display: flex;
-	justify-content: space-between;
-}
-.form-select, .form-control{	
-	display: inline;
-	width: auto;
-}
-.boldRed{
-	color: red;
-}
-.boldGreen{
-	color: green;
-}
-.insertShipment ul{
-	margin: 0;
-}
-</style>
+<link href="/css/subul.css" rel="styleSheet" type="text/css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	function ajaxChk(pageNum){
 		$("#pageNum").val(pageNum);
 		var formData = $(".searchPlace").serialize();
 		$.ajax({
-			url		: 'aaa/shipmentAjaxChk2',
+			url		: '/inventoryManagementListAjaxChk',
 			type 	: "POST", 
 			data	: formData,
 			dataType: 'text',
@@ -81,6 +53,7 @@
 	<div class="shipmentContainer">
 		<h1>출하등록</h1>
 		<form class="searchPlace" onsubmit="return false">
+			<input type="hidden" value="shipment/shipmentList" name="pageaddr">
 			<input type="hidden" value="1" name="pageNum" id="pageNum">
 			<input type="hidden" value="출하" name="gubun">
 			<div class="category">
