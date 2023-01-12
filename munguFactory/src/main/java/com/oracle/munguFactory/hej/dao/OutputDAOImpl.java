@@ -9,6 +9,7 @@ import com.oracle.munguFactory.dto.EmpDTO;
 import com.oracle.munguFactory.dto.FactoryDTO;
 import com.oracle.munguFactory.dto.ItemDTO;
 import com.oracle.munguFactory.dto.OutputDTO;
+import com.oracle.munguFactory.dto.PageDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -114,7 +115,23 @@ public class OutputDAOImpl implements OutputDAO {
 		return result;
 	}
 
-
+	// 생산실적 관련 조회
+	@Override
+	public List<OutputDTO> outputSearchList(OutputDTO output) {
+		System.out.println("- OutputDAOImpl outputSearchList Start -");
+		
+		List<OutputDTO> outputSearchList = null;
+		
+		try {
+			// keyword 검색
+			outputSearchList = session.selectList("outputSearchList", output);
+			System.out.println("outputSearchList -> " + outputSearchList);
+		} catch (Exception e) {
+			System.out.println("OutputDAOImpl outputSearchList Exception -> " + e.getMessage());
+		}
+		return outputSearchList;
+	}
+	
 	// select option용
 	// 공장 목록
 	@Override
@@ -144,5 +161,94 @@ public class OutputDAOImpl implements OutputDAO {
 		}
 		return result;
 	}
-
+	
+	
+	
+	@Override
+	public int getOutputListSize(PageDTO searchOptions) {
+		log.info("- getOutputListSize() start -");
+		
+		int result = 0;
+		
+		try {
+			result = session.selectOne("getOutputList", searchOptions);
+		} catch (Exception e) {
+			System.out.println("OutputDAOImpl getOutputList Exception -> " + e.getMessage());
+		}
+		
+		return result;
+	}
+	@Override
+	public List<OutputDTO> getOutputList(PageDTO paging) {
+		log.info("getOutputList() start...");
+		
+		List<OutputDTO> result = null;
+		
+		try {
+			result = session.selectList("getOutputList", paging);
+		} catch (Exception e) {
+			System.out.println("getOutputList e.getMessage() : "+e.getMessage());
+		}
+		
+		return result;
+	}
+	@Override
+	public int insertOutputSubul(OutputDTO output) {
+		System.out.println("- OutputDAOImpl insertOutputSubul Start -");
+		
+		int result = 0;
+		
+		try {
+			result = session.insert("insertOutputSubul", output);
+		} catch (Exception e) {
+			System.out.println("OutputDAOImpl insertOutputSubul Exception -> " + e.getMessage());
+		}
+		
+		return result;
+	}
+	@Override
+	public int plusOutputStorage(OutputDTO output) {
+		System.out.println("- OutputDAOImpl updateOutputStorage Start -");
+		
+		int updateCnt = 0;
+		
+		try {
+			updateCnt = session.update("plusOutputStorage", output);
+			log.info("output -> " + updateCnt);
+		} catch (Exception e) {
+			System.out.println("OutputDAOImpl updateOutputStorage Exception -> " + e.getMessage());
+		}
+		
+		return updateCnt;
+	}
+	@Override
+	public int updateOutputSubul(OutputDTO output) {
+		System.out.println("- OutputDAOImpl updateOutputSubul Start -");
+		
+		int updateCnt = 0;
+		
+		try {
+			updateCnt = session.update("updateOutputSubul", output);
+			log.info("output -> " + updateCnt);
+		} catch (Exception e) {
+			System.out.println("OutputDAOImpl updateOutputSubul Exception -> " + e.getMessage());
+		}
+		
+		return updateCnt;
+	}
+	@Override
+	public int updateStorageOutput(OutputDTO output) {
+		System.out.println("- OutputDAOImpl updateStorageOutput Start -");
+		
+		int updateCnt = 0;
+		
+		try {
+			updateCnt = session.update("updateStorageOutput", output);
+			log.info("output -> " + updateCnt);
+		} catch (Exception e) {
+			System.out.println("OutputDAOImpl updateStorageOutput Exception -> " + e.getMessage());
+		}
+		
+		return updateCnt;
+	}
 }
