@@ -148,12 +148,12 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="#" class="menu-link">
+                  <a href="/accountList" class="menu-link">
                     <div data-i18n="Account">거래처 등록</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="#" class="menu-link">
+                  <a href="/factoryList" class="menu-link">
                     <div data-i18n="Notifications">공장 등록</div>
                   </a>
                 </li>

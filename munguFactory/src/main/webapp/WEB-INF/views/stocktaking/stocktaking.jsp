@@ -22,7 +22,7 @@
 		text-align: center;
 	}
 	
-	.selectFactory {
+	.selectFactory, .selectGubun{
 		width : 120px;
 	}
 	
@@ -45,6 +45,7 @@
 	}
 	.form-select {
 		display : inline-block;
+		cursor : pointer;
 	}
 	.form-control {
 		display : inline-block;
@@ -73,6 +74,20 @@
 	.realStockCnt {
 		width : 90px;
 	}
+	
+	.emp_no {
+		width : 90px;
+	}
+	
+	.dropdown .gubunText {
+		color : blue;
+	}
+	
+	.dropdown-item {
+		cursor: pointer;
+	}
+	
+	
 </style>
 </head>
 <body>
@@ -81,8 +96,13 @@
 		<div class="searchStock row">
 			<div class="col-sm-6">
 				<select class='form-select selectFactory' id="searchFactory"></select>
+<!-- 				<select class='form-select selectGubun' id="searchGubun">
+					<option value="">구분선택</option>
+					<option value="재고실사">재고실사</option>
+					<option value="임시실사">임시실사</option>
+				</select> -->
 				<input class="form-control" type="date" value="" id="startDate">
-				<input class="form-control" type="date" value="" id="endDate">
+				<input class="form-control" type="date" value="" id="endDate" max="">
 				
 				<button type="button" class="btn btn-info searchBtn" onclick="selectStockTakingList()">검색</button>
 			</div>
@@ -150,7 +170,12 @@
 			</div>
 	
 	</div>
-
+	
+	<nav aria-label="Page navigation">
+    	<ul class="pagination justify-content-center" id="stockTakingPaginationUl">
+    	
+		</ul>
+	</nav>
 		
 
 	
@@ -159,6 +184,9 @@
 </body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
+
+// 전역변수들 모음 
+let currentPage = 1;
 
 let factoryList = [
 	<c:forEach items="${factoryList}" var="factory">
@@ -172,9 +200,9 @@ let factoryList = [
 let itemList = [
 	<c:forEach items="${itemList}" var="item">
 		{ 
-			item_no : '${item.itemNo}' 
-			, factory_no : '${item.factoryNo}'
-			, item_Name : '${item.itemName}'
+			item_no : '${item.item_no}' 
+			, factory_no : '${item.factory_no}'
+			, item_Name : '${item.item_name}'
 		},
 	</c:forEach>
 ]
@@ -183,6 +211,8 @@ $(function () {
 	initPage();
 })
 
+
+// 항상 실행해야할 함수
 function initPage () {
 	//검색폼 - 공장 셀렉트 업데이트
 	$('#searchFactory').html(makeFactorySelect());
@@ -190,6 +220,7 @@ function initPage () {
 	initSearchDate();
 }
 
+// 검색 관련
 // 공장 선택 옵션 만들어주기
 function makeFactorySelect() {
 	
@@ -216,6 +247,9 @@ function initSearchDate () {
 
 }
 
+
+
+// 행 추가 랜더링 함수
 function addRow() {
 	
 	let table = document.getElementById('insertStockTbl');
@@ -250,13 +284,13 @@ function addRow() {
 	newCellDBCnt.innerHTML = "<input type='number' min='0' name='db_amount' id='DBCnt' class='form-control DBCnt' value=''readOnly='readOnly'>";
 	newCellStockCnt.innerHTML = "<input type='number' min='0' name='amount' id='realStockCnt' class='form-control realStockCnt' value=''>";
 	//newCellDiff.innerHTML = "<input type='number' min='0' name='dfCnt' id='dfCnt' class='form-control' value=''>"
-	newCellMember.innerHTML = "<input type='text' name='emp_no' id='emp_no' value='2301001' readOnly='readOnly'>"
+	newCellMember.innerHTML = "<input type='text' name='emp_no' id='emp_no' class='form-control emp_no' value='2301001' readOnly='readOnly'>"
 	newCellMemo.innerHTML = "<input type='text' name='subul_note' id='memo' class='form-control' value=''>";
-	newCellStat.innerHTML = "<button type='button' class='btn btn-primary' onclick='insertSubulStockTaking()'>승인</button>"
-	// <button type='button' class='btn btn-secondary'>임시저장</button>
+	newCellStat.innerHTML = "<button type='button' class='btn btn-secondary' onclick='return insertTempSilsa(this.form);'>저장</button> <button type='button' class='btn btn-primary' onclick='insertSubulStockTaking()'>승인</button>"
+	
 }
 
-
+// 값을 모두 입력했는지 Validation 체크 함수
 function isAllEnter() {
 	
 	if(!$('#factorySelect>option:selected').val()) {
@@ -277,6 +311,7 @@ function isAllEnter() {
 	return true;
 }
 
+// 수불부에 '재고실사'로 등록하기
 function insertSubulStockTaking(){
 	
 	if(!isAllEnter()) {
@@ -288,19 +323,43 @@ function insertSubulStockTaking(){
 	if(isConfirm){
 		
 		insertForm.submit();
-		alert('등록이 완료되었습니다.')
+		alert('등록이 완료되었습니다.');
 		
 	} else {
-		alert('등록이 취소되었습니다.')
+		alert('등록이 취소되었습니다.');
 	}
 }
 
 
-// 공장코드~~
+// 수불부에 '임시실사'로 등록하기
+// 왠지 같은 함수에서 처리할 수 있을거 같음...보완 필요
+function insertTempSilsa(frm) {
+	
+
+	if(!isAllEnter()) {
+   		return false;
+   	} 
+	
+	let insertConfirm = confirm('임시실사값을 등록하시겠습니까?');
+	
+	if(insertConfirm){
+		
+		frm.action='${pageContext.request.contextPath }/stocktaking/insertTempSilsa'
+		frm.submit();
+		alert('등록이 완료되었습니다.');
+		return true;
+		
+		
+	} else {
+		alert('등록이 취소되었습니다.');
+	}
+	
+}
+
+// 상품 select 랜더링을 위한 공장 코드 value가져오기
 function getFactoryNo(value) {
 	
 	$('#factorySelect').val(value);
-	console.log('선택된 값 : ' + value);
 	
 	let factory_no = value;
 	
@@ -311,7 +370,6 @@ function getFactoryNo(value) {
 		dataType: "json",
 		success: function(result) {
 			
-			console.log(result);
 			makeItemSelect(result)
 		}
 		
@@ -320,7 +378,7 @@ function getFactoryNo(value) {
 	
 }
 
-
+// 공장 코드 선택에 따른 상품 select 랜더링
 function makeItemSelect(data) {
 	
 	$('#itemSelect').empty();
@@ -329,7 +387,7 @@ function makeItemSelect(data) {
 
 	if(data != null) {
 		for(let datum of data) {
-			innerHtml += `<option value="\${datum.itemNo}">\${datum.itemNo}</option>`
+			innerHtml += `<option value="\${datum.item_no}">\${datum.item_no}</option>`
 			
 		}
 	} 
@@ -352,7 +410,7 @@ function getItemNo(value) {
 		data: {item_no},
 		dataType: "json",
 		success: function(result){
-			for (let i = 0; result.length; i++){
+			for (let i = 0; i<result.length; i++){
 				$('#itemName').val(result[i].item_name);
 				$('#DBCnt').val(result[i].stock_count);
 			}
@@ -362,11 +420,100 @@ function getItemNo(value) {
 	});
 }
 
+// '임시실사' 데이터 수정 함수
+function updateTempSilsa(target) {
+	
+	let targetTr = $(target).closest('tr');
+	console.log(targetTr);
+	
+	let subul_num = targetTr.find('.subul_num').val();
+	let amount = targetTr.find('.amount').val();
+	console.log(subul_num);
+	
+}
+
+//'임시실사' 데이터 삭제 함수
+function deleteTempSilsa(target) {
+	
+	let targetTr = $(target).closest('tr');
+	
+	let subul_num = targetTr.find('.subul_num').val();
+	
+	let deleteConfirm = confirm('해당 임시실사 데이터를 삭제하시겠습니까?');
+	
+	if (deleteConfirm) {
+		
+		$.ajax({
+			
+			url:"${pageContext.request.contextPath }/stocktaking/deleteTempSilsa",
+			data:{subul_num},
+			dataType:"json",
+			success: function(result){
+				
+				if (result == 1) {
+					alert('삭제가 완료되었습니다.')
+					selectStockTakingList();
+				}
+
+			}
+			
+		}); 
+		
+		
+	} else {
+		
+		alert('삭제가 취소되었습니다.');
+		return false;
+		
+	}
+ 	
+	
+}
+
+//'임시실사' 데이터 승인 함수
+function updateTempSilsaGubun(target) {
+	
+	let targetTr = $(target).closest('tr');
+	
+	let subul_num = targetTr.find('.subul_num').val();
+	let amount = targetTr.find('.amount').val();
+	let item_no = targetTr.find('.item_no').val();
+	let factory_no = targetTr.find('.factory_no').val();
+	
+	let updateConfirm = confirm('해당 임시실사 데이터를 승인하시겠습니까?');
+	
+ 	if(updateConfirm) {
+		
+ 		$.ajax({
+			
+			url:"${pageContext.request.contextPath }/stocktaking/updateTempSilsaGubun",
+			data: {subul_num, amount, item_no, factory_no},
+			type: 'post',
+			dataType:"json",
+			success: function(result) {
+				if (result == 1){
+					alert('승인 완료 되었습니다.');
+					selectStockTakingList();
+				}
+			
+			}
+		
+	});
+		
+	} else {
+		
+		alert('승인이 취소되었습니다.');
+		return false;
+		
+	}
+	 
+	
+}
+
+
 
 // 검색목록 테이블 랜더링
 function makeTable (data) {
-	
-	console.log("makeTable : " + data);
 	
 	let reqNo = 1;
 	let innerHtml = ``
@@ -374,22 +521,126 @@ function makeTable (data) {
 	for(let datum of data) {
 		innerHtml += `
 			<tr>
-				<td>\${datum.subul_num}</td>
-				<td>\${datum.date}</td>
-				<td>\${datum.factory_name}</td>
-				<td>\${datum.item_no}</td>
-				<td>\${datum.item_name}</td>
-				<td>\${datum.stock_count}</td>
-				<td>\${datum.db_amount}</td>
-				<td>\${datum.amount}</td>
-				<td>\${datum.emp_no}</td>
-				<td>\${datum.subul_note}</td>
-				<td>\${datum.gubun}</td>
+				<td>
+					<input type="hidden" class="subul_num" value="\${datum.subul_num}">
+				\${datum.subul_num}
+				</td>
+				<td>
+					<input type="hidden" class="date" value="\${datum.date}">
+					\${datum.date}
+				</td>
+				<td>
+					<input type="hidden"  class="factory_no" value="\${datum.factory_no}">
+					\${datum.factory_name}
+				</td>
+				<td>
+					<input type="hidden" class="item_no" value="\${datum.item_no}">
+					\${datum.item_no}
+				</td>
+				<td>
+					<input type="hidden"  class="item_name" value="\${datum.item_name}">
+					\${datum.item_name}
+				</td>
+				<td>
+					<input type="hidden" class="db_amount" value="\${datum.db_amount}">
+					\${datum.db_amount}
+				</td>
+				<td>
+					<input type="hidden" class="amount" value="\${datum.amount}">
+					\${datum.amount}
+				</td>
+				<td>
+					<input type="hidden" class="diff_amount" value="\${datum.amount - datum.db_amount}">
+					\${datum.amount - datum.db_amount}
+				</td>
+				<td>
+					<input type="hidden" class="emp_no" value="\${datum.emp_no}">
+					\${datum.emp_no}
+				</td>
+				<td>
+					<input type="hidden" class="subul_note" value="\${datum.subul_note}">
+					\${datum.subul_note}
+				</td>
+				<td class="gubun"> `;
+					if(datum.gubun == '임시실사') {
+						
+						innerHtml += `<div class="dropdown"> 
+							<a class="btn p-0 dropdown-toggle hide-arrow gubunText" data-bs-toggle="dropdown">\${datum.gubun}</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" onclick="updateTempSilsaGubun(this)"><i class='bx bx-check me-1'></i>  승인 </a>
+	                            <a class="dropdown-item" onclick="updateTempSilsa(this)" ><i class="bx bx-edit-alt me-1"></i> 수정 </a>
+	                            <a class="dropdown-item" onclick="deleteTempSilsa(this)"><i class="bx bx-trash me-1"></i> 삭제 </a>
+                          </div>
+						</div> `;
+						
+					} else {
+						innerHtml += `
+						\${datum.gubun} `;
+					}
+				innerHtml += `
+				</td>
 			</tr>
 		`;
 	}
 	
 	$('#realStockTbl').html(innerHtml);
+	
+}
+
+function changePage(e, page) {
+	// a태그 기본 작동을 막기 위한 함수
+	e.preventDefault();
+	// 선택한 페이지 넘버값을 받아서 전역변수 currentPage에 담는다.
+	currentPage = page;
+	// 목록 가져오기
+	selectStockTakingList();
+
+}
+
+// 페이징 만듦
+function makePaginationLi(pageData){
+	
+	let innerHTML = ``;
+	
+	innerHTML += `
+		<li class="page-item prev">
+		`
+	    if(pageData.startPage == 1) {
+			innerHTML += `<a class="page-link" onclick="return false;">`
+		    // 첫 1~5페이지에서 [<] 키가 작동하지 않도록함 
+	    } else {
+	    	innerHTML += ` <a class="page-link" onclick="changePage(event,\${pageData.startPage - 1})">`
+	    }
+	    
+		innerHTML += `
+	           <i class="tf-icon bx bx-chevrons-left"></i>
+	       </a>
+		</li>
+		`
+		
+		for( let i = pageData.startPage; i <= pageData.endPage ; i++) {
+			innerHTML += `
+				<li class="page-item">
+					<a class="page-link" onclick="changePage(event,\${i})">\${i}</a>
+				</li>
+			`
+		}
+		
+		innerHTML += `<li class="page-item">`
+		if(pageData.endPage == pageData.totalPage){
+			innerHTML += `<a class="page-link" onclick="return false;">`
+			// 마지막 PageBlock에서  [>] 버튼이 작동하지 않도록 함
+		} else {
+			innerHTML += `<a class="page-link" onclick="changePage(event,\${pageData.endPage + 1})">`
+		}
+		
+		innerHTML += `
+				<i class="tf-icon bx bx-chevrons-right"></i>
+			</a>
+		</li>
+	   `
+		//
+		$('#stockTakingPaginationUl').html(innerHTML)
 	
 }
 
@@ -401,19 +652,24 @@ function selectStockTakingList() {
 	
 	//선택된 공장 번호 가져오기
 	let factory_no = $('#searchFactory option:selected').val()
+	let gubun = $('#searchGubun option:selected').val()
+	
+	console.log(factory_no);
+	console.log(gubun);
 	
 	$.ajax({
 		
 		url:"${pageContext.request.contextPath }/stocktaking/search",
 		data: {
-			startDate, endDate, factory_no
+			startDate, endDate, factory_no, currentPage //전역변수 //, gubun
 		},
 		dataType: "json",
 		success: function(result){
-			makeTable(result);
+			makeTable(result.stockTakingList);
+			makePaginationLi(result.page);
 		}
 		
-	})
+	});
 	
 }
 </script>

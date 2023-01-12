@@ -26,6 +26,16 @@
 </head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
+
+	$(function(){
+		
+	});
+	
+	
+	function deleteOrder(suju_no){
+		location.href = "/sujuDelete?suju_no=" + suju_no;
+	}
+
 </script>
 <body>
 		<%-- <table class="table table-striped table-hover ajaxContents">
@@ -109,9 +119,8 @@
 						</tbody>
 					</table>
 				</div>
-				<input type="submit" value="수주 수정">
-				<input type="button" value="수주 삭제">
-				<input type="button" value="발주 신청">
+					<input type="submit" value="수주 수정"  class="btn btn-outline-primary">
+					<input type="button" value="수주 삭제"  class="btn btn-outline-primary" onclick="deleteOrder(${orders.suju_no })">
 			</form>
 		</div>
 </body>

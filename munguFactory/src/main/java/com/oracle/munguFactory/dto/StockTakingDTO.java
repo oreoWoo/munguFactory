@@ -37,4 +37,10 @@ public class StockTakingDTO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
 	private LocalDate endDate;
 	
+	private String pageNum;
+	private int start;
+	private int end;
+	private int rowPage;
+	private String currentPage;
+	
 }

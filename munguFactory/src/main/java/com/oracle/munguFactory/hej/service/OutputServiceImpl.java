@@ -29,7 +29,6 @@ public class OutputServiceImpl implements OutputService {
 		
 		return totOutputCnt;
 	}
-
 	
 	// 생산실적 목록
 	@Override
@@ -40,29 +39,6 @@ public class OutputServiceImpl implements OutputService {
 		
 		return outputList;
 	}
-
-	// 생산실적 등록
-	@Override
-	public int insertOutput(OutputDTO output) {
-		System.out.println("~~ OutputServiceImpl insert Start ~~");
-		
-		int result = 0;
-		result = od.insertOutput(output);
-		
-		return result;
-	}
-
-	// 생산실적 삭제
-	@Override
-	public int deleteOutput(OutputDTO prod_no) {
-		System.out.println("~~ OutputServiceImpl delete Start ~~");
-		
-		int result = 0;
-		result = od.deleteOutput(prod_no);
-		
-		return result;
-	}
-
 	// 생산실적 상세 정보
 	@Override
 	public OutputDTO outputDetail(int prod_no) {
@@ -75,20 +51,16 @@ public class OutputServiceImpl implements OutputService {
 	}
 	
 	
-	// select option 용
-	// 공장 목록
+	// 생산실적 등록
 	@Override
-	public List<FactoryDTO> factorySelect() {
-		return od.getFactoryList();
+	public int insertOutput(OutputDTO output) {
+		System.out.println("~~ OutputServiceImpl insert Start ~~");
+		
+		int result = 0;
+		result = od.insertOutput(output);
+		
+		return result;
 	}
-
-	// 사원 목록
-	@Override
-	public List<EmpDTO> empSelect() {
-		return od.getEmpList();
-	}
-
-
 	// 생산실적 수정
 	@Override
 	public int updateOutput(OutputDTO output) {
@@ -96,9 +68,32 @@ public class OutputServiceImpl implements OutputService {
 		
 		int updateCnt = 0;
 		updateCnt = od.updateOutput(output);
+		
 		return updateCnt;
 	}
+	// 생산실적 삭제
+	@Override
+	public int deleteOutput(OutputDTO prod_no) {
+		System.out.println("~~ OutputServiceImpl delete Start ~~");
+		
+		int result = 0;
+		result = od.deleteOutput(prod_no);
+		
+		return result;
+	}
 
+	
+	// select option 용
+	// 공장 목록
+	@Override
+	public List<FactoryDTO> factorySelect() {
+		return od.getFactoryList();
+	}
+	// 사원 목록
+	@Override
+	public List<EmpDTO> empSelect() {
+		return od.getEmpList();
+	}
 
 	
 	

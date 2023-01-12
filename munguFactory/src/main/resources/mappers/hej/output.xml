@@ -29,6 +29,31 @@
                   <![CDATA[where ROWNUM >#{start} and ROWNUM <=#{end}]]>
 	</select>
 	
+	<!-- 생산실적 상세 정보 -->	
+	<select id="outputDetail" parameterType="int" resultType="Output">
+		SELECT * FROM output WHERE prod_no = #{prod_no}	
+	</select>
+	
+	
+	<!-- 생산실적 등록 -->
+	<insert id="insertOutput" parameterType="Output">
+		INSERT INTO output(factory_no, item_no, item_name, emp_no, finish_date, prod_amount, poor_quantity, yield)
+		VALUES(#{factory_no}, #{item_no}, #{item_name}, #{emp_no}, now(), #{prod_amount}, #{poor_quantity},  (#{poor_quantity}/#{prod_amount})*100)
+	</insert>
+
+	<!-- 생산실적 수정 (공장코드, 사원번호) -->
+    <update id="updateOutput" parameterType="Output">
+		 UPDATE output SET factory_no=#{factory_no}, emp_no=#{emp_no}
+		 WHERE  prod_no=#{prod_no}
+	</update>	
+	
+	<!-- 생산실적 삭제 -->
+	<delete id="deleteOutput" parameterType="int">
+		DELETE FROM output WHERE prod_no=#{prod_no}
+	</delete>
+	
+	
+	<!-- select option용 -->
 	<!-- 공장 목록 -->
 	<select id="factoryList" resultType="Factory">
 		SELECT * FROM factory
@@ -38,21 +63,4 @@
 	<select id="empList" resultType="Emp">
 		SELECT * FROM emp
 	</select>
-	
-	<!-- 생산실적 등록 -->
-	<insert id="insertOutput" parameterType="Output">
-		INSERT INTO output(factory_no, item_no, item_name, emp_no, finish_date, prod_amount, poor_quantity, yield)
-		VALUES(#{factory_no}, #{item_no}, #{item_name}, #{emp_no}, now(), #{prod_amount}, #{poor_quantity},  (#{poor_quantity}/#{prod_amount})*100)
-	</insert>
-	
-	<!-- 생산실적 상세 정보 -->	
-	<select id="outputDetail" parameterType="int" resultType="Output">
-		SELECT * FROM output WHERE prod_no = #{prod_no}	
-	</select>
-	
-	<!-- 생산실적 수정 (공장코드, 사원번호) -->
-    <update id="updateOutput" parameterType="Output">
-		 UPDATE output SET factory_no=#{factory_no}, emp_no=#{emp_no}
-		 WHERE  prod_no=#{prod_no}
-	</update>	
 </mapper>

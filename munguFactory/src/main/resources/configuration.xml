@@ -3,7 +3,9 @@
 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+
 	<typeAliases>
+
 		<typeAlias alias="Output"   type="com.oracle.munguFactory.dto.OutputDTO"/>
 		<typeAlias alias="Page"     type="com.oracle.munguFactory.dto.PageDTO" />
 		<typeAlias alias="Subul" 	type="com.oracle.munguFactory.dto.SubulDTO" />
@@ -18,6 +20,7 @@
 		<typeAlias alias="StockTaking"  type="com.oracle.munguFactory.dto.StockTakingDTO" />
 		
 		<!-- suju -->
-		<typeAlias alias="OrdersDetail" type="com.oracle.munguFactory.dto.OrdersDetailDTO" />
+		<typeAlias alias="OrdersDetail"  type="com.oracle.munguFactory.dto.OrdersDetailDTO" />
+		<typeAlias alias="Orders"  type="com.oracle.munguFactory.dto.OrdersDTO" />
 	</typeAliases>
 </configuration>

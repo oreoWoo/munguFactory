@@ -24,4 +24,13 @@ public interface StockTakingDAO {
 	int insertStockTaking(StockTakingDTO stockTakingDTO);
 
 	int updateStockCnt(StockTakingDTO stockTakingDTO);
+
+	int totalStockTakingCnt();
+
+	int insertTempSilsa(StockTakingDTO stockTakingDTO);
+
+	int updateTempSilsaGubun(StockTakingDTO stockTakingDTO);
+
+	int deleteTempSilsa(StockTakingDTO stockTakingDTO);
+	
 }

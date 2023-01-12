@@ -1,6 +1,7 @@
 package com.oracle.munguFactory.dto;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import lombok.Data;
 
@@ -12,7 +13,7 @@ public class OutputDTO {
 	private int 			 emp_no;		// 사원번호
 	private int			 	 factory_no;	// 공장코드 (=입고창고)
 	private String 		 	 item_name;		// 품명
-	private LocalDateTime 	 finish_date;	// 작업일시 (=작업완료일?)
+	private Date 	 finish_date;	// 작업일시 (=작업완료일?)
 	private int 	 		 prod_amount;	// 생산수량
 	private int	 		 	 poor_quantity;	// 불량수량
 	private float		 	 yield;			// 수율
