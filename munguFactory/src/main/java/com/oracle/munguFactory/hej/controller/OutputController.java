@@ -7,11 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oracle.munguFactory.dto.EmpDTO;
 import com.oracle.munguFactory.dto.FactoryDTO;
-import com.oracle.munguFactory.dto.ItemDTO;
 import com.oracle.munguFactory.dto.OutputDTO;
+import com.oracle.munguFactory.dto.PageDTO;
 import com.oracle.munguFactory.hej.service.OutputService;
 import com.oracle.munguFactory.hej.service.Paging;
 
@@ -128,6 +129,44 @@ public class OutputController {
 		return "redirect:outputList";
 	}
 	
-	//
+	// 생산실적 조회
+	@RequestMapping(value = "listSearch")
+	public String listSearch(OutputDTO output, String currentPage, Model model) {
+		System.out.println("~~ searchOutput Start ~~");
+		
+		int totalOutput = os.totalOutput();	// 생산실적 전체 cnt
+		
+		// Paging 작업
+		/*
+		 * Paging page = new Paging(totalOutput, currentPage);
+		 * 
+		 * output.setStart(page.getStart()); // 시작 시 1 output.setEnd(page.getEnd()); //
+		 * 시작 시 10
+		 */		
+		System.out.println("[CONTROLLER] output -> " + output);
+		List<OutputDTO> listSearchOutput = os.listSearchOutput(output);
+		
+		model.addAttribute("totalOutput", totalOutput);
+		model.addAttribute("outputList", listSearchOutput);
+		//model.addAttribute("page", page);
+		
+		return "output/outputList";
+	}
+	
+	// 생산실적 조회 2트
+	@PostMapping(value = "outputListAjaxChk")
+	public String outputListAjaxChk(@RequestParam(defaultValue = "1") int pageNum, PageDTO searchOptions, Model model) {
+		log.info("~~ outputListAjaxChk() Start ~~");
+		
+		searchOptions.setPageDTO(os.getOutputListSize(searchOptions), pageNum);
+		
+		List<OutputDTO> outputList = os.getOutputList(searchOptions);
+		
+		model.addAttribute("paging", searchOptions);
+		model.addAttribute("outputList", outputList);
+		
+		return "ouptut/outputList";
+	}
+	
 	
 }
