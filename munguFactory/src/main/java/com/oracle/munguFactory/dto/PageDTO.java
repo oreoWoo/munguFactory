@@ -50,4 +50,8 @@ public class PageDTO {
 			endPage=totalPage;
 		}
 	}
+	
+	//emp page
+	private int start;
+	
 }
