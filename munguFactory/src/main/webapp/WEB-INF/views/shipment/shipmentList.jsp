@@ -31,9 +31,24 @@
 					<c:forEach var="subul" items="${subulList }">
 						<tr>
 							<td>${subul.subul_num }</td>
-							<td>${subul.account_name }</td> 
-							<td>${subul.serial_no }</td> 
-							<td>${subul.item_name }</td>
+							<td>
+								<a data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.account_no },'/accountInfoDetail?account_no=')" href="#">
+									${subul.account_name }
+								</a>
+								<%-- <a href="/accountInfoDetail?account_no=${subul.account_no }">${subul.account_name }</a> --%>
+							</td> 
+							<td>
+								<a data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.serial_no },'/user/sujuDetail?suju_no=')" href="#">
+									${subul.serial_no }
+								</a>
+							</td>
+							<%-- <td><a href="/user/sujuDetail?suju_no=${subul.serial_no }">${subul.serial_no }</a></td> --%>
+							<td>
+								<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.item_no },'/ItemAdminSelect?item_no=')" href="#">
+									${subul.item_name }
+								</a>
+							</td>
+							<%-- <td><a href="/ItemAdminSelect?item_no=${subul.item_no }">${subul.item_name }</a></td> --%>
 							<td>${subul.amount }</td>
 							<td>
 								<fmt:formatDate value="${subul.subul_date }" pattern="yy-MM-dd [E]"/><br/>
