@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.oracle.munguFactory.dto.OrdersDTO;
 import com.oracle.munguFactory.dto.OrdersDetailDTO;
+import com.oracle.munguFactory.dto.OrdersListDTO;
+import com.oracle.munguFactory.dto.OrdersPaging;
 import com.oracle.munguFactory.jjh.dao.JjhSujuDao;
 
 import lombok.RequiredArgsConstructor;
@@ -29,5 +31,12 @@ public class JjhSujuServiceImpl implements JjhSujuService {
 		log.info("sujuDelete start...");
 		int result = jjhSujuDao.sujuDelete(suju_no);
 		return result;
+	}
+
+	@Override
+	public OrdersListDTO sujuList(OrdersPaging ordersPaging) {
+		log.info("sujuDelete start...");
+		OrdersListDTO ordersListDTO = jjhSujuDao.sujuList(ordersPaging);
+		return ordersListDTO;
 	}
 }

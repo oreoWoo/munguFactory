@@ -25,6 +25,7 @@
 		<!-- suju -->
 		<typeAlias alias="OrdersDetail"  type="com.oracle.munguFactory.dto.OrdersDetailDTO" />
 		<typeAlias alias="Orders"  type="com.oracle.munguFactory.dto.OrdersDTO" />
+		<typeAlias alias="OrdersPaging"  type="com.oracle.munguFactory.dto.OrdersPaging" />
 		
 		<!-- emp -->
 		<typeAlias alias="Dept"  type="com.oracle.munguFactory.dto.DeptDTO" />
