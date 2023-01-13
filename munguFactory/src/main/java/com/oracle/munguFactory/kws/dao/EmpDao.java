@@ -37,5 +37,9 @@ public interface EmpDao {
 
 	int changePw(String emp_password, int emp_no);
 
+	int updateEmp(EmpDTO emp);
+
+	int deleteEmpData(int emp_no);
+
 
 }

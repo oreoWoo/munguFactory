@@ -1,18 +1,25 @@
 package com.oracle.munguFactory.home.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.oracle.munguFactory.dto.AuthorityDTO;
+import com.oracle.munguFactory.dto.DeptDTO;
+import com.oracle.munguFactory.dto.EmpDTO;
+import com.oracle.munguFactory.dto.PositDTO;
+import com.oracle.munguFactory.kws.service.EmpService;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
-
-	@GetMapping(value = "/")
-	public String goHome() {
-		return "main/home";
-	}
 	
 	@GetMapping(value = "/accordion")
 	public String goAccordian() {

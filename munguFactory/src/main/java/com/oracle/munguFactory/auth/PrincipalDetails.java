@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.oracle.munguFactory.dto.EmpDTO;
 import com.oracle.munguFactory.dto.SecurityUserDTO;
 
 import lombok.Data;
@@ -17,9 +18,11 @@ import lombok.Data;
 public class PrincipalDetails implements UserDetails {
 	
 	private SecurityUserDTO securityUser;
+	private EmpDTO empDTO;
 
-	public PrincipalDetails(SecurityUserDTO securityUser) {
+	public PrincipalDetails(SecurityUserDTO securityUser, EmpDTO empDTO) {
 		this.securityUser = securityUser;
+		this.empDTO = empDTO;
 		System.out.println("PrincipalDetails 생성자 securityUser->" + securityUser);
 	}
 	

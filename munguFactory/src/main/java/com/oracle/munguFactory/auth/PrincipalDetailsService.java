@@ -39,7 +39,8 @@ public class PrincipalDetailsService implements UserDetailsService {
 		else{
 			System.out.println("else");
 			SecurityUserDTO securityUser = new SecurityUserDTO(emp.getEmp_id(), emp.getEmp_password(),"ROLE_"+emp.getAuth_name());
-			return new PrincipalDetails(securityUser);
+			
+			return new PrincipalDetails(securityUser, emp);
 		}
 	}
 

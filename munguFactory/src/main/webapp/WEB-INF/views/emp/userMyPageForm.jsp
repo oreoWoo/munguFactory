@@ -35,7 +35,7 @@
 			var check = true;
 			var address = $('#postcode').val() + " " + $('#address').val() + " /" + $('#detailAddress').val();
 			var email = $('#user_email1').val() + "@" +  $('#user_email2').val()
-			
+					
 			$('#emp_address').attr('value', address);
 			$('#emp_email').attr('value', email);
 			
@@ -115,7 +115,7 @@
 		$(function()
 		{	
 			//이메일 값 나누기
-			var email = '${userEmp.emp_email}';
+			var email = '${emp.emp_email}';
 			var user_email = email.split('@');
 			var user_email1 = user_email[0];
 			var user_email2 = user_email[1];
@@ -124,7 +124,7 @@
 			$('#user_email2').attr('value', user_email2);
 			
 			//주소 값 불러온 후 나눠서 넣기
-			var address1 = '${userEmp.emp_address}';
+			var address1 = '${emp.emp_address}';
 			var index1 = address1.indexOf(' ');
 			var index2 = address1.indexOf('/');
 			
@@ -138,18 +138,18 @@
 			
 			if('${result}' == 1)
 			{
-				alert("회원 정보 삭제에 성공했습니다.");
+				alert("회원 정보 변경에 성공했습니다.");
 			}
 			else if('${result}' == 2)
 			{
-				alert("회원 정보 삭제에 실패했습니다.");
+				alert("회원 정보 변경에 실패했습니다.");
 			}
 			
 		});	
 </script>
 <head>
 <style type="text/css">
-	/* .form-control {
+	.form-control {
 		display: inline;
 		width: 50%;
 		height: calc(1.5em + .75rem + 2px);
@@ -173,7 +173,7 @@
 		
 	#postcode {
 		width: 300px;
-	} */
+	}
 	
 </style>
 <meta charset="UTF-8">
@@ -181,104 +181,46 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<h3>관리자용 마이페이지</h3>
-		<form action="/admin/adminEditUserInfo" method="post">
+		<h3>마이페이지</h3>
+		<form action="/user/editInfo" method="post">
 			<table class="table table-hover text-center">
 				<tr>
 					<th><label for="emp_no">사번</label></th>
-					<td><input type="text"   class="form-control" readonly tabindex="-1" id="emp_no" name="emp_no" value="${userEmp.emp_no}"></td>
+					<td><input type="text"   class="form-control" readonly tabindex="-1" id="emp_no" name="emp_no" value="${emp.emp_no}"}></td>
 				</tr>
-				
 				<tr>
 					<th><label for="emp_name">이름</label></th>
-					<td><input type="text"  class="form-control" id="emp_name" name="emp_name" value="${userEmp.emp_name}"></td>
+					<td><input type="text"  class="form-control" id="emp_name" name="emp_name" value="${emp.emp_name}"}></td>
 				</tr>
-				
 				<tr>
-					<th><label for="emp_name">아이디</label></th>
-					<td><input type="text"   class="form-control" readonly tabindex="-1" id="emp_id" name="emp_id" value="${userEmp.emp_id}"></td>
+					<th><label for="emp_id">아이디</label></th>
+					<td><input type="text"   class="form-control" readonly tabindex="-1" id="emp_id" name="emp_id" value="${emp.emp_id}"}></td>
 				</tr>
-				
 				<tr>
 					<th><label for="emp_password">비밀번호</label></th>
-					<td><input type="password"  class="form-control" id="emp_password" name="emp_password" value="${userEmp.emp_password}"></td>
+					<td><input type="password"  class="form-control" id="emp_password" name="emp_password" value="${emp.emp_password}"}></td>
 				</tr>
-				
 				<tr>
 					<th><label for="chk_emp_password">비밀번호 재확인</label></th>
-					<td><input type="password"  class="form-control" id="chk_emp_password" name="chk_emp_password" value="${userEmp.emp_password}"></td>
+					<td><input type="password"  class="form-control" id="chk_emp_password" name="chk_emp_password" value="${emp.emp_password}"}></td>
 				</tr>
-				
 				<tr>
 					<th>성별</th> 
-					<td> 
+					<td>
 						<c:choose>
-							<c:when test="${userEmp.emp_gender eq '남'}">
+							<c:when test="${emp.emp_gender eq '남'}">
 								<input type="radio" name="emp_gender" value="남" checked="checked">남성  
+								
 								<input type="radio" name="emp_gender" value="여" onclick="return false">여성  
 							</c:when>
 							<c:otherwise>
 								<input type="radio" name="emp_gender" value="남" onclick="return false">남성  
+								
 								<input type="radio" name="emp_gender" value="여" checked="checked">여성
 							</c:otherwise>
 						</c:choose>
 					</td>
 				</tr>
-				
-				<tr>
-					<th>권한 등급</th>
-					<td>
-						<select name="auth_no" id="auth_no">
-							<c:forEach var="auth" items="${authlist}">
-								<c:choose>
-									<c:when test="${auth.auth_no eq userEmp.auth_no}">
-										<option value="${auth.auth_no}" selected="selected">${auth.auth_name}</option>
-									</c:when>
-									<c:otherwise>
-										<option value="${auth.auth_no}">${auth.auth_name}</option>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						</select>
-					</td>
-				</tr>
-				
-				<tr>
-					<th>직책</th>
-					<td>
-						<select name="posit_no" id="posit_no">
-							<c:forEach var="pos" items="${poslist}">
-								<c:choose>
-									<c:when test="${pos.posit_no eq userEmp.posit_no}">
-										<option value="${pos.posit_no}" selected="selected">${pos.posit_name}</option>
-									</c:when>
-									<c:otherwise>
-										<option value="${pos.posit_no}">${pos.posit_name}</option>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						</select>
-					</td>
-				</tr>
-				
-				<tr>
-					<th>부서</th>
-					<td>
-						<select name="dept_no" id="dept_no">
-							<c:forEach var="dept" items="${deptlist}">
-								<c:choose>
-									<c:when test="${dept.dept_no eq userEmp.dept_no}">
-										<option value="${dept.dept_no}" selected="selected">${dept.dept_name}</option>
-									</c:when>
-									<c:otherwise>
-										<option value="${dept.dept_no}">${dept.dept_name}</option>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						</select>
-					</td>
-				</tr>
-				
 				<tr>
 					<th><label for="user_email">이메일</label></th>
 					<td><input type="text" class="form-control" name="user_email1" id="user_email1" required="required"> <br> 
@@ -294,7 +236,7 @@
 				<tr>
 					<th><label for="postcode">우편번호</label></th>
 					<td><input type="text" class="form-group form-control" id="postcode" name="member_address1" readonly tabindex="-1">
-					<input type="button" class="btn btn-primary" onclick="DaumPostcode()" value="우편번호 찾기"></td>
+					<input type="button" class="btn btn-primary" onclick="DaumPostcode()" value="우편번호 찾기"></span></td>
 				</tr>
 				
 				<tr>
@@ -308,17 +250,15 @@
 					<input type="hidden" id="extraAddress" placeholder="참고항목"></td>
 				</tr>
 				
-				<tr>	
-					<td><input type="submit" onclick="updateUpCheck()" value="수정하기">
-					<input type="submit" formaction="/admin/deleteEmpData" value="삭제하기"></td>
-				</tr>
-
 			</table>
+			
+			<div style=" text-align: center;">
+				<button type="submit" style="display: inline-block;" class="btn btn-primary btn-lg" onclick="updateUpCheck()">수정하기</button>
+			</div>
+			
 			<input type="hidden" id="emp_address" name ="emp_address"> 
 			<input type="hidden" id="emp_email" name = "emp_email"> 
 		</form>
-		
-					
 	</div>
 </body>
 </html>
