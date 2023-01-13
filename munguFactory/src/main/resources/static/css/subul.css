@@ -1,34 +1,37 @@
 @charset "UTF-8";
-.inventoryManagementContainer, .shipmentContainer{
-	background-color:white;
-	width: 90%;
-	margin :3% 5% 5% 5%;
-	padding: 2%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-content: center;
-}
-.searchPlace{
-	display: flex;
-	justify-content: space-between;
-}
-.form-select, .form-control{	
-	display: inline;
-	width: auto;
-}
-.ajaxContents td, th{
-	padding: 3px 0px 3px 0px;
-	margin: 0;
-	border: 0;
-	text-align: center;
-}
-.boldRed{
-	color: red;
-}
-.boldGreen{
-	color: green;
-}
-.insertShipment ul{
-	margin: 0;
-}
+	.inventoryManagementContainer, .shipmentContainer{
+		background-color:white;
+		width: 90%;
+		margin :3% 5% 5% 5%;
+		padding: 2%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-content: center;
+	}
+	.searchPlace{
+		display: flex;
+		justify-content: space-between;
+	}
+	.form-select, .form-control{	
+		display: inline;
+		width: auto;
+	}
+	.ajaxContents td, th{
+		padding: 3px 0px 3px 0px;
+		margin: 0;
+		border: 0;
+		text-align: center;
+	}
+	.boldRed{
+		color: red;
+	}
+	.boldGreen{
+		color: green;
+	}
+	.insertShipment ul{
+		margin: 0;
+	}
+	.fullsizemodal{
+		min-width: 80%;
+	}

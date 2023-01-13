@@ -22,4 +22,6 @@ public class SubulDTO {
 	private String factory_name;
 	private String item_name;
 	private String account_name;
+	private String factory_no;
+	private int account_no;
 }

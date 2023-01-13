@@ -54,7 +54,7 @@
 		<if test="factory_no!=null and factory_no!=0">AND i.factory_no=#{factory_no}</if>
 		<if test="subul_date!=null and !subul_date.equals('')">AND s.subul_date like concat('%',#{subul_date},'%')</if>
 		ORDER BY s.subul_num DESC
-		LIMIT 15 offset #{offset};
+		LIMIT #{rowPageOption} offset #{offset};
 	</select>
 	
 	<select id="getFactoryList" resultType="Factory">
