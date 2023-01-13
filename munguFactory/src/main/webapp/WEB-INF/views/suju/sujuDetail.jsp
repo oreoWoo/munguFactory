@@ -98,7 +98,8 @@
 									<th>품번</th>
 									<th>품명</th>
 									<th>수주수량</th>
-									<th>상태</th>
+									<th>제작 상태</th>
+									<th>발주 상태</th>
 								</tr>
 						</thead>
 						<tbody>
@@ -114,6 +115,12 @@
 									<td>${ordersDetail.item_name }</td>
 									<td>${ordersDetail.suju_amount }개</td>
 									<td>${ordersDetail.prod_state }</td>
+									<td>
+										<c:choose>
+											<c:when test="${not empty ordersDetail.balju_no}">발주 완료</c:when>
+											<c:otherwise>발주 전</c:otherwise>
+										</c:choose>
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>

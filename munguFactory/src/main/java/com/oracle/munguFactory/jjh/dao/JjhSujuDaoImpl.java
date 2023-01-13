@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.oracle.munguFactory.dto.OrdersDTO;
 import com.oracle.munguFactory.dto.OrdersDetailDTO;
+import com.oracle.munguFactory.dto.OrdersListDTO;
+import com.oracle.munguFactory.dto.OrdersPaging;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,5 +44,25 @@ public class JjhSujuDaoImpl implements JjhSujuDao {
 			log.error(e.getMessage());
 		}
 		return result;
+	}
+
+	@Override
+	public OrdersListDTO sujuList(OrdersPaging ordersPaging) {
+		log.info("sujuDetail start...");
+		List<OrdersDTO> ordersDTOs = null;
+		
+		int totCnt = 0;
+		try {
+			totCnt = session.selectOne("sujuTotCnt", ordersPaging);
+			System.out.println("totCnt?->" + totCnt);
+			ordersPaging.setInfo(totCnt);
+			ordersDTOs = session.selectList("sujuList", ordersPaging);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		OrdersListDTO ordersListDTO = new OrdersListDTO(ordersPaging, ordersDTOs);
+		
+		System.out.println("ordersListDTO?->" + ordersListDTO);
+		return ordersListDTO;
 	}
 }
