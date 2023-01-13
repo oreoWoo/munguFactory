@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.munguFactory.dto.ProdDTO;
 import com.oracle.munguFactory.hej.service.Paging;
@@ -18,7 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
+
 public class ProdController {
+	
 	private final ProdService ps;
 
 	@RequestMapping("/ProdList")
@@ -42,16 +44,31 @@ public class ProdController {
 		
 		return "prod/ProdList";
 	}
-	//수정
+	
+	//수정 Form
 	@RequestMapping(value="/ProdModPop", method = RequestMethod.GET)
-	public String detailModContent(Model model, int sujuNo) {
-		System.out.println("detailContent start ~!");
+	public String detailModContent(Model model, int suju_no, int item_no) {
+		System.out.println("detailContent start sujuNo->"+suju_no);
+		System.out.println("detailContent start itemNo->"+item_no);
 		
-		int prodDto =  ps.ContentModProd(sujuNo);
-		
+		ProdDTO prodDto = ps.ContentModProd(suju_no, item_no);
+	
+		System.out.println("ProdController detailModContent prodDto.getSujuNo()->"+prodDto.getSuju_no());
+		System.out.println("ProdController detailModContent prodDto.getItemNo()->"+prodDto.getItem_no());
+		System.out.println("잘 받아오는지??????-> "+ prodDto.getItem_name());
 		model.addAttribute("prodDto", prodDto);
 		
 		return "prod/detailContent";
 		
+	}
+	
+	// 수정 액션
+	@RequestMapping(value ="/modContent", method = RequestMethod.POST)
+	@ResponseBody
+	public int modContent(ProdDTO prodDto, Model model) {
+		System.out.println("modContent prodDto=> " + prodDto);
+		int prod = ps.modContent(prodDto);
+		
+		return prod;
 	}
 }

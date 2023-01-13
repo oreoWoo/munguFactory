@@ -41,16 +41,35 @@ public class ProdDaoImpl implements ProdDao {
 		return prodList;
 	}
 	@Override
-	public int ContentModProd(int sujuNo) {
+	public ProdDTO ContentModProd(int suju_no, int item_no) {
 		System.out.println("ProdDaoImpl ContentModProd start~!");
-		int modProd =0;
+		ProdDTO prod  = new ProdDTO();
+		ProdDTO prod1 = new ProdDTO();   // Parameter 용도
+		prod1.setSuju_no(suju_no);
+		prod1.setItem_no(item_no);
 		try {
-			Integer prod = session.selectOne("ModContent", sujuNo);
-			modProd=prod.intValue();
+			System.out.println("ProdDaoImpl  ContentModProd prod1.getSujuNo()->"+prod1.getSuju_no());
+			System.out.println("ProdDaoImpl  ContentModProd prod1.getItemNo()->"+prod1.getItem_no());
+		
+			  prod = session.selectOne("ModContent", prod1);
+			  System.out.println("ProdDaoImpl prod.getSujuNo()-> "+ prod.getSuju_no());
+			 
+			/* prod = session.selectOne("ModContent", sujuNo); */
 		} catch (Exception e) {
 			System.out.println("ProdDaoImpl prodList "+ e.getMessage());
 		}
-		return modProd;
+		return prod;
+	}
+	@Override
+	public int modContent(ProdDTO prodDto) {
+		int prod = 0;
+		try {
+			prod = session.update("updateContent", prodDto);
+			System.out.println("prodDto"+ prodDto);
+		} catch (Exception e) {
+			System.out.println("modContent"+ e.getMessage());
+		}
+		return prod;
 	}
 
 }

@@ -31,11 +31,21 @@ public class ProdServiceImpl implements ProdService {
 	}
 
 	@Override
-	public int ContentModProd(int sujuNo) {
+	public ProdDTO ContentModProd(int suju_no, int item_no) {
 		System.out.println("ProdServiceImpl ContentProd start~! ");
-		int prodDto = 0;
-		prodDto = pd.ContentModProd(sujuNo);
+		System.out.println("ProdServiceImpl  sujuNo->"+suju_no);
+		System.out.println("ProdServiceImpl  itemNo->"+item_no);
+		ProdDTO prodDto = new ProdDTO();
+		prodDto = pd.ContentModProd(suju_no, item_no);
 		return prodDto;
+	}
+
+	@Override
+	public int modContent(ProdDTO prodDto) {
+		System.out.println("ProdServiceImpl modContent start~! ");
+		int prod = 0;
+		prod = pd.modContent(prodDto);
+		return prod;
 	}
 
 	
