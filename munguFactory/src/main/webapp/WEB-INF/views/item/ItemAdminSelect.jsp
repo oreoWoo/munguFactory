@@ -7,14 +7,14 @@
 <head>
 <meta charset="UTF-8">
 <title>ItemAdminSelect</title>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	function deleteChk(item_no) {
 		if (confirm("품목을 삭제하시겠습니까?")) {
 			location.href="ItemAdminDelete?item_no="+item_no;
 		}
 		
 	}
-</script>
+</script> -->
 </head>
 <body>
 	<div class="subulContainer">
@@ -53,9 +53,9 @@
 			</tbody>
 		</table>
 		<button type="button" onclick="location.href='/ItemAdminList'">목록</button>
-		<button type="button"
-			onclick="location.href='/ItemAdminUpdate?item_no=${ias.item_no}'">수정</button>
-		<button type="button" onclick="deleteChk(${ias.item_no})'">삭제</button>
+		<button type="button" onclick="location.href='/ItemAdminUpdate?item_no=${ias.item_no}'">수정</button>
+		<button type="button" onclick="location.href='/ItemAdminDelete?item_no=${ias.item_no}'">삭제</button>
+		<%-- <button type="button" onclick="deleteChk(${ias.item_no})'">삭제</button> --%>
 	</div>
 </body>
 </html>

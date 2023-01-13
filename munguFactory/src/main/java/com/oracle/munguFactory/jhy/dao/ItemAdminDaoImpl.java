@@ -53,6 +53,27 @@ public class ItemAdminDaoImpl implements ItemAdminDao {
 		return itemAdminUpdate;
 	}
 
+	//ItemAdminDelete
+	@Override
+	public int itemAdminDelete(ItemDTO itemDto) {
+		int itemAdminDelete = session.delete("jhy_itemAdminDelete", itemDto);
+		return itemAdminDelete;
+	}
+
+	//Paging
+	@Override
+	public int totalCount() {
+		int totalCount = 0;
+		try {
+			totalCount = session.selectOne("jhy_totalCount");
+			System.out.println("totalCount->" + totalCount);
+		} catch (Exception e) {
+			System.out.println("totalCount->" + totalCount);
+			System.out.println("totalCount exception->" + e.getMessage());
+		}
+		return totalCount;
+	}
+
 
 
 }
