@@ -10,5 +10,8 @@ public class ItemDTO {
 	private int stock_unit;		//재고단위
 	private String item_check;	//생산여부
 	private String hs_code;		//HS코드
+	
+	//factory
+	private String factory_name; //공장명
 
 }

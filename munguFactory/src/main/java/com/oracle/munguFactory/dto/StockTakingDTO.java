@@ -23,8 +23,8 @@ public class StockTakingDTO {
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE_TIME)
-	private LocalDateTime date;
-	private Integer inventory_count;
+	private LocalDateTime subul_date;
+	private Integer db_amount;
 	private String factory_name;
 	private String item_name;
 	private Integer stock_count;
@@ -36,5 +36,11 @@ public class StockTakingDTO {
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
 	private LocalDate endDate;
+	
+	private String pageNum;
+	private int start;
+	private int end;
+	private int rowPage;
+	private String currentPage;
 	
 }

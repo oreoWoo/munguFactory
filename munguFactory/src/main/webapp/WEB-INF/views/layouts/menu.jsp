@@ -126,13 +126,18 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="#" class="menu-link">
+                  <a href="/loginForm" class="menu-link">
                     <div data-i18n="Account">로그인</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="#" class="menu-link">
-                    <div data-i18n="Notifications">비밀번호 찾기</div>
+                  <a href="/signUp" class="menu-link">
+                    <div data-i18n="Account">회원가입</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="/findIdPwForm" class="menu-link">
+                    <div data-i18n="Notifications">아이디/비밀번호 찾기</div>
                   </a>
                 </li>
               </ul>
@@ -148,12 +153,12 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="#" class="menu-link">
+                  <a href="/accountList" class="menu-link">
                     <div data-i18n="Account">거래처 등록</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="#" class="menu-link">
+                  <a href="/factoryList" class="menu-link">
                     <div data-i18n="Notifications">공장 등록</div>
                   </a>
                 </li>
@@ -229,12 +234,28 @@
               </a>
             </li>
              <li class="menu-item">
-              <a href="#" class="menu-link">
+              <a href="/Shipment" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">출하 등록</div>
               </a>
             </li>
 			
+			 <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">관리자 기능</span>
+            </li>
+            <li class="menu-item">
+              <a href="/userlist" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">유저리스트</div>
+              </a>
+            </li>
+             <li class="menu-item">
+              <a href="/makeUserList" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">유저리스트 생성</div>
+              </a>
+            </li>
+            
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Pages</span>
             </li>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.munguFactory.mapper.lhj.account">
+
+	<!-- 거래처 전체 갯수  -->
+	<select id="hjTotalAccount" resultType="int">
+		select Count(*) FROM accounts
+	</select>
+	
+	<select id="hjsearchAccountTotal" parameterType="string" resultType="int">
+		 select Count(*)
+	     from accounts
+	     where account_name like CONCAT('%',#{searchString},'%')
+	</select>
+	
+	<!-- 거래처 전체리스트 -->
+	<select id="hjAccountList" parameterType="Accounts" resultType="Accounts">
+ 		SELECT *
+		FROM
+		(SELECT * FROM ACCOUNTS ORDER BY ACCOUNT_NO DESC)
+ 		orders  limit #{pageBlock} OFFSET #{start} 
+		
+	</select>
+	
+	<!-- 거래처번호별 상세정보  -->
+	<select id="hjAccountInfoDetail" parameterType="int" resultType="Accounts">
+		select *
+		from  accounts 
+		where account_no=#{account_no}
+	</select>
+	
+	<!-- 거래처번호별 수정 페이지 -->
+	<select id="hjAcountUpdateForm" parameterType="int" resultType="Accounts">
+		select *
+		from  accounts 
+		where account_no=#{account_no}
+	</select>
+	
+	<!-- 거래처 정보 수정 -->
+	<update id="hjUpdateAccount" parameterType="Accounts">
+	 <![CDATA[
+		update accounts
+		set   account_name=#{account_name},
+			  account_type=#{account_type},
+			  acc_conditions=#{acc_conditions},
+			  acc_category=#{acc_category},
+			  acc_owner=#{acc_owner},
+		      acc_address=#{acc_address},
+		      acc_address2=#{acc_address2},
+		      acc_zipcode=#{acc_zipcode},
+		      acc_manager=#{acc_manager},
+		      acc_telnum=#{acc_telnum},
+		      acc_enddate=#{acc_enddate},
+		      acc_state=if(date(acc_enddate) > date(sysdate()), 0,1)
+		where account_no=#{account_no}
+		  ]]>
+	</update>
+	
+	<!-- 거래처 신규 등록 -->
+	<insert id="hjAddAccount" parameterType="Accounts">
+	
+		insert into accounts
+			(account_name,
+		     account_idno,
+		     account_type,
+		     acc_owner,
+		     acc_zipcode,
+		     acc_address,
+		     acc_address2,
+		     acc_conditions,
+		     acc_category,
+		     acc_manager,
+		     acc_enddate,
+		     acc_state,
+		     acc_telnum)
+		values(
+			#{account_name},
+			#{account_idno},
+			#{account_type},
+			#{acc_owner},
+			#{acc_zipcode},
+			#{acc_address},
+			#{acc_address2},
+			#{acc_conditions},
+			#{acc_category},
+			#{acc_manager},
+			#{acc_enddate},
+			#{acc_state},
+			#{acc_telnum}
+		
+		)
+	</insert>
+	
+	<!-- 거래처 정보삭제 -->
+	<delete id="hjAccountDelete" parameterType="int">
+		delete 
+		from accounts
+		where account_no=#{account_no}
+	</delete>
+	
+	<!-- 거래처 검색 -->
+	<select id="hjsearchAccount" parameterType="string" resultType="Accounts">
+	
+	   select *
+	   from accounts
+	   where account_name like CONCAT('%',#{searchString},'%')
+
+	
+	</select>
+</mapper>

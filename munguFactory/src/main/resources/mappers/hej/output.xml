@@ -8,8 +8,8 @@
 	</select>
 
 	<!-- 생산실적 목록 -->
-	<select id="outputList" resultType="Output" parameterType="Output">
-      SELECT  *   FROM
+	<select id="outputList" resultType="Output" parameterType="Page">
+       SELECT  *   FROM
         (SELECT  *   FROM 
          (SELECT 
                  @ROWNUM:=@ROWNUM + 1 AS ROWNUM, 
@@ -20,8 +20,8 @@
                             ,item_name
                             ,finish_date
                             ,prod_amount
-                           ,poor_quantity
-                           ,yield
+                            ,poor_quantity
+                            ,yield
              FROM
                  output P, (SELECT @ROWNUM:=0) TMP
              ORDER BY prod_no DESC) SUB
@@ -29,6 +29,67 @@
                   <![CDATA[where ROWNUM >#{start} and ROWNUM <=#{end}]]>
 	</select>
 	
+	<!-- 생산실적 상세 정보 -->	
+	<select id="outputDetail" parameterType="int" resultType="Output">
+		SELECT * FROM output WHERE prod_no = #{prod_no}	
+	</select>
+	
+	
+	<!-- 생산실적 등록 -->
+	<insert id="insertOutput" parameterType="Output">
+		INSERT INTO output(factory_no, item_no, item_name, emp_no, finish_date, prod_amount, poor_quantity, yield)
+		VALUES(#{factory_no}, #{item_no}, #{item_name}, #{emp_no}, now(), #{prod_amount}, #{poor_quantity},  (#{poor_quantity}/#{prod_amount})*100)
+	</insert>
+
+	<!-- 생산실적 수정 (공장코드, 사원번호) -->
+    <update id="updateOutput" parameterType="Output">
+		 UPDATE output SET factory_no=#{factory_no}, emp_no=#{emp_no}
+		 WHERE  prod_no=#{prod_no}
+	</update>	
+	
+	<!-- 생산실적 삭제 -->
+	<delete id="deleteOutput" parameterType="int">
+		DELETE FROM output WHERE prod_no=#{prod_no}
+	</delete>
+	
+	<!-- 생산실적 관련 조회 -->
+ 	<select id="outputSearchList" parameterType="Output"  resultType="Output">
+		SELECT *
+		FROM output
+		WHERE true
+		<choose>
+			<!-- 품번 -->
+			<when test="search.equals('item_no')">
+			    AND	item_no LIKE concat('%', #{keyword}, '%')
+			</when>
+			
+			<!-- 품명 -->
+			<when test="search.equals('item_name')">
+				AND item_name LIKE concat('%', #{keyword}, '%')
+			</when>
+
+			<!-- 사원번호 -->
+			<when test="search == 'emp_no'">
+				AND emp_no LIKE concat('%', #{keyword}, '%')
+			</when>
+			
+			<!-- 공장코드 -->
+			<when test="search == 'factory_no'">
+				AND factory_no LIKE concat('%', #{keyword}, '%')
+			</when>
+			
+			<otherwise>
+								<!-- 품번,품명, 사원번호, 공장 -->
+				AND item_no    LIKE CONCAT('%', #{keyword}, '%')
+				OR  item_name  LIKE CONCAT('%', #{keyword}, '%')
+				OR  emp_no	   LIKE CONCAT('%', #{keyword}, '%')
+				OR  factory_no LIKE CONCAT('%', #{keyword}, '%')
+			</otherwise>
+		</choose>
+	</select>
+	
+	
+	<!-- select option용 -->
 	<!-- 공장 목록 -->
 	<select id="factoryList" resultType="Factory">
 		SELECT * FROM factory
@@ -39,25 +100,65 @@
 		SELECT * FROM emp
 	</select>
 	
-	<!-- 생산실적 등록 -->
-	<insert id="insertOutput" parameterType="Output">
-		INSERT INTO output(factory_no, item_no, item_name, emp_no, finish_date, prod_amount, poor_quantity, yield)
-		VALUES(#{factory_no}, #{item_no}, #{item_name}, #{emp_no}, #{finish_date}, #{prod_amount}, #{poor_quantity},  (#{poor_quantity}/#{prod_amount})*100)
-	</insert>
-	
-	<!-- 생산실적 상세 정보 -->	
-	<select id="outputDetail" parameterType="int" resultType="Output">
-		SELECT * FROM output WHERE prod_no = #{prod_no}	
+	<select id="getOutputListSize" resultType="int" parameterType="Output">
+		SELECT COUNT(*)
+		FROM output
+		WHERE true
+		<if test="searchOption != null">
+			<choose>
+				<when test="searchOption.equals('전체')">
+					<!-- 품번,품명, 사원번호, 공장 -->
+					AND item_no    LIKE CONCAT('%', #{keyword}, '%')
+					OR  item_name  LIKE CONCAT('%', #{keyword}, '%')
+					OR  emp_no	   LIKE CONCAT('%', #{keyword}, '%')
+					OR  factory_no LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="searchOption.equals('품번')">AND item_no 	   LIKE CONCAT('%', #{keyword}, '%')</when>
+				<when test="searchOption.equals('품번')">AND item_name  LIKE CONCAT('%', #{keyword}, '%')</when>
+				<when test="searchOption.equals('품번')">AND emp_no 	   LIKE CONCAT('%', #{keyword}, '%')</when>
+				<when test="searchOption.equals('품번')">AND factory_no LIKE CONCAT('%', #{keyword}, '%')</when>
+			</choose>
+		</if>
 	</select>
 	
-
-<!--     <update id="tkEmpUpdate" parameterType="Emp">
-		 UPDATE emp SET ename=#{ename}, job=#{job}, mgr=#{mgr},
-					    sal=#{sal}, 
-					    hiredate=#{hiredate}, 
-		                <if test="#{comm}!=null"> 	comm=#{comm},    </if>
-		                deptno=#{deptno} 
-		 WHERE  empno=#{empno}
-   </update>	
-	 -->
+	<insert id="insertOutputSubul" useGeneratedKeys="true" keyProperty="">
+		INSERT INTO subul(item_no, emp_no, serial_no, subul_date, amount, gubun)
+		VALUES (#{item_no}, #{emp_no}, (SELECT max(prod_no) FROM output), now(), #{prod_amount}, "입고")
+	</insert>
+	
+ 	<update id="plusOutputStorage" parameterType="Output">
+		 UPDATE storages
+		 SET stock_count= 
+		 	(SELECT *
+		 	FROM    (SELECT stock_count + #{prod_amount}
+		 			 FROM storages
+		 			 WHERE item_no=#{item_no}) a)
+		 WHERE item_no=#{item_no}
+	</update>	
+	
+<!-- 트랜잭션 수정. (창고) -->
+<!-- 		<update id="updateStorageOutput" parameterType="Output">
+		
+	</update>
+	           -->        
+<!--     	SELECT *
+    	FROM   output
+    	WHERE true
+		<if test="searchOption != null">
+			<choose>
+				<when test="searchOption.equals('전체')">
+					품번,품명, 사원번호, 공장
+					AND item_no    LIKE CONCAT('%', #{searchString}, '%')
+					OR  item_name  LIKE CONCAT('%', #{searchString}, '%')
+					OR  emp_no	   LIKE CONCAT('%', #{searchString}, '%')
+					OR  factory_no LIKE CONCAT('%', #{searchString}, '%')
+				</when>
+				<when test="searchOption.equals('품번')">AND item_no 	   LIKE CONCAT('%', #{searchString}, '%')</when>
+				<when test="searchOption.equals('품번')">AND item_name  LIKE CONCAT('%', #{searchString}, '%')</when>
+				<when test="searchOption.equals('품번')">AND emp_no 	   LIKE CONCAT('%', #{searchString}, '%')</when>
+				<when test="searchOption.equals('품번')">AND factory_no LIKE CONCAT('%', #{searchString}, '%')</when>
+			</choose>
+		</if>
+		ORDER BY prod_no DESC
+		LIMIT 15 offset #{offset};  --> 
 </mapper>

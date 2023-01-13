@@ -5,7 +5,10 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.oracle.munguFactory.dto.AccountsDTO;
 import com.oracle.munguFactory.dto.FactoryDTO;
+import com.oracle.munguFactory.dto.OrdersDTO;
+import com.oracle.munguFactory.dto.OrdersDetailDTO;
 import com.oracle.munguFactory.dto.PageDTO;
 import com.oracle.munguFactory.dto.SubulDTO;
 
@@ -29,7 +32,6 @@ public class ljwDaoImpl implements ljwDao {
 		}
 		return result;
 	}
-
 	@Override
 	public int getSubulListSize(PageDTO searchOptions) {
 		log.info("getSubulListSize() start...");
@@ -41,7 +43,6 @@ public class ljwDaoImpl implements ljwDao {
 		}
 		return result;
 	}
-
 	@Override
 	public List<FactoryDTO> getFactoryList() {
 		log.info("getFactoryList() start...");
@@ -50,6 +51,57 @@ public class ljwDaoImpl implements ljwDao {
 			result = session.selectList("getFactoryList");
 		} catch (Exception e) {
 			log.info("getFactoryList() e.getMessage... : "+e.getMessage());
+		}
+		return result;
+	}
+	@Override
+	public List<AccountsDTO> getAccountList() {
+		List<AccountsDTO> result = null;
+		try {
+			result = session.selectList("ljwGetAccountList");
+		} catch (Exception e) {
+			log.info("getAccountList() e.getMessage... : "+e.getMessage());
+		}
+		return result;
+	}
+	@Override
+	public List<OrdersDTO> getOrderList(int account_no) {
+		List<OrdersDTO> result = null;
+		try {
+			result = session.selectList("ljwGetOrderList",account_no);
+		} catch (Exception e) {
+			log.info("getOrderList() e.getMessage... : "+e.getMessage());
+		}
+		return result;
+	}
+	@Override
+	public List<OrdersDetailDTO> getOrdersDetailList(int suju_no) {
+		List<OrdersDetailDTO> result = null;
+		try {
+			result = session.selectList("ljwGetOrdersDetailList",suju_no);
+		} catch (Exception e) {
+			log.info("getOrdersDetailList() e.getMessage... : "+e.getMessage());
+		}
+		return result;
+	}
+	@Override
+	public int insertShipment(SubulDTO subul) throws Exception{
+		int result = 0;
+		session.insert("insertShipment",subul);
+		session.update("insertShipmentStroage",subul);
+		result = session.update("baljuUpdate",subul);
+		return result;
+	}
+	@Override
+	public OrdersDetailDTO getOrdersDetail(int suju_no, int item_no) {
+		OrdersDetailDTO result = null;
+		OrdersDetailDTO param = new OrdersDetailDTO();
+		param.setItem_no(item_no);
+		param.setSuju_no(suju_no);
+		try {
+			result = session.selectOne("getOrdersDetail",param);
+		} catch (Exception e) {
+			log.info("insertShipment() e.getMessage... : "+e.getMessage());
 		}
 		return result;
 	}

@@ -20,8 +20,6 @@
 	    width: 80px;
 	}
 	
-	
-	
 	input[type="number"]::-webkit-outer-spin-button,
 	input[type="number"]::-webkit-inner-spin-button {
 	    -webkit-appearance: none;
@@ -51,16 +49,20 @@
                           <input type="number"
                               id="meeting-time"
                               class="form-control phone-mask input"
+                              value=""
+                              name="item_no"
                               aria-label="658 799 8941"
                               aria-describedby="basic-default-phone"
                               style="width:210px; translate: 12px;"
-                          />
+                          >
                         </div>
                         <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label" for="basic-default-message">품명</label>
                           <input type="text"
                               id="meeting-time"
                               class="form-control phone-mask"
+                              value=""
+                              name="item_name"
                               aria-label="658 799 8941"
                               aria-describedby="basic-default-phone"
                               style="width:210px; translate: 12px;"
@@ -75,24 +77,10 @@
                           	</select>
                         </div>
                         <div class="row mb-3" style="translate: 20px;">
-                          <label class="col-sm-2 col-form-label" for="basic-default-message">작업일시</label>
-                          <div class="col-sm-10">
-                            <input type="datetime-local"
-                              value="2023-01-05T12:30"
-                              id="meeting-time"
-                              min="2023-01-02T00:00"
-                              max="2023-01-31T00:00"
-                              class="form-control phone-mask"
-                              aria-label="658 799 8941"
-                              aria-describedby="basic-default-phone"
-                              style="width:210px;"
-                            />
-                          </div>
-                        </div>
-                        <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label" for="basic-default-message">생산수량</label>
                           <div class="col-sm-10">
-                            <input type="number" id="fn_prod_amount" name="fn_prod_amount"
+                            <input type="number" id="fn_prod_amount" name="prod_amount"
+                              value=""
                               min="1"
                               class="form-control phone-mask num_only"
                               aria-label="658 799 8941"
@@ -104,7 +92,8 @@
                         <div class="row mb-3" style="translate: 20px;">
                           <label class="col-sm-2 col-form-label" for="basic-default-message">불량수량</label>
                           <div class="col-sm-10">
-                            <input type="number" id="fn_poor_quantity" name="fn_poor_quantity"
+                            <input type="number" id="fn_poor_quantity" name="poor_quantity"
+                              value=""
                               min="0" max="fn_prod_amount"
                               class="form-control phone-mask num_only"
                               aria-label="658 799 8941"
@@ -113,15 +102,6 @@
                             />
                           </div>
                         </div>
-<!--                         <div class="row mb-3" style="translate: 20px;">
-                          <label class="col-sm-2 col-form-label text-right font-weight-bold num_only" for="basic-default-message">수율</label>
-                          <div class="col-sm-10">
-                            <input type="text" id="fn_yield" name="fn_yield" class="form-control phone-mask num_only" aria-label="658 799 8941"
-                              aria-describedby="basic-default-phone"
-                              style="width:210px;" required
-                            />
-                          </div>
-                        </div> -->
                         <div class="row justify-content-end">
                           <div class="col-sm-10">
                             <input type="submit" class="btn btn-primary" style="translate: -45px;" required>
@@ -135,7 +115,6 @@
 </body>
 <script type="text/javascript">
 
-
 	// 수율 계산
 	$(function() {
 			$('input.num_only').on('keyup', function() {
@@ -148,7 +127,6 @@
 				$("#fn_yield").val(yield+'%');
 			});
 		});
-
 
 </script>
 </html>

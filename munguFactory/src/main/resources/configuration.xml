@@ -3,21 +3,33 @@
 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+
 	<typeAliases>
 
 		<typeAlias alias="Output"   type="com.oracle.munguFactory.dto.OutputDTO"/>
 		<typeAlias alias="Page"     type="com.oracle.munguFactory.dto.PageDTO" />
 		<typeAlias alias="Subul" 	type="com.oracle.munguFactory.dto.SubulDTO" />
+
 		<typeAlias alias="Factory"  type="com.oracle.munguFactory.dto.FactoryDTO" />
 		<typeAlias alias="Emp"      type="com.oracle.munguFactory.dto.EmpDTO"/>
 		<typeAlias alias="Prod" type="com.oracle.munguFactory.dto.ProdDTO"/>
 
 		<typeAlias alias="item" type="com.oracle.munguFactory.dto.ItemDTO"/>
 
+		<typeAlias alias="Accounts"	type="com.oracle.munguFactory.dto.AccountsDTO"/>
+		<typeAlias alias="Orders"	type="com.oracle.munguFactory.dto.OrdersDTO"/>
+		
 		<!-- stockTaking -->
 		<typeAlias alias="StockTaking"  type="com.oracle.munguFactory.dto.StockTakingDTO" />
 		
 		<!-- suju -->
-		<typeAlias alias="OrdersDetail" type="com.oracle.munguFactory.dto.OrdersDetailDTO" />
+		<typeAlias alias="OrdersDetail"  type="com.oracle.munguFactory.dto.OrdersDetailDTO" />
+		<typeAlias alias="Orders"  type="com.oracle.munguFactory.dto.OrdersDTO" />
+		
+		<!-- emp -->
+		<typeAlias alias="Dept"  type="com.oracle.munguFactory.dto.DeptDTO" />
+	    <typeAlias alias="Posit"  type="com.oracle.munguFactory.dto.PositDTO" />
+	    <typeAlias alias="Auth"  type="com.oracle.munguFactory.dto.AuthorityDTO" />
+	    <typeAlias alias="EmpList"  type="com.oracle.munguFactory.dto.EmpListDTO" />
 	</typeAliases>
 </configuration>

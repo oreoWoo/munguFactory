@@ -7,26 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-.inventoryManagementContainer{
-	background-color:white;
-	width: 80%;
-	margin :5% 10% 10% 10%;
-	padding: 2%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-content: center;
-}
-.searchPlace{
-	display: flex;
-	justify-content: space-between;
-}
-.form-select, .form-control{	
-	display: inline;
-	width: auto;
-}
-</style>
+<link href="/css/subul.css" rel="styleSheet" type="text/css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	function ajaxChk(pageNum){
@@ -54,6 +35,7 @@
 	<div class="inventoryManagementContainer">
 		<h1>수불부</h1>
 		<form class="searchPlace" onsubmit="return false">
+			<input type="hidden" value="inventoryManagement/inventoryManagementList" name="pageaddr">
 			<input type="hidden" value="1" name="pageNum" id="pageNum">
 			<div class="category">
 				<select class="form-select" name="factory_no" onchange="ajaxChk(1)">

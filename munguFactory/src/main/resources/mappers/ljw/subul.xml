@@ -4,7 +4,8 @@
 <mapper namespace="com.oracle.munguFactory.mappers.ljw.subul">
 	<select id="getSubulListSize" resultType="int" parameterType="Page">
 		SELECT COUNT(*)
-		FROM SUBUL s, emp e, item i, factory f
+		FROM emp e, item i, factory f, SUBUL s
+		LEFT JOIN orders o ON s.serial_no=o.suju_no
 		WHERE s.EMP_NO=e.EMP_NO
 		AND s.item_no=i.item_no
 		AND i.factory_no=f.factory_no
@@ -29,7 +30,9 @@
 	
 	<select id="getSubulList" resultType="Subul" parameterType="Page">
 		SELECT *
-		FROM SUBUL s, emp e, item i, factory f
+		FROM emp e, item i, factory f, SUBUL s
+		LEFT JOIN orders o ON s.serial_no=o.suju_no
+		LEFT JOIN accounts a on o.account_no=a.account_no
 		WHERE s.EMP_NO=e.EMP_NO
 		AND s.item_no=i.item_no
 		AND i.factory_no=f.factory_no
@@ -57,5 +60,50 @@
 	<select id="getFactoryList" resultType="Factory">
 		SELECT * FROM factory ORDER BY factory_name
 	</select>
-
+	<select id="ljwGetAccountList" resultType="Accounts">
+		SELECT DISTINCT a.account_no, a.* 
+		FROM accounts a, orders o, orders_detail od 
+		WHERE a.account_no=o.account_no 
+		AND o.Suju_No=od.Suju_No
+		AND od.balju_No IS NULL
+	</select>
+	<select id="ljwGetOrderList" resultType="Orders" parameterType="int">
+		SELECT distinct o.suju_no, o.* 
+		FROM orders o, orders_detail od 
+		WHERE o.account_no=#{account_no}
+		AND o.Suju_No=od.Suju_No 
+		AND od.balju_No IS NULL
+	</select>
+	<select id="ljwGetOrdersDetailList" resultType="OrdersDetail" parameterType="int">
+		SELECT * 
+		FROM orders_detail od, item i, storages s 
+		WHERE od.Suju_No=#{suju_no} 
+		AND od.item_no=i.item_no 
+		AND s.item_no=od.item_no
+		AND od.balju_no IS NULL
+	</select>
+	<insert id="insertShipment" parameterType="Subul" keyColumn="subul_num" useGeneratedKeys="true" keyProperty="subul_num">
+		INSERT INTO subul (item_no, emp_no, serial_no, db_amount, amount, gubun) 
+		VALUES (#{item_no}, #{emp_no}, #{serial_no}, (select stock_count FROM storages WHERE item_no=#{item_no}), ${amount}, '출하')
+	</insert>
+	<update id="insertShipmentStroage" parameterType="Subul">
+		UPDATE storages 
+		SET stock_count = 
+			(SELECT * 
+			FROM (	SELECT stock_count-#{amount}
+					FROM storages 
+					WHERE item_no=#{item_no}) a) 
+		WHERE item_no = #{item_no}
+	</update>
+	<update id="baljuUpdate" parameterType="Subul">
+		UPDATE orders_detail SET balju_No = #{subul_num} WHERE Suju_No = #{serial_no} AND item_no=#{item_no}
+	</update>
+	<select id="getOrdersDetail" parameterType="OrdersDetail" resultType="OrdersDetail">
+		SELECT * 
+		FROM orders_detail od, storages s, item i 
+		WHERE od.Suju_No=#{suju_no} 
+		AND od.item_no=#{item_no}
+		AND s.item_no=#{item_no} 
+		AND i.item_no=od.item_no
+	</select>
 </mapper>
