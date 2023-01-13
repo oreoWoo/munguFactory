@@ -23,10 +23,10 @@
                             ,poor_quantity
                             ,yield
              FROM
-                 output P, (SELECT @ROWNUM:=0) TMP
+                 output P, (SELECT @ROWNUM:=2) TMP
              ORDER BY prod_no DESC) SUB
                  ORDER BY SUB.ROWNUM ASC)the
-                  <![CDATA[where ROWNUM >#{start} and ROWNUM <=#{end}]]>
+                  <![CDATA[where ROWNUM >#{start} and ROWNUM <=#{end}+1]]>
 	</select>
 	
 	<!-- 생산실적 상세 정보 -->	
@@ -79,13 +79,13 @@
 			</when>
 			
 			<otherwise>
-								<!-- 품번,품명, 사원번호, 공장 -->
 				AND item_no    LIKE CONCAT('%', #{keyword}, '%')
 				OR  item_name  LIKE CONCAT('%', #{keyword}, '%')
 				OR  emp_no	   LIKE CONCAT('%', #{keyword}, '%')
 				OR  factory_no LIKE CONCAT('%', #{keyword}, '%')
 			</otherwise>
 		</choose>
+		ORDER BY prod_no DESC
 	</select>
 	
 	
@@ -136,11 +136,7 @@
 		 WHERE item_no=#{item_no}
 	</update>	
 	
-<!-- 트랜잭션 수정. (창고) -->
-<!-- 		<update id="updateStorageOutput" parameterType="Output">
-		
-	</update>
-	           -->        
+      
 <!--     	SELECT *
     	FROM   output
     	WHERE true
