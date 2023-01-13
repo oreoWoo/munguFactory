@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.munguFactory.mapper.kdj.prod">
+	<!-- <resultMap type="Prod" id="prodMap">
+
+	   <result column="Suju_No" property="suju_no"/>
+	   <result column="item_no" property="item_no"/>
+	   <result column="emp_no" property="emp_no"/>
+	   <result column="Finish_Date" property="finish_date"/>
+	   <result column="Prod_Date" property="prod_date"/>
+	   <result column="Prod_Amount" property="prod_amount"/>
+	   <result column="Prod_State" property="prod_state"/>
+	   <result column="Factory_no" property="factory_no"/>
+
+	   
+	</resultMap> -->
+
+	<select id="totalProdCnt" resultType="int">
+	   SELECT 
+	   		Count(*) 
+	   FROM  
+	   	 	production_order
+	</select>
+
+	<select id="prodList" resultType="Prod" parameterType="Prod" >
+		
+                        
+       SELECT  *   FROM
+   			  (SELECT  *   FROM 
+					(SELECT 
+					        @ROWNUM:=@ROWNUM + 1 AS ROWNUM, 
+					                      suju_no
+							          	 ,item_no
+							             ,emp_no
+							             ,finish_date
+							             ,prod_date
+							             ,prod_amount
+								         ,prod_state
+								         ,factory_no
+					    FROM
+					        production_order P, (SELECT @ROWNUM:=0) TMP
+					    ORDER BY suju_no DESC) SUB
+                       ORDER BY SUB.ROWNUM ASC)the
+                        <![CDATA[where ROWNUM >#{start} and ROWNUM <=#{end}]]>                 
+                      
+	</select>
+	
+	<select id="ModContent" parameterType="Prod" resultType="Prod">
+		
+			select 
+						 p.suju_no
+						,p.item_no
+						,p.emp_no
+						,p.finish_date
+						,p.prod_date
+						,p.prod_amount
+						,p.prod_state
+						,p.factory_no
+						,i.item_name
+					
+					from 
+					        production_order p, item i
+				    where   p.suju_No =#{suju_no}
+				    and     p.item_no =i.item_no
+		 
+		
+	</select>
+	<select id="updateContent" parameterType="Prod" >
+	update 
+	 		production_order
+	 set
+	 	     emp_no=#{emp_no}
+	 	    ,Prod_State='생산완료'	 	   
+	 		,Prod_Amount=#{prod_amount}
+	 	    ,Finish_Date=#{finish_date}
+	 where   
+	        Suju_No =#{suju_no}
+	 and    
+	 		item_no =#{item_no}
+	</select>
+</mapper>
