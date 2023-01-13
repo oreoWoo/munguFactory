@@ -8,6 +8,7 @@
 	String context = request.getContextPath();
 %>
 <html>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <head>
 	<script type="text/javascript">
 		function checkData()
@@ -43,7 +44,7 @@
 		}
 		
 		
-		$(function()
+/* 		$(function()
 		{		
 			if('${result}' == 1)
 			{
@@ -53,16 +54,48 @@
 			{
 				alert("사원 리스트에 등록 실패했습니다. 입력정보를 다시 확인해 주세요");
 			}
-		});	
+		});	 */
 	</script>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 </head>
+<style type="text/css">
+	.form-control {
+		display: inline;
+		width: 50%;
+		height: calc(1.5em + .75rem + 2px);
+		padding: .375rem .75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #6e707e;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d1d3e2;
+		border-radius: .35rem;
+		-webkit-transition: border-color .15s ease-in-out, -webkit-box-shadow
+			.15s ease-in-out;
+		transition: border-color .15s ease-in-out, -webkit-box-shadow .15s
+			ease-in-out;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out,
+			-webkit-box-shadow .15s ease-in-out
+		}
+		
+	#postcode {
+		width: 300px;
+	}
+	
+</style>
 <body>
-		<h2>유저 등록하기</h2>
-		<div class="container-fluid">
-			<form action="/createUserList">
-				<table class="table table-hover text-center">
+		
+		<div class="container-fluid" >
+			<div class="card mb-6">
+
+			 
+			<h4 class="fw-bold py-3 mb-4" style="padding-left: 80px; margin-top: 50px;">유저 등록하기</h4>
+			<form action="/admin/createUserList">
+				<table class="table" style="width: 1300px; margin-left:50px;  margin-top: 50px; margin-bottom: 50px;">
 					<tr>
 						<th>사원 이름</th>
 						<td><input type="text" id="emp_name" name="emp_name"></td>
@@ -113,11 +146,12 @@
 				</table>
 				
 				<div style=" text-align: center;" class="form-group" id="sendBut">
-					<button type="submit" class="btn btn-primary btn-lg" onclick="return checkData()">등록하기</button>
+					<button type="submit" class="btn btn-primary btn-lg" onclick="return checkData(); return false;">등록하기</button>
 				</div>
+				<br>
 				
 			</form>
-			
+		</div>	
 		</div>
 </body>
 </html>
