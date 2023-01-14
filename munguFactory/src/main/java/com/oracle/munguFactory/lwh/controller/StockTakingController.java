@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.oracle.munguFactory.auth.PrincipalDetails;
 import com.oracle.munguFactory.dto.ItemDTO;
 import com.oracle.munguFactory.dto.StockPaging;
 import com.oracle.munguFactory.dto.StockTakingDTO;
@@ -19,14 +24,16 @@ import com.oracle.munguFactory.lwh.service.StockTakingService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping(value = "/stocktaking")
+@RequestMapping(value = "/user/stocktaking")
 @RequiredArgsConstructor
 public class StockTakingController {
 
 	private final StockTakingService st;
 	
 	@GetMapping(value = "/main")
-	public String goStockTaking(Model model, StockTakingDTO stockTakingDTO) {
+	public String goStockTaking(Model model, StockTakingDTO stockTakingDTO, HttpSession session) {
+		UserDetails ud = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		PrincipalDetails pd = (PrincipalDetails) ud;
 		
 		//공장 코드
 		model.addAttribute("factoryList", st.selectFactoryList());
@@ -34,6 +41,9 @@ public class StockTakingController {
 		model.addAttribute("itemList", st.selectItemList(stockTakingDTO));
 		//수불부 - '재고실사' 목록
 		model.addAttribute("subulList", st.selectSubulList());
+		//emp_no
+		model.addAttribute("emp_no",pd.getEmpDTO().getEmp_no());
+		model.addAttribute("emp_name",pd.getEmpDTO().getEmp_name());
 		
 		return "stocktaking/stocktaking";
 	}
@@ -69,7 +79,7 @@ public class StockTakingController {
 	
 	@ResponseBody
 	@GetMapping(value = "/selectItemInfo")
-	public List<StockTakingDTO> selectItemInfo(StockTakingDTO stockTakingDTO){
+	public StockTakingDTO selectItemInfo(StockTakingDTO stockTakingDTO){
 		// 선택한 상품 이름값 가져오기
 		return st.selectItemInfo(stockTakingDTO);
 	}
@@ -78,14 +88,14 @@ public class StockTakingController {
 	@PostMapping(value = "/insertStockTaking")
 	public String insertStockTaking(StockTakingDTO stockTakingDTO) {
 		int result = st.insertStockTaking(stockTakingDTO);
-		return "redirect:/stocktaking/main";
+		return "redirect:/user/stocktaking/main";
 	}
 	
 	//'임시실사' 등록
 	@PostMapping(value = "/insertTempSilsa")
 	public String insertTempSilsa(StockTakingDTO stockTakingDTO) {
 		int result = st.insertTempSilsa(stockTakingDTO);
-		return "redirect:/stocktaking/main";
+		return "redirect:/user/stocktaking/main";
 	}
 	
 	//'임시실사' -> '재고실사' 수정

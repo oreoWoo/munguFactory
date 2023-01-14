@@ -19,7 +19,7 @@ public interface StockTakingDAO {
 
 	List<StockTakingDTO> selectSubulList();
 
-	List<StockTakingDTO> selectItemInfo(StockTakingDTO stockTakingDTO);
+	StockTakingDTO selectItemInfo(StockTakingDTO stockTakingDTO);
 
 	int insertStockTaking(StockTakingDTO stockTakingDTO);
 

@@ -18,7 +18,7 @@
 		margin-top: 20px;
 	}
 	
-	.realStockTbl, .realSearchTbl {
+	.realSearchTbl {
 		text-align: center;
 	}
 	
@@ -67,7 +67,7 @@
 		width : 125px;
 	}
 	
-	.itemSelect {
+	.itemSelect, .updateItemSelect {
 		width : 125px;
 	}
 	
@@ -125,7 +125,7 @@
 		</div>
 		
 		<!-- 재고실사 데이터 등록 -->
-		<form action="${pageContext.request.contextPath }/stocktaking/insertStockTaking" name="insertForm" method="post">
+		<form action="${pageContext.request.contextPath }/user/stocktaking/insertStockTaking" name="insertForm" method="post">
 			<div class="card">
 				<div class="table-responsive text-nowrap">
 					<table class="table table-bordered insertStockTbl" id="stockInsertTbl">
@@ -219,7 +219,7 @@ let itemList = [
 
 $(function () {
 	initPage();
-	console.log("세션"+"${session.emp_no}");
+	console.log("세션"+'${emp_no}');
 })
 
 // 항상 실행해야할 함수
@@ -293,14 +293,14 @@ function addRow() {
 	let newCellStat = newRow.insertCell(8);
 	
 	newCellDate.innerText = sysdate;
-	newCellFacotry.innerHTML = "<select id='factorySelect' class='form-select factorySelect' name='factory_no' onchange='getFactoryNo(this.value)'>"+makeFactorySelect()+"</select>";
-	newCellItem.innerHTML = "<select id='itemSelect' class='form-select itemSelect' name='item_no' onchange='getItemNo(this.value)' disabled><option value=''>품번선택</option></select>";
-	newCellItemName.innerHTML = "<input type='text' name='item_name' id='itemName' class='form-control itemName' value='' readOnly='readOnly' placeholder='품번을 선택해주세요.'>";
-	newCellDBCnt.innerHTML = "<input type='number' min='0' name='db_amount' id='DBCnt' class='form-control DBCnt' value=''readOnly='readOnly'>";
-	newCellStockCnt.innerHTML = "<input type='number' min='0' name='amount' id='realStockCnt' class='form-control realStockCnt' value=''>";
+	newCellFacotry.innerHTML = "<select id='factorySelectI' class='form-select factorySelect' name='factory_no' onchange='getFactoryNo(this)'>"+makeFactorySelect()+"</select>";
+	newCellItem.innerHTML = "<select id='itemSelectI' class='form-select itemSelect' name='item_no' onchange='getItemNo(this)' disabled><option value=''>품번선택</option></select>";
+	newCellItemName.innerHTML = "<input type='text' name='item_name' id='itemNameI' class='form-control itemName' value='' readOnly='readOnly' placeholder='품번을 선택해주세요.'>";
+	newCellDBCnt.innerHTML = "<input type='number' min='0' name='db_amount' id='DBCntI' class='form-control DBCnt' value=''readOnly='readOnly'>";
+	newCellStockCnt.innerHTML = "<input type='number' min='0' name='amount' id='realStockCntI' class='form-control realStockCnt' value=''>";
 	//newCellDiff.innerHTML = "<input type='number' min='0' name='dfCnt' id='dfCnt' class='form-control' value=''>"
-	newCellMember.innerHTML = "<input type='text' name='emp_no' id='emp_no' class='form-control emp_no' value='${session.emp_no}' readOnly='readOnly'>"
-	newCellMemo.innerHTML = "<input type='text' name='subul_note' id='memo' class='form-control' value=''>";
+	newCellMember.innerHTML = "<input type='hidden' name='emp_no' class='form-control emp_no' value='${emp_no}'><input type='text' id='emp_noI' class='form-control emp_no' value='${emp_name}' readOnly='readOnly'>"
+	newCellMemo.innerHTML = "<input type='text' name='subul_note' id='memoI' class='form-control' value=''>";
 	newCellStat.innerHTML = "<button type='button' class='btn btn-secondary' onclick='return insertTempSilsa(this.form);'>저장</button> <button type='button' class='btn btn-primary' onclick='insertSubulStockTaking()'>승인</button>"
 	
 	if($('#stockInsertTbl >tbody tr').length == 1) {
@@ -363,7 +363,7 @@ function insertTempSilsa(frm) {
 	
 	if(insertConfirm){
 		
-		frm.action='${pageContext.request.contextPath }/stocktaking/insertTempSilsa'
+		frm.action='${pageContext.request.contextPath }/user/stocktaking/insertTempSilsa'
 		frm.submit();
 		alert('등록이 완료되었습니다.');
 		return true;
@@ -375,20 +375,24 @@ function insertTempSilsa(frm) {
 }
 
 // 상품 select 랜더링을 위한 공장 코드 value가져오고 -> 품번 option 만드는 함수 호출
-function getFactoryNo(value) {
+function getFactoryNo(target, subul_num) {
 	
-	$('#factorySelect').val(value);
-	
-	let factory_no = value;
-	
+	let factory_no = target.value;
+
 	$.ajax({
 		
-		url:"${pageContext.request.contextPath }/stocktaking/itemSelect",
+		url:"${pageContext.request.contextPath }/user/stocktaking/itemSelect",
 		data: {factory_no},
 		dataType: "json",
 		success: function(result) {
-			
-			makeItemSelect(result)
+			if(subul_num) {
+				$("#itemNameU"+subul_num).val('');
+				$("#DBCntU"+subul_num).val(''); 
+			} else {
+				$("#itemNameI").val('');
+				$("#DBCntI").val(''); 
+			}
+			makeItemSelect(result,target)
 			
 		}
 		
@@ -397,49 +401,55 @@ function getFactoryNo(value) {
 }
 
 // 공장 코드 선택에 따른 상품 select 랜더링
-function makeItemSelect(data) {
+function makeItemSelect(data,target) {
 	
-	$('#itemSelect').empty();
+	let targetItemSelect;
+	if($(target).attr('id') == 'factorySelectI') {
+		targetItemSelect = $('#itemSelectI')
+	} else {
+		let subul_num = $(target).attr('id').substring(14);
+		targetItemSelect = $('#itemSelectU'+subul_num)
+	}
+	
+	$(targetItemSelect).empty();
 	
 	let innerHtml = `<option value="">품번선택</option>`;
 
 	if(data != null) {
 		
-		$('#itemSelect').removeAttr('disabled');
+		$(targetItemSelect).removeAttr('disabled');
 		for(let datum of data) {
 			innerHtml += `<option value="\${datum.item_no}">\${datum.item_no}</option>`
-			
 		}
 	} 
 	
-	$('#itemSelect').append(innerHtml);
-}
-
-
-//이게 맞나...
-function getUpdateItemNo(value) {
-	
-	
-	
+	$(targetItemSelect).append(innerHtml);
 }
 
 // 상품코드로부터 상품이름, 창고재고값 가져오기
-function getItemNo(value) {
+function getItemNo(target) {
+		
+	let targetItemName;
+	let targetDBCnt;
+	if($(target).attr('id') == 'itemSelectI') {
+		targetItemName = $('#itemNameI');
+		targetDBCnt = $('#DBCntI');
+	} else {
+		let subul_num = $(target).attr('id').substring(11);
+		targetItemName = $('#itemNameU'+subul_num);
+		targetDBCnt = $('#DBCntU'+subul_num);
+	}
 	
-	$('#itemSelect').val(value);
-	let item_no = value;
+	let item_no = target.value;
 	
 	$.ajax({
 		
-		url:"${pageContext.request.contextPath }/stocktaking/selectItemInfo",
+		url:"${pageContext.request.contextPath }/user/stocktaking/selectItemInfo",
 		data: {item_no},
 		dataType: "json",
 		success: function(result){
-			for (let i = 0; i<result.length; i++){
-				$('#itemName').val(result[i].item_name);
-				$('#DBCnt').val(result[i].stock_count);
-			}
-			
+			$(targetItemName).val(result.item_name);
+			$(targetDBCnt).val(result.stock_count);
 		}
 		
 	});
@@ -456,6 +466,7 @@ function openUpdateTempSilsa(target) {
 	let amount = targetTr.find('.amount').val();
 	let factory_no = targetTr.find('.factory_no').val();
 	let item_no = targetTr.find('.item_no').val();
+	let item_name = targetTr.find('.item_name').val();
 	let db_amount = targetTr.find('.db_amount').val();
 	let subul_note = targetTr.find('.subul_note').val();
 	let gubun = targetTr.find('.gubunText').text();
@@ -463,18 +474,29 @@ function openUpdateTempSilsa(target) {
 	for(let i = 2; i<11 ; i++) {
 		targetTd.eq(i).empty();
 	}
-	 
-	targetTd.eq(2).append("<select id='updateFactorySelect' class='form-select factorySelect' name='factory_no' onchange='getFactoryNo(this.value)'>"+makeFactorySelect()+"</select>");
-	targetTd.eq(3).append("<select id='itemSelect' class='form-select updateItemSelect' name='item_no' onchange='getUpdateItemNo(this.value)'><option value=''>품번선택</option></select>");
-	targetTd.eq(4).append("<input type='text' name='item_name' id='updateItemName' class='form-control itemName' value='' readOnly='readOnly' placeholder='품번을 선택해주세요.'>");
-	targetTd.eq(5).append("<input type='number' min='0' name='db_amount' id='updateDBCnt' class='form-control DBCnt' value=''readOnly='readOnly'>");
-	targetTd.eq(6).append("<input type='number' min='0' name='amount' id='updateRealStockCnt' class='form-control realStockCnt' value='"+amount+"'>");
+	
+	let itemOptionHtml =''
+	itemList.forEach(el=>{
+		if(el.factory_no == factory_no) {
+			itemOptionHtml += `<option value='\${el.item_no}'`
+			if(el.item_no == item_no) {
+				itemOptionHtml += ` selected `
+			}
+			itemOptionHtml += `>\${el.item_no}</option>`
+		}
+	})
+	
+	targetTd.eq(2).append("<select id='factorySelectU"+ subul_num +"' class='form-select factorySelect' name='factory_no' onchange='getFactoryNo(this,"+subul_num+")'>"+makeFactorySelect()+"</select>");
+	targetTd.eq(3).append("<select id='itemSelectU"+subul_num+"' class='form-select updateItemSelect' name='item_no' onchange='getItemNo(this)'><option value=''>품번선택</option>"+itemOptionHtml+"</select>");
+	targetTd.eq(4).append("<input type='text' name='item_name' id='itemNameU"+ subul_num +"' class='form-control itemName' value='"+ item_name +"' readOnly='readOnly' placeholder='품번을 선택해주세요.'>");
+	targetTd.eq(5).append("<input type='number' min='0' name='db_amount' id='DBCntU"+ subul_num +"' class='form-control DBCnt' value='"+ db_amount +"'readOnly='readOnly'>");
+	targetTd.eq(6).append("<input type='number' min='0' name='amount' id='realStockCntU"+ subul_num +"' class='form-control realStockCnt' value='"+amount+"'>");
 	targetTd.eq(7).append("-");	
-	targetTd.eq(8).append("<input type='text' name='emp_no' id='updateEmp_no' class='form-control emp_no' value='2301001' readOnly='readOnly'>");
+	targetTd.eq(8).append("<input type='text' name='emp_no' id='updateEmp_no' class='form-control emp_no' value='"+${emp_name}+"' readOnly='readOnly'>");
 	targetTd.eq(9).append("<input type='text' name='subul_note' id='updateMemo' class='form-control subul_note' value='"+subul_note+"'>");
 	targetTd.eq(10).append("<button type='button' class='btn btn-secondary' onclick='undoUpdate()'>취소</button> <button type='button' class='btn btn-primary' onclick='updateTempSilsa(this)'>수정</button>");
 	
-	$('#updateFactorySelect').find('option[value='+factory_no+']').attr('selected', 'selected');
+	$('#factorySelectU'+subul_num).find('option[value='+factory_no+']').attr('selected', 'selected');
 	
 }
 
@@ -499,7 +521,7 @@ function updateTempSilsa(data) {
 		
 		$.ajax({
 			
-			url:"${pageContext.request.contextPath }/stocktaking/updateTempSilsa",
+			url:"${pageContext.request.contextPath }/user/stocktaking/updateTempSilsa",
 			data:{subul_num, item_no, amount, emp_no, subul_note},
 			type:"post",
 			dataType:"json",
@@ -546,7 +568,7 @@ function deleteTempSilsa(target) {
 		
 		$.ajax({
 			
-			url:"${pageContext.request.contextPath }/stocktaking/deleteTempSilsa",
+			url:"${pageContext.request.contextPath }/user/stocktaking/deleteTempSilsa",
 			data:{subul_num},
 			dataType:"json",
 			success: function(result){
@@ -583,7 +605,7 @@ function updateTempSilsaGubun(target) {
 		
  		$.ajax({
 			
-			url:"${pageContext.request.contextPath }/stocktaking/updateTempSilsaGubun",
+			url:"${pageContext.request.contextPath }/user/stocktaking/updateTempSilsaGubun",
 			data: {subul_num, amount, item_no, factory_no},
 			type: 'post',
 			dataType:"json",
@@ -622,7 +644,7 @@ function makeTable (data) {
 			<tr>
 				<td>
 					<input type="hidden" class="subul_num" value="\${datum.subul_num}">
-				\${datum.subul_num}
+					\${datum.subul_num}
 				</td>
 				<td>
 					<input type="hidden" class="subul_date" value="\${datum.subul_date}">
@@ -663,13 +685,14 @@ function makeTable (data) {
 				<td class="gubun"> `;
 					if(datum.gubun == '임시실사') {
 						
-						innerHtml += `<div class="dropdown"> 
+						innerHtml += `
+						<div class="dropdown"> 
 							<a class="btn p-0 dropdown-toggle hide-arrow gubunText" data-bs-toggle="dropdown">\${datum.gubun}</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" onclick="updateTempSilsaGubun(this)"><i class='bx bx-check me-1'></i>  승인 </a>
+								<a class="dropdown-item" onclick="updateTempSilsaGubun(this)"><i class='bx bx-check me-1'></i> 승인 </a>
 	                            <a class="dropdown-item" onclick="openUpdateTempSilsa(this)" ><i class="bx bx-edit-alt me-1"></i> 수정 </a>
 	                            <a class="dropdown-item" onclick="deleteTempSilsa(this)"><i class="bx bx-trash me-1"></i> 삭제 </a>
-                          </div>
+                         	</div>
 						</div> `;
 						
 					} else {
@@ -677,6 +700,8 @@ function makeTable (data) {
 					}
 				innerHtml += `</td>
 							</tr>`;
+							
+				reqNo++;
 	}
 	
 	$('#realStockTbl').html(innerHtml);
@@ -724,7 +749,7 @@ function makePaginationLi(pageData){
 			`
 		}
 		
-		innerHTML += `<li class="page-item">`
+		innerHTML += `<li class="page-item next">`
 		if(pageData.endPage == pageData.totalPage){
 			innerHTML += `<a class="page-link" onclick="return false;">`
 			// 마지막 PageBlock에서  [>] 버튼이 작동하지 않도록 함
@@ -754,7 +779,7 @@ function selectStockTakingList() {
 	
 	$.ajax({
 		
-		url:"${pageContext.request.contextPath }/stocktaking/search",
+		url:"${pageContext.request.contextPath }/user/stocktaking/search",
 		data: {
 			startDate, endDate, factory_no, gubun, currentPage //전역변수 //
 		},

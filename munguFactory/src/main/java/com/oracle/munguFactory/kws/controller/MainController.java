@@ -53,6 +53,12 @@ public class MainController
 		return "emp/admin";
 	}
 	
+	@RequestMapping("/login")
+	public String login(Model model) {
+		model.addAttribute("msg","로그인에 실패하셨습니다.");
+		return "main/home";
+	}
+	
 	@RequestMapping("/loginFail")
 	public String loginFail(Model model) {
 		model.addAttribute("msg","로그인에 실패하셨습니다.");

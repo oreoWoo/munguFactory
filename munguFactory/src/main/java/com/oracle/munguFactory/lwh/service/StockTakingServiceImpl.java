@@ -40,7 +40,7 @@ public class StockTakingServiceImpl implements StockTakingService {
 	}
 
 	@Override
-	public List<StockTakingDTO> selectItemInfo(StockTakingDTO stockTakingDTO) {
+	public StockTakingDTO selectItemInfo(StockTakingDTO stockTakingDTO) {
 		return st.selectItemInfo(stockTakingDTO);
 	}
 

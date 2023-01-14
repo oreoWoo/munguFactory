@@ -212,7 +212,7 @@
               <span class="menu-header-text">창고(재고)관리</span>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath }/stocktaking/main" class="menu-link">
+              <a href="${pageContext.request.contextPath }/user/stocktaking/main" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">재고실사 등록</div>
               </a>

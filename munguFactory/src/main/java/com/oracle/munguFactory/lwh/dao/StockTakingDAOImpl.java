@@ -38,8 +38,8 @@ public class StockTakingDAOImpl implements StockTakingDAO {
 	}
 
 	@Override
-	public List<StockTakingDTO> selectItemInfo(StockTakingDTO stockTakingDTO) {
-		return session.selectList("selectItemInfo", stockTakingDTO);
+	public StockTakingDTO selectItemInfo(StockTakingDTO stockTakingDTO) {
+		return session.selectOne("selectItemInfo", stockTakingDTO);
 	}
 
 	@Override
