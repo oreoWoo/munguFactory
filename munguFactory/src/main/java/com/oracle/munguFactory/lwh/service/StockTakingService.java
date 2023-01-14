@@ -30,4 +30,6 @@ public interface StockTakingService {
 	int updateTempSilsaGubun(StockTakingDTO stockTakingDTO);
 
 	int deleteTempSilsa(StockTakingDTO stockTakingDTO);
+
+	int updateTempSilsa(StockTakingDTO stockTakingDTO);
 }
