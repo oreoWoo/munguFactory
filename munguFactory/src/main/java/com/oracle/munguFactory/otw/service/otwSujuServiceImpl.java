@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.oracle.munguFactory.dto.AccountsDTO;
+import com.oracle.munguFactory.dto.OrdersDTO;
 import com.oracle.munguFactory.otw.dao.otwSujuDao;
 
 import lombok.RequiredArgsConstructor;
@@ -15,10 +16,11 @@ public class otwSujuServiceImpl implements otwSujuService {
 	
 	private final otwSujuDao twd;
 	
+
 	@Override
-	public List<AccountsDTO> selectByRow(int fromRow, int wirtePages) {
-		List<AccountsDTO> SujuAccountList = twd.selectByRow(fromRow, wirtePages);
-		return SujuAccountList;
+	public int sujuSave(OrdersDTO ordersDTO) {
+	int result = twd.sujuSave(ordersDTO);
+		return result;
 	}
 
 }

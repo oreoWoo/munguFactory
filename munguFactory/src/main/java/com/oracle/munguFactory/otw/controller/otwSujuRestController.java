@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oracle.munguFactory.dto.AccountsDTO;
+import com.oracle.munguFactory.dto.ItemDTO;
+import com.oracle.munguFactory.jhy.service.ItemAdminService;
 import com.oracle.munguFactory.lhj.service.LhjService;
 import com.oracle.munguFactory.lhj.service.Paging;
 
@@ -20,7 +22,9 @@ import lombok.RequiredArgsConstructor;
 public class otwSujuRestController {
 	
 	private final LhjService LhjService;
+	private final ItemAdminService ItemAdminService;
 	
+	// 거래처 조회
 	@RequestMapping("sujuAccountList")
 	public Map<String, Object> sujuAccountList(AccountsDTO account, String currentPage){
 		//account 전체 Count
@@ -41,6 +45,13 @@ public class otwSujuRestController {
 		map.put("list", accountList);
 		map.put("page", page);
 		return map;
+	}
+	
+	// 품목 조회
+	@RequestMapping("sujuItemList")
+	public List<ItemDTO> sujuItemList() {
+		List<ItemDTO> sujuItemList = ItemAdminService.itemAdminList();
+		return sujuItemList;
 	}
 
 

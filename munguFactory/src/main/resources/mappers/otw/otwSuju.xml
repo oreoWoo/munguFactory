@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oracle.munguFactory.mappers.otw.otwSuju">
 
+<insert id="sujuInsert" parameterType="Orders">
+	Insert all 
+	into orders values (#{suju_no}, #{emp_no}, #{account_no}, NULL, #{suju_date}, #{last_date}, #{order_note})
+	<foreach collection="ordersDetailDTOs"  item="item" separator=" ">
+		into orders_detail values (#{suju_no}, #{item.item_no}, #{item.suju_amount})
+	</foreach>
+	select * from DUAL 
+</insert>
 </mapper>

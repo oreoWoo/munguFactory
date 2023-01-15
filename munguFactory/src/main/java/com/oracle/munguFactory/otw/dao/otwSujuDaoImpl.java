@@ -2,10 +2,12 @@ package com.oracle.munguFactory.otw.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.oracle.munguFactory.dto.AccountsDTO;
+import com.oracle.munguFactory.dto.OrdersDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,14 +15,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class otwSujuDaoImpl implements otwSujuDao {
 	
-	private final otwSujuMapper twm;
-	
+	private final SqlSession session;
 	
 	
 		@Override
-		public List<AccountsDTO> selectByRow(@Param("fromRow") int fromRow, @Param("wirtePages") int writePages) {
-			List<AccountsDTO> SujuAccountList = twm.Sql_selectByRow(fromRow, writePages);
-			return SujuAccountList;
+		public int sujuSave(OrdersDTO ordersDTO) {
+			int result = 0;
+			try {
+				result = session.insert("sujuInsert", ordersDTO);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			return result;
 		}
 
 }
