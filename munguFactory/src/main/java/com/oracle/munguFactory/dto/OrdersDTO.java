@@ -16,7 +16,6 @@ public class OrdersDTO {
 	private String emp_name;
 	private int account_no;
 	private String account_name;
-	private String balju_no;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+9")
 	private LocalDate suju_date;

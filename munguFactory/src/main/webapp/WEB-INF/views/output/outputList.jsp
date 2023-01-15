@@ -113,44 +113,23 @@
 		curosr:pointer;
 		outline: 0;
 	}
-</style>
-<script type="text/javascript">
-/* 	function ajaxChk(pageNum) {
-		$("#pageNum").val(pageNum);
-		
-		var formData = $(".listSearch").serialize();
-		
-		$.ajax({
-			url 	: '/outputListAjaxChk',
-			type	: "POST",
-			data	: formData,
-			dataType: 'text',
-			success : function(data) {
-				var html = $('<div>').html(data);
-				var sethtml = html.find("div#setHtml").html();
-				$('.outputContainer .ajaxContents').remove();
-				$('.outputContainer').append(sethtml);
-			}
-		});		
-	}
 	
-	$(function() {
-		ajaxChk(1);
-	}); */
-</script>
-
+	
+	
+	
+</style>
 </head>
 <body>
 	<div class="outputContainer">
 		<h1 class="display-3">생산실적</h1>
 		<!-- 생산실적 등록 -->
-		<div class="alert alert-primary" role="alert" style="width: 70px;text-align: center;translate: 1200px 107px;height:40px;padding: 9px 2px 0px 1px;font-weight: bold;"><a href="writeFormOutput">등록</a></div>
+		<div class="alert alert-primary" role="alert" style="width: 70px; text-align: center;translate: 1250px 107px;height:40px;padding: 9px 2px 0px 1px;font-weight: bold;"><a href="writeFormOutput">등록</a></div>
 
 		<!-- 생산실적 관련 정보 조회 -->
 		<form action="listSearch" style="translate: 2px 52px;">
 			<input type="hidden" value="1" name="pageNum" id="pageNum">
 		
-			<div class="searchBox">
+			<div class="searchBox" style="translate: 45px;">
 				<select name="search" class="form-select" style="width: 110px;">
 					<option value="">전체</option>
 					<option value="item_no">품번</option>
@@ -159,13 +138,13 @@
 					<option value="factory_no">공장코드</option>
 					<!-- 기간별 조회는 나중에 추가 예정 -->
 				</select>
-				<input type="text" class="form-control" name="keyword" style="height: 38.91px;translate: 110px -39px;width: 110px;">
+				<input type="text" class="form-control" name="keyword" style="height: 38.91px;translate: 110px -39px;width: 250px;">
 				<!-- <input type="text" style="display: none;"> -->	<!-- 엔터키를 위해 쓴 -->
-				<button type="submit" class="btn btn-outline-primary btn_submit" id="btnSearch" style="translate: 225px -70px;"><img src="https://cdn-icons-png.flaticon.com/512/71/71403.png" style="width: 20px;height: 20px;translate: -10px -10px;"></button>
+				<button type="submit" class="btn btn-outline-primary btn_submit" id="btnSearch" style="translate: 360px -70px;"><img src="https://cdn-icons-png.flaticon.com/512/71/71403.png" style="width: 20px;height: 20px;translate: -10px -10px;"></button>
 			</div>
 		</form>
-		<div class="card mb-2" style="width: 1280px;">
-			<div class="card-body table-responsive text-nowrap">
+		<div class="card mb-2" style="width: 1280px; translate: 45px;">
+			<div class="card-body table-responsive text-nowrap container">
 				<table class="outputTbl" style="background: white;">
 					<thead style="background-color: #FFFAFA;">
 						<tr>
@@ -189,10 +168,18 @@
 								<td>${output.item_name}</td>
 								<td>${output.emp_no}</td>
 								<td>${output.factory_no}</td>
-								<td><fmt:formatDate value="${output.finish_date}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+								<td><fmt:formatDate value="${output.finish_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 								<td>${output.prod_amount}</td>
 								<td>${output.poor_quantity}</td>
-								<td>${output.yield}</td>
+								<td>
+									<c:set var="yield" value="${output.yield}"/>
+									
+									<c:choose>
+										<c:when test="${yield eq 0}">-</c:when>
+										<c:otherwise><fmt:formatNumber value="${output.yield}" pattern="0.0"/></c:otherwise>
+									</c:choose>
+									
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -200,7 +187,7 @@
 			</div>
 		</div>
 	
-		<!-- 페이징 처리 2트 -->
+		<!-- 페이징 처리 -->
 		<nav aria-label="Page navigation example">
                <ul class="pagination justify-content-center">
                   <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
@@ -210,19 +197,6 @@
                </ul>
 		</nav>
 
-
-<%-- 		<div class="div-center">
-			<!-- 페이징 처리 -->
-			<c:if test="${page.startPage > page.pageBlock }">
-				<a href="outputList?currentPage=${page.startPage - page.pageBlock}">[이전]</a>
-			</c:if>
-			<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-				<a href="outputList?currentPage=${i}">[${i}]</a>
-			</c:forEach>
-			<c:if test="${page.endPage > page.totalPage }">
-				<a href="outputList?currentPage=${page.startPage + page.pageBlock}">[다음]</a>
-			</c:if>
-		</div> --%>
 	</div>
 </body>
 </html>

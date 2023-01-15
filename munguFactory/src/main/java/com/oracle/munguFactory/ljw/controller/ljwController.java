@@ -1,7 +1,5 @@
 package com.oracle.munguFactory.ljw.controller;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,12 +27,11 @@ public class ljwController {
 	}
 //	(Ajax) 수불부 목록 검색 및 가져오기
 	@PostMapping("/inventoryManagementListAjaxChk")
-	public String inventoryManagementListAjaxChk(String pageaddr, int pageNum,PageDTO searchOptions, Model model) {
+	public String inventoryManagementListAjaxChk(String pageaddr, int pageNum, PageDTO searchOptions, Model model) {
 		log.info("inventoryManagementListAjaxChk() start...");
 		searchOptions.setPageDTO(service.getSubulListSize(searchOptions), pageNum);
-		List<SubulDTO> subulList = service.getSubulList(searchOptions);
 		model.addAttribute("paging",searchOptions);
-		model.addAttribute("subulList", subulList);
+		model.addAttribute("subulList", service.getSubulList(searchOptions));
 		return pageaddr;
 	}
 //	출하등록 페이지이동
@@ -70,7 +67,7 @@ public class ljwController {
 //	(Ajax) 출하등록 실행(transaction rollback기능)
 	@ResponseBody
 	@PostMapping("/ajaxInsertShipment")
-	public String ajaxInsertShipment(Model model, SubulDTO subul) {
+	public int ajaxInsertShipment(Model model, SubulDTO subul) {
 		log.info("ajaxInsertShipment() start...");
 		subul.setEmp_no(2301001);
 		int result = 0;
@@ -80,7 +77,6 @@ public class ljwController {
 			System.out.println("ajaxInsertShipment() e.getMessage() :"+e.getMessage());
 			result = 0;
 		}
-		System.out.println(result);
-		return Integer.toString(result);
+		return result;
 	}
 }

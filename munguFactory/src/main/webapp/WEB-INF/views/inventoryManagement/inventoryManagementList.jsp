@@ -33,11 +33,30 @@
 			<c:forEach var="subul" items="${subulList }">
 				<tr>
 					<td>${subul.subul_num }</td>
-					<td>${subul.serial_no }</td>
-					<td>${subul.item_name }</td>
+					<td>
+						<c:choose>
+							<c:when test="${subul.gubun=='출하' }">
+								<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.serial_no },'/user/sujuDetail?suju_no=')" href="#">
+									${subul.serial_no }
+								</a>
+							</c:when>
+							<c:otherwise>
+								${subul.serial_no }
+							</c:otherwise>
+						</c:choose>
+					</td>
+					<td>
+						<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.item_no },'/ItemAdminSelect?item_no=')" href="#">
+							${subul.item_name }
+						</a>
+					</td>
 					<td>${subul.db_amount }</td>
 					<td>${subul.amount }</td>
-					<td>${subul.factory_name }</td>
+					<td>
+						<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.factory_no},'factoryInfo?factory_no=')" href="#">
+							${subul.factory_name }
+						</a>
+					</td>
 					<td>${subul.factory_name }창고</td>
 					<td>${subul.gubun }</td>
 					<td>${subul.emp_name }</td>

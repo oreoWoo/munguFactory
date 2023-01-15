@@ -2,14 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oracle.munguFactory.mappers.jjh.jjhSuju">
 	
+	<select id="sujuTotCnt" parameterType="OrdersPaging" resultType="int">
+		select Count(*) 
+		from orders o inner Join accounts a on o.account_no = a.account_no
+		<choose>
+			<when test="searchName!=null and !searchName.equals('') and startDate!=null and !startDate.equals('')">
+				where a.account_name like concat(#{searchName} ,'%') 
+				and  Suju_date between #{startDate} and #{endDate}
+			</when>
+			<when test="startDate!=null and !startDate.equals('')">
+				where Suju_date between #{startDate} and #{endDate}
+			</when>
+			<when test="searchName!=null and !searchName.equals('')">
+				where a.account_name like concat(#{searchName} ,'%')
+			</when>
+		</choose>
+		
+	</select>
+	
+	<select id="sujuList" parameterType="OrdersPaging" resultType="Orders">
+		select *
+		from orders o 
+		left outer Join accounts a on o.account_no = a.account_no 
+		<choose>
+			<when test="searchName!=null and !searchName.equals('') and startDate!=null and !startDate.equals('')">
+				where a.account_name like concat(#{searchName} ,'%') 
+				and  Suju_date between #{startDate} and #{endDate}
+			</when>
+			<when test="startDate!=null and !startDate.equals('')">
+				where Suju_date between #{startDate} and #{endDate}
+			</when>
+			<when test="searchName!=null and !searchName.equals('')">
+				where a.account_name like concat(#{searchName} ,'%')
+			</when>
+		</choose>
+		limit #{rowPage}
+		offset #{startPage};
+	</select>
+	
 	<select id="sujuInfo" parameterType="int" resultType="Orders">
-		select suju_no, o.emp_no, emp_name, o.account_no,account_name, balju_no, suju_date, last_date, order_note
+		select suju_no, o.emp_no, emp_name, o.account_no,account_name, suju_date, last_date, order_note
 		from orders o left outer join emp e on o.emp_no = e.emp_no left outer join accounts a on o.account_no = a.account_no
 		where Suju_No= #{suju_no}
 	</select>
 	
 	<select id="sujuDetail" parameterType="int" resultType="OrdersDetail">
-		select distinct od.Suju_No, od.item_no, i.item_Name, od.Suju_Amount, po.Prod_State
+		select distinct od.Suju_No, od.item_no, i.item_Name, od.Suju_Amount, po.Prod_State, od.balju_no
 		from orders_detail od, item i, production_order po
 		where od.Suju_No= #{suju_no}
 		and od.item_no = i.item_no

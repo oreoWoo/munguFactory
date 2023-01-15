@@ -18,7 +18,7 @@ function userlistDeptSearch()
 {
 	var dept_no = $('#dept_no').val();
 	
-	location.href= '<%=context%>/userlistDeptSearch?dept_no=' + dept_no;
+	location.href= '<%=context%>/admin/userlistDeptSearch?dept_no=' + dept_no;
 }
 	
 
@@ -48,7 +48,7 @@ function userlistDeptSearch()
 					<td>${emp.dept_name}</td>
 					<td>${emp.posit_name}</td>
 					<td>${emp.auth_name}</td>
-					<td><button type="button" class="btn btn-primary" onclick="location.href = '/adminGetUserInfo?emp_no=${emp.emp_no}'">정보 수정</button></td>
+					<td><button type="button" class="btn btn-primary" onclick="location.href = '/admin/adminGetUserInfo?emp_no=${emp.emp_no}'">정보 수정</button></td>
 				</tr>
 				<c:set var="no" value="${no - 1 }"></c:set>
 	
@@ -58,25 +58,25 @@ function userlistDeptSearch()
 		<c:choose>
 			<c:when test="${dept_no eq 0}">
 				<c:if test="${page.startPage > page.pageBlock }">
-					<a href="/userlist?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+					<a href="/admin/userlist?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
 				</c:if>
 				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-					<a href="/userlist?currentPage=${i}">[${i}]</a>
+					<a href="/admin/userlist?currentPage=${i}">[${i}]</a>
 				</c:forEach>
 				<c:if test="${page.endPage < page.totalPage }">
-					<a href="userlist?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+					<a href="/admin/userlist?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
 				</c:if>	
 			</c:when>
 			
 			<c:otherwise>
 				<c:if test="${page.startPage > page.pageBlock }">
-					<a href="/userlistDeptSearch?currentPage=${page.startPage-page.pageBlock}&&dept_no=${dept_no}">[이전]</a>
+					<a href="/admin/userlistDeptSearch?currentPage=${page.startPage-page.pageBlock}&&dept_no=${dept_no}">[이전]</a>
 				</c:if>
 				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-					<a href="/userlistDeptSearch?currentPage=${i}&&dept_no=${dept_no}">[${i}]</a>
+					<a href="/admin/userlistDeptSearch?currentPage=${i}&&dept_no=${dept_no}">[${i}]</a>
 				</c:forEach>
 				<c:if test="${page.endPage < page.totalPage }">
-					<a href="/userlistDeptSearch?currentPage=${page.startPage+page.pageBlock}&&dept_no=${dept_no}">[다음]</a>
+					<a href="/admin/userlistDeptSearch?currentPage=${page.startPage+page.pageBlock}&&dept_no=${dept_no}">[다음]</a>
 				</c:if>	
 			</c:otherwise>
 		</c:choose>

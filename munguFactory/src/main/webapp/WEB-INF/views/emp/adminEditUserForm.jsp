@@ -138,11 +138,11 @@
 			
 			if('${result}' == 1)
 			{
-				alert("회원 정보 변경에 성공했습니다.");
+				alert("회원 정보 삭제에 성공했습니다.");
 			}
 			else if('${result}' == 2)
 			{
-				alert("회원 정보 변경에 실패했습니다.");
+				alert("회원 정보 삭제에 실패했습니다.");
 			}
 			
 		});	
@@ -182,7 +182,7 @@
 <body>
 	<div class="container-fluid">
 		<h3>관리자용 마이페이지</h3>
-		<form action="/adminEditUserInfo" method="post">
+		<form action="/admin/adminEditUserInfo" method="post">
 			<table class="table table-hover text-center">
 				<tr>
 					<th><label for="emp_no">사번</label></th>
@@ -309,13 +309,16 @@
 				</tr>
 				
 				<tr>	
-					<td><input type="submit" onclick="updateUpCheck()" value="수정하기"></td>
+					<td><input type="submit" onclick="updateUpCheck()" value="수정하기">
+					<input type="submit" formaction="/admin/deleteEmpData" value="삭제하기"></td>
 				</tr>
 
 			</table>
 			<input type="hidden" id="emp_address" name ="emp_address"> 
 			<input type="hidden" id="emp_email" name = "emp_email"> 
 		</form>
+		
+					
 	</div>
 </body>
 </html>

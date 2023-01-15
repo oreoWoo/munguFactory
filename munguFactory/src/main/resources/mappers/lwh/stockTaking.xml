@@ -132,4 +132,12 @@
 		
 	</delete>
 	
+	<update id="updateTempSilsa">
+		UPDATE subul SET item_no = #{item_no}, 
+						 amount = #{amount}, 
+						 emp_no = #{emp_no}, 
+						 subul_note = #{subul_note}
+		WHERE subul_num = #{subul_num}
+	</update>
+	
 </mapper>

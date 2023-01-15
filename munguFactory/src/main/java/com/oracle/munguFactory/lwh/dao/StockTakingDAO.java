@@ -32,5 +32,7 @@ public interface StockTakingDAO {
 	int updateTempSilsaGubun(StockTakingDTO stockTakingDTO);
 
 	int deleteTempSilsa(StockTakingDTO stockTakingDTO);
+
+	int updateTempSilsa(StockTakingDTO stockTakingDTO);
 	
 }

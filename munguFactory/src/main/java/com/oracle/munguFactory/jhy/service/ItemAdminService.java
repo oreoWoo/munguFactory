@@ -21,6 +21,12 @@ public interface ItemAdminService {
 	List<ItemDTO> itemAdminUpSelect(ItemDTO itemDto);
 	int itemAdminUpdate(ItemDTO itemDto);
 
+	//ItemAdminDelete
+	int itemAdminDelete(ItemDTO itemDto);
+
+	//Paging
+	int totalCount();
+
 
 
 }

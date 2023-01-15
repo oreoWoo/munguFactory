@@ -4,16 +4,27 @@
 <mapper namespace="com.oracle.munguFactory.mapper.jhy">
 	<!-- ItemAdminList -->
 	<select id="jhy_itemAdminList" parameterType="item" resultType="item">
+	select  *from (
+		 
+		 	select rownum as trn, tot.*
+		 	from (
+		 		select rownum as rn , sub.*
+		 		from (
 		SELECT item_no, hs_code, item_name, item_check
 		FROM item
+		
+		ORDER BY item_no asc)sub
+			  		ORDER BY rn DESC)tot)
+			        where trn BETWEEN #{start} and #{end}
 	</select>
 	
 	<!-- ItemAdminSelect -->
 	<select id="jhy_itemAdminSelect" parameterType="int" resultType="item">
 		SELECT i.item_no, i.hs_code, f.factory_name, i.item_name, i.stock_unit, i.item_check
 		FROM item i, factory f
-		WHERE item_no = #{item_no}
-		AND i.factory_no = f.factory_no
+		WHERE i.factory_no = f.factory_no
+		AND item_no = #{item_no}
+		
 	</select>
 	
 	<!-- ItemAdminInsert -->
@@ -32,10 +43,34 @@
 		WHERE i.factory_no = f.factory_no
 		AND i.item_no = #{item_no}
 	</select>
-	
 	<update id="jhy_itemAdminUpdate" parameterType="item">
 		UPDATE item 
 		SET factory_no = #{factory_no}, item_name = #{item_name}, stock_unit = #{stock_unit}, item_check = #{item_check}, hs_code = #{hs_code}
 		WHERE item_no = #{item_no}
 	</update>
+	
+	<!-- ItemAdminDelete -->
+	<delete id="jhy_itemAdminDelete" parameterType="item">
+		DELETE FROM item WHERE item_no = #{item_no}
+	</delete>
+	
+	<!-- ItemUserList -->
+	<select id="jhy_itemUserList" parameterType="item" resultType="item">
+		SELECT item_no, hs_code, item_name, item_check
+		FROM item
+	</select>
+	
+	<!-- ItemUserSelect -->
+	<select id="jhy_itemUserSelect" parameterType="int" resultType="item">
+		SELECT i.item_no, i.hs_code, f.factory_name, i.item_name, i.stock_unit, i.item_check
+		FROM item i, factory f
+		WHERE i.factory_no = f.factory_no
+		AND item_no = #{item_no}
+	</select>
+	
+	<!-- Paging -->
+	<select id="jhy_totalCount" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM item
+	</select>
 </mapper>
