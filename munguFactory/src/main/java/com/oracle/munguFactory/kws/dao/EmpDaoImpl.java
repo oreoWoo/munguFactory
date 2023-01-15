@@ -269,6 +269,34 @@ public class EmpDaoImpl implements EmpDao {
 		return result;
 	}
 
+	@Override
+	public int updateEmp(EmpDTO emp) {
+		int result = 0;
+		System.out.println("주소 값:"+emp.getEmp_address());
+		try {
+			result = session.update("updateEmpInfo",emp);
+			System.out.println("Update 결과 값:"+result);
+		}catch (Exception e) {
+			System.out.println("Error Occurred " + e.getMessage());
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int deleteEmpData(int emp_no) {
+		int result = 0;
+		System.out.println("삭제 EmpDaoImpl emp_no ->" + emp_no);
+		try {
+			
+			result = session.delete("deleteEmpListData",emp_no);
+			result = session.delete("deleteEmpData",emp_no);
+		} catch (Exception e) {
+			System.out.println("EmpDaoImpl deleteEmpData Exception->"+e.getMessage());
+		}
+		return result;
+	}
+
 
 
 }

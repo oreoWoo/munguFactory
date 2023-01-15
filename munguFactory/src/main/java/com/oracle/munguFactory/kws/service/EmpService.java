@@ -164,4 +164,22 @@ public class EmpService {
 			return result;
 		}
 
+		public int updateEmp(EmpDTO emp) {
+			System.out.println("EmpService updateEmp Start");
+			int result = 0;
+			try {
+				result = ed.updateEmp(emp);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+			return result;
+		}
+
+		public int deleteEmpData(int emp_no) {
+			int result = 0;
+			result = ed.deleteEmpData(emp_no);
+			return result;
+		}
+
 }

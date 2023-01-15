@@ -53,6 +53,20 @@ public class ItemAdminServiceImpl implements ItemAdminService {
 		return itemAdminUpdate;
 	}
 
+	//ItemAdminDelete
+	@Override
+	public int itemAdminDelete(ItemDTO itemDto) {
+		int itemAdminDelete = itemDao.itemAdminDelete(itemDto);
+		return itemAdminDelete;
+	}
+
+	//Paging
+	@Override
+	public int totalCount() {
+		int totalCount = itemDao.totalCount();
+		return totalCount;
+	}
+
 
 
 }

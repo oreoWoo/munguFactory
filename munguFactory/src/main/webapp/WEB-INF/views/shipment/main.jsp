@@ -12,6 +12,7 @@
 <script type="text/javascript">
 	function ajaxChk(pageNum){
 		$("#pageNum").val(pageNum);
+		$("#pageNum").val(pageNum);
 		var formData = $(".searchPlace").serialize();
 		$.ajax({
 			url		: '/inventoryManagementListAjaxChk',
@@ -26,9 +27,6 @@
 			}
 		});
 	}
-	$(function(){
-		ajaxChk(1);
-	});
 	function ajaxInsertShipmentForm(){
 		if($(".insertShipment").html()==null){
 			$.ajax({
@@ -47,16 +45,50 @@
 			alert('한번에 한 건씩 등록해주세요.');
 		}
 	}
+	function detailInfo(pk,url){
+		$.ajax({
+			url		: url+pk,
+			type 	: "GET", 
+			dataType: 'text',
+			success	: function(data){
+				var html = $('<div>').html(data);
+				$('.modal-body').html("");
+				$('.modal-body').append(html.find("div #container").html());
+				$('.modal-body').append(html.find("div .subulContainer").html());
+				$('.modal-body').append(html.find("div .inventoryManagementContainer").html());
+				$('.modal-body').append(html.find("div .col-xxl").html());
+			}
+		});
+	}
+	$(function(){
+		ajaxChk(1);
+	});
 </script>
 </head>
 <body>
 	<div class="shipmentContainer">
 		<h1>출하등록</h1>
+		<div class="modal fade" id="fullsizemodal" tabindex="-1"
+			aria-hidden="true">
+			<div class="modal-dialog fullsizemodal modal-dialog-scrollable" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+					</div>
+				</div>
+			</div>
+		</div>
 		<form class="searchPlace" onsubmit="return false">
 			<input type="hidden" value="shipment/shipmentList" name="pageaddr">
 			<input type="hidden" value="1" name="pageNum" id="pageNum">
 			<input type="hidden" value="출하" name="gubun">
 			<div class="category">
+				<select class="form-select" name="rowPageOption" onchange="ajaxChk(1)">
+					<option selected="selected" value="10">10개씩 보기</option>
+					<option value="15">15개씩 보기</option>
+					<option value="20">20개씩 보기</option>
+					<option value="50">50개씩 보기</option>
+					<option value="100">100개씩 보기</option>
+				</select>
 				<select class="form-select" name="factory_no" onchange="ajaxChk(1)">
 					<option selected="selected" value="0">창고선택(전체)</option>
 					<c:forEach var="factory" items="${factoryList }">

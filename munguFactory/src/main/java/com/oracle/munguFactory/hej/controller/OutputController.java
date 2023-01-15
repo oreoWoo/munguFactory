@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/user")
 @Slf4j
 public class OutputController {
 	

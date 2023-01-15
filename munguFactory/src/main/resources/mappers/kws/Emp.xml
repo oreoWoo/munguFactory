@@ -72,7 +72,8 @@
 	</select>
  	
  	<select id="updateEmpInfoWithAdmin" parameterType="Emp">
-		UPDATE emp SET emp_name = #{emp_name}, emp_password = #{emp_password}, emp_address = #{emp_address}, emp_email = #{emp_email}, auth_no = #{auth_no}, dept_no = #{dept_no}, posit_no = #{posit_no} WHERE emp_no = #{emp_no}
+		UPDATE emp SET emp_name = #{emp_name}, emp_password = #{emp_password}, emp_address = #{emp_address}, emp_email = #{emp_email}, auth_no = #{auth_no}, dept_no = #{dept_no}, posit_no = #{posit_no} 
+		WHERE emp_no = #{emp_no}
 	</select>
 	
 	
@@ -80,4 +81,17 @@
 		UPDATE Emp e SET e.emp_password = #{emp_password} WHERE e.emp_no = #{emp_no}
 	</update>
 	
+	
+	<update id="updateEmpInfo" parameterType="Emp">
+		UPDATE emp SET emp_name = #{emp_name}, emp_passwd = #{emp_passwd}, emp_address = #{emp_address}, emp_email = #{emp_email}, auth_no = #{auth_no}, dept_no = #{dept_no}, posit_no = #{posit_no}
+		WHERE emp_no = #{emp_no}
+	</update>
+	
+	<delete id="deleteEmpListData">
+		DELETE FROM `mungudb`.`emp_list` WHERE EMP_NO = #{emp_no};
+	</delete>
+	
+	<delete id="deleteEmpData">
+		DELETE FROM `mungudb`.`emp` WHERE EMP_NO = #{emp_no};
+	</delete>
 </mapper>

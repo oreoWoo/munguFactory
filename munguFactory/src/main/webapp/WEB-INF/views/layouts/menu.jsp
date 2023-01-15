@@ -122,12 +122,12 @@
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">회원가입</div>
+                <div data-i18n="Account Settings">로그인</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="/loginForm" class="menu-link">
-                    <div data-i18n="Account">로그인</div>
+                  <a href="/user/MyPageForm" class="menu-link">
+                    <div data-i18n="Account">마이페이지</div>
                   </a>
                 </li>
                 <li class="menu-item">
@@ -244,13 +244,13 @@
               <span class="menu-header-text">관리자 기능</span>
             </li>
             <li class="menu-item">
-              <a href="/userlist" class="menu-link">
+              <a href="/admin/userlist" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">유저리스트</div>
               </a>
             </li>
              <li class="menu-item">
-              <a href="/makeUserList" class="menu-link">
+              <a href="/admin/makeUserList" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">유저리스트 생성</div>
               </a>

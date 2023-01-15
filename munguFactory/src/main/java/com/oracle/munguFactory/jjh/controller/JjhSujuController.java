@@ -7,10 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.oracle.munguFactory.dto.OrdersDTO;
 import com.oracle.munguFactory.dto.OrdersDetailDTO;
+import com.oracle.munguFactory.dto.OrdersListDTO;
+import com.oracle.munguFactory.dto.OrdersPaging;
 import com.oracle.munguFactory.jjh.service.JjhSujuService;
 
 import ch.qos.logback.classic.Logger;
@@ -59,5 +63,23 @@ public class JjhSujuController {
 		return "suju/sujuModifyForm";
 	}
 	
-
+	@GetMapping("/sujuList")
+	public String sujuList(OrdersPaging ordersPaging, Model model) {
+		log.info("sujuList start...");
+		log.info("ordersPaging -> " + ordersPaging);
+		OrdersListDTO ordersListDTO = jjhSujuService.sujuList(ordersPaging);
+		model.addAttribute("ordersListDTO", ordersListDTO);
+		return "suju/sujulist";
+	}
+	
+	
+	@PostMapping
+	@ResponseBody
+	public OrdersListDTO sujuListAction(OrdersPaging ordersPaging, Model model) {
+		log.info("sujuList start...");
+		log.info("ordersPaging -> " + ordersPaging);
+		OrdersListDTO ordersListDTO = jjhSujuService.sujuList(ordersPaging);
+		model.addAttribute("ordersListDTO", ordersListDTO);
+		return ordersListDTO;
+	}
 }

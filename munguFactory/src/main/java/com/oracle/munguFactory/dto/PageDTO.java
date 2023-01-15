@@ -31,18 +31,20 @@ public class PageDTO {
 	}
 	
 	//subulPage search options
+	private int rowPageOption;
 	private String	searchOption;
 	private String	searchString;
 	private String	gubun;
 	private int		factory_no;
 	private int		serial_no;
+	private int		account_no;
 	private String	subul_date;
 	public void setPageDTO(int total, int currentPage) {
 		this.total = total;
 		this.currentPage=currentPage;
-		offset = (currentPage-1) * rowPage;
-		end = offset + rowPage;
-		totalPage = (int)Math.ceil((double)total/rowPage);
+		offset = (currentPage-1) * rowPageOption;
+		end = offset + rowPageOption;
+		totalPage = (int)Math.ceil((double)total/rowPageOption);
 		
 		startPage = currentPage - (currentPage-1)%pageBlock;
 		endPage = startPage + pageBlock -1;

@@ -79,6 +79,9 @@
 		width : 90px;
 	}
 	
+	.subul_note{
+		width : 100px;
+	}
 	.dropdown .gubunText {
 		color : blue;
 	}
@@ -93,28 +96,35 @@
 <body>
 	<div class="stockContainer">
 		<h1 class="display-3">재고실사 관리</h1>
+		<!-- 검색 옵션 영역 -->
 		<div class="searchStock row">
 			<div class="col-sm-6">
-				<select class='form-select selectFactory' id="searchFactory"></select>
+				<!-- 공장선택 -->
+				<select class='form-select selectFactory' id="searchFactory">
+				</select>
 				
+				<!-- 상태선택 -->
 				<select class='form-select selectGubun' id="searchGubun">
 					<option value="">상태선택</option>
 					<option value="재고실사">재고실사</option>
 					<option value="임시실사">임시실사</option>
 				</select>  
 				
+				<!-- 날짜선택 -->
 				<input class="form-control" type="date" value="" id="startDate" max="">
 				<input class="form-control" type="date" value="" id="endDate" max="">
 				
 				<button type="button" class="btn btn-info searchBtn" onclick="selectStockTakingList()">검색</button>
 			</div>
 			
+			<!-- 행 추가 -->
 			<div class="col-sm-6" style="text-align : right;">
 				<button type="button" class="btn rounded-pill btn-info" id="plusBtn" onclick="addRow()"><strong>+</strong></button>
 			</div>
 			
 		</div>
 		
+		<!-- 재고실사 데이터 등록 -->
 		<form action="${pageContext.request.contextPath }/stocktaking/insertStockTaking" name="insertForm" method="post">
 			<div class="card">
 				<div class="table-responsive text-nowrap">
@@ -143,7 +153,7 @@
 			</div>
 		</form>
 		
-		
+		<!-- 검색결과 영역 -->
 		<div class="card">
 			<div class="table-responsive text-nowrap">
 				<table class="table table-bordered realSearchTbl">
@@ -170,23 +180,22 @@
 			
 			</div>
 	
-	</div>
+		</div>
 	
-	<nav aria-label="Page navigation">
-    	<ul class="pagination justify-content-center" id="stockTakingPaginationUl">
-    	
-		</ul>
-	</nav>
+		<!-- 페이지 영역 -->
+		<nav aria-label="Page navigation">
+	    	<ul class="pagination justify-content-center" id="stockTakingPaginationUl">
+	    	
+			</ul>
+		</nav>
 		
-
-	
-	</div>
+	</div> <!-- stockContainer 끝 -->
 	
 </body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 
-// 전역변수들 모음 
+///전역변수들 모음///
 let currentPage = 1;
 
 let factoryList = [
@@ -210,8 +219,8 @@ let itemList = [
 
 $(function () {
 	initPage();
+	console.log("세션"+"${session.emp_no}");
 })
-
 
 // 항상 실행해야할 함수
 function initPage () {
@@ -221,6 +230,7 @@ function initPage () {
 	initSearchDate();
 	pageHere();
 }
+
 
 //페이지 강조처리
 function pageHere() {
@@ -252,21 +262,19 @@ function initSearchDate () {
 	let startDate = aWeekAgo.getFullYear()+'-'+('0'+(aWeekAgo.getMonth()+1)).slice(-2)+'-'+('0'+aWeekAgo.getDate()).slice(-2);
 	let endDate = today.getFullYear()+'-'+('0'+(today.getMonth()+1)).slice(-2)+'-'+('0'+today.getDate()).slice(-2);
 	
+	// 날짜 선택 옵션에 value, 속성 추가하기
 	$('#startDate').val(startDate);
 	$('#startDate').prop('max',endDate);
 	$('#endDate').val(endDate);
 	$('#endDate').prop('max', endDate);
 
-	
 }
-
 
 
 // 행 추가 랜더링 함수
 function addRow() {
 	
 	let table = document.getElementById('insertStockTbl');
-	let trCnt = document.getElementsByTagName('tr').length;
 	
 	let today = new Date();
 	let sysdate = today.getFullYear()+'-'+('0'+(today.getMonth()+1)).slice(-2)+'-'+('0'+today.getDate()).slice(-2);
@@ -291,7 +299,7 @@ function addRow() {
 	newCellDBCnt.innerHTML = "<input type='number' min='0' name='db_amount' id='DBCnt' class='form-control DBCnt' value=''readOnly='readOnly'>";
 	newCellStockCnt.innerHTML = "<input type='number' min='0' name='amount' id='realStockCnt' class='form-control realStockCnt' value=''>";
 	//newCellDiff.innerHTML = "<input type='number' min='0' name='dfCnt' id='dfCnt' class='form-control' value=''>"
-	newCellMember.innerHTML = "<input type='text' name='emp_no' id='emp_no' class='form-control emp_no' value='2301001' readOnly='readOnly'>"
+	newCellMember.innerHTML = "<input type='text' name='emp_no' id='emp_no' class='form-control emp_no' value='${session.emp_no}' readOnly='readOnly'>"
 	newCellMemo.innerHTML = "<input type='text' name='subul_note' id='memo' class='form-control' value=''>";
 	newCellStat.innerHTML = "<button type='button' class='btn btn-secondary' onclick='return insertTempSilsa(this.form);'>저장</button> <button type='button' class='btn btn-primary' onclick='insertSubulStockTaking()'>승인</button>"
 	
@@ -360,7 +368,6 @@ function insertTempSilsa(frm) {
 		alert('등록이 완료되었습니다.');
 		return true;
 		
-		
 	} else {
 		alert('등록이 취소되었습니다.');
 	}
@@ -381,19 +388,16 @@ function getFactoryNo(value) {
 		dataType: "json",
 		success: function(result) {
 			
-			console.log("공장코드를 받아서 뽑아온 품번목록이랍니다" + result)
 			makeItemSelect(result)
+			
 		}
 		
-		
-	})
+	});
 	
 }
 
 // 공장 코드 선택에 따른 상품 select 랜더링
 function makeItemSelect(data) {
-	
-	console.log("makeItemSelect의 data예요"+data);
 	
 	$('#itemSelect').empty();
 	
@@ -412,8 +416,14 @@ function makeItemSelect(data) {
 }
 
 
-// 상품코드
+//이게 맞나...
+function getUpdateItemNo(value) {
+	
+	
+	
+}
 
+// 상품코드로부터 상품이름, 창고재고값 가져오기
 function getItemNo(value) {
 	
 	$('#itemSelect').val(value);
@@ -435,8 +445,8 @@ function getItemNo(value) {
 	});
 }
 
-// '임시실사' 데이터 수정 함수
-function updateTempSilsa(target) {
+// '임시실사' dropdown 수정 버튼 눌렀을 때 input박스 만드는 함수
+function openUpdateTempSilsa(target) {
 	
 	let targetTr = $(target).closest('tr');
 	let targetTd = targetTr.children();
@@ -448,22 +458,79 @@ function updateTempSilsa(target) {
 	let item_no = targetTr.find('.item_no').val();
 	let db_amount = targetTr.find('.db_amount').val();
 	let subul_note = targetTr.find('.subul_note').val();
+	let gubun = targetTr.find('.gubunText').text();
 	
-	for(let i = 2; i<10 ; i++) {
+	for(let i = 2; i<11 ; i++) {
 		targetTd.eq(i).empty();
 	}
 	 
 	targetTd.eq(2).append("<select id='updateFactorySelect' class='form-select factorySelect' name='factory_no' onchange='getFactoryNo(this.value)'>"+makeFactorySelect()+"</select>");
-	targetTd.eq(3).append("<select id='itemSelect' class='form-select itemSelect' name='item_no' onchange='getItemNo(this.value)'><option value=''>품번선택</option></select>");
-	targetTd.eq(4).append("<input type='text' name='item_name' id='itemName' class='form-control itemName' value='' readOnly='readOnly' placeholder='품번을 선택해주세요.'>");
-	targetTd.eq(5).append("<input type='number' min='0' name='db_amount' id='DBCnt' class='form-control DBCnt' value=''readOnly='readOnly'>");
-	targetTd.eq(6).append("<input type='number' min='0' name='amount' id='realStockCnt' class='form-control realStockCnt' value='"+amount+"'>");
+	targetTd.eq(3).append("<select id='itemSelect' class='form-select updateItemSelect' name='item_no' onchange='getUpdateItemNo(this.value)'><option value=''>품번선택</option></select>");
+	targetTd.eq(4).append("<input type='text' name='item_name' id='updateItemName' class='form-control itemName' value='' readOnly='readOnly' placeholder='품번을 선택해주세요.'>");
+	targetTd.eq(5).append("<input type='number' min='0' name='db_amount' id='updateDBCnt' class='form-control DBCnt' value=''readOnly='readOnly'>");
+	targetTd.eq(6).append("<input type='number' min='0' name='amount' id='updateRealStockCnt' class='form-control realStockCnt' value='"+amount+"'>");
 	targetTd.eq(7).append("-");	
-	targetTd.eq(8).append("<input type='text' name='emp_no' id='emp_no' class='form-control emp_no' value='2301001' readOnly='readOnly'>");
-	targetTd.eq(9).append("<input type='text' name='subul_note' id='memo' class='form-control' value='"+subul_note+"'>");
+	targetTd.eq(8).append("<input type='text' name='emp_no' id='updateEmp_no' class='form-control emp_no' value='2301001' readOnly='readOnly'>");
+	targetTd.eq(9).append("<input type='text' name='subul_note' id='updateMemo' class='form-control subul_note' value='"+subul_note+"'>");
+	targetTd.eq(10).append("<button type='button' class='btn btn-secondary' onclick='undoUpdate()'>취소</button> <button type='button' class='btn btn-primary' onclick='updateTempSilsa(this)'>수정</button>");
 	
 	$('#updateFactorySelect').find('option[value='+factory_no+']').attr('selected', 'selected');
 	
+}
+
+
+//'임시실사' 데이터 수정 함수
+function updateTempSilsa(data) {
+	
+	let targetTr = $(data).closest('tr');
+	
+	let item_no = targetTr.find('.updateItemSelect').val();
+	let amount = targetTr.find('#updateRealStockCnt').val();
+	let emp_no = targetTr.find('#updateEmp_no').val();
+	let subul_note = targetTr.find('#updateMemo').val();
+	let subul_num = targetTr.find('.subul_num').val();
+	
+	console.log('얍 '+ subul_note);
+	
+	if(!confirm("변경사항을 적용하시겠습니까?")) {
+		alert("수정이 취소되었습니다.")
+		return false;
+	} else {
+		
+		$.ajax({
+			
+			url:"${pageContext.request.contextPath }/stocktaking/updateTempSilsa",
+			data:{subul_num, item_no, amount, emp_no, subul_note},
+			type:"post",
+			dataType:"json",
+			success: function(result){
+				
+				if(result == 1) {
+					
+					alert("수정이 완료되었습니다.");
+					selectStockTakingList();
+				} else {
+					
+					alert("수정에 실패하였습니다.");
+				}
+				
+			}
+			
+		});
+		
+	}
+}
+
+
+//취소 함수
+function undoUpdate() {
+	
+	if(!confirm("변경사항을 취소하시겠습니까?")){
+		return false;
+	} else {
+		alert("수정이 취소되었습니다.")
+		selectStockTakingList();
+	}
 }
 
 //'임시실사' 데이터 삭제 함수
@@ -488,17 +555,13 @@ function deleteTempSilsa(target) {
 					alert('삭제가 완료되었습니다.')
 					selectStockTakingList();
 				}
-
+				
 			}
-			
 		}); 
 		
-		
 	} else {
-		
 		alert('삭제가 취소되었습니다.');
 		return false;
-		
 	}
  	
 	
@@ -530,6 +593,8 @@ function updateTempSilsaGubun(target) {
 					selectStockTakingList();
 				}
 			
+			},error : function (err) {
+				console.error(err)
 			}
 		
 	});
@@ -602,25 +667,24 @@ function makeTable (data) {
 							<a class="btn p-0 dropdown-toggle hide-arrow gubunText" data-bs-toggle="dropdown">\${datum.gubun}</a>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" onclick="updateTempSilsaGubun(this)"><i class='bx bx-check me-1'></i>  승인 </a>
-	                            <a class="dropdown-item" onclick="updateTempSilsa(this)" ><i class="bx bx-edit-alt me-1"></i> 수정 </a>
+	                            <a class="dropdown-item" onclick="openUpdateTempSilsa(this)" ><i class="bx bx-edit-alt me-1"></i> 수정 </a>
 	                            <a class="dropdown-item" onclick="deleteTempSilsa(this)"><i class="bx bx-trash me-1"></i> 삭제 </a>
                           </div>
 						</div> `;
 						
 					} else {
-						innerHtml += `
-						\${datum.gubun} `;
+						innerHtml += `\${datum.gubun} `;
 					}
-				innerHtml += `
-				</td>
-			</tr>
-		`;
+				innerHtml += `</td>
+							</tr>`;
 	}
 	
 	$('#realStockTbl').html(innerHtml);
 	
 }
 
+/// 페이지 처리용 함수들 ///
+// 다른 페이지 누르면 그 페이지 값을 가져오기 위한 함수
 function changePage(e, page) {
 	// a태그 기본 작동을 막기 위한 함수
 	e.preventDefault();
@@ -678,7 +742,7 @@ function makePaginationLi(pageData){
 	
 }
 
-
+// 옵션에 맞는 결과 조회 함수
 function selectStockTakingList() {
 	
 	let startDate = $('#startDate').val();
@@ -698,6 +762,7 @@ function selectStockTakingList() {
 		success: function(result){
 			makeTable(result.stockTakingList);
 			makePaginationLi(result.page);
+		
 		}
 		
 	});
