@@ -75,6 +75,9 @@
 		width : 90px;
 	}
 	
+	.emp_name {
+		width : 85px;
+	}
 	.emp_no {
 		width : 90px;
 	}
@@ -492,7 +495,7 @@ function openUpdateTempSilsa(target) {
 	targetTd.eq(5).append("<input type='number' min='0' name='db_amount' id='DBCntU"+ subul_num +"' class='form-control DBCnt' value='"+ db_amount +"'readOnly='readOnly'>");
 	targetTd.eq(6).append("<input type='number' min='0' name='amount' id='realStockCntU"+ subul_num +"' class='form-control realStockCnt' value='"+amount+"'>");
 	targetTd.eq(7).append("-");	
-	targetTd.eq(8).append("<input type='text' name='emp_no' id='updateEmp_no' class='form-control emp_no' value='"+${emp_name}+"' readOnly='readOnly'>");
+	targetTd.eq(8).append("<input type='hidden' name='emp_no' id='updateEmp_no' class='form-control emp_no' value='${emp_no}'> <input type='text' name='emp_name' id='updateEmp_name' class='form-control emp_name' value='${emp_name}' readOnly='readOnly'>");
 	targetTd.eq(9).append("<input type='text' name='subul_note' id='updateMemo' class='form-control subul_note' value='"+subul_note+"'>");
 	targetTd.eq(10).append("<button type='button' class='btn btn-secondary' onclick='undoUpdate()'>취소</button> <button type='button' class='btn btn-primary' onclick='updateTempSilsa(this)'>수정</button>");
 	
@@ -507,7 +510,7 @@ function updateTempSilsa(data) {
 	let targetTr = $(data).closest('tr');
 	
 	let item_no = targetTr.find('.updateItemSelect').val();
-	let amount = targetTr.find('#updateRealStockCnt').val();
+	let amount = targetTr.find('.realStockCnt').val();
 	let emp_no = targetTr.find('#updateEmp_no').val();
 	let subul_note = targetTr.find('#updateMemo').val();
 	let subul_num = targetTr.find('.subul_num').val();
@@ -663,8 +666,13 @@ function makeTable (data) {
 					\${datum.item_name}
 				</td>
 				<td>
-					<input type="hidden" class="db_amount" value="\${datum.db_amount}">
-					\${datum.db_amount}
+					<input type="hidden" class="db_amount" value="\${datum.db_amount}">`;
+					if(datum.db_amount == null) {
+						innerHtml+= `-`;
+					} else {
+						innerHtml+= `\${datum.db_amount}`;
+					}
+				innerHtml +=`	
 				</td>
 				<td>
 					<input type="hidden" class="amount" value="\${datum.amount}">
@@ -676,7 +684,7 @@ function makeTable (data) {
 				</td>
 				<td>
 					<input type="hidden" class="emp_no" value="\${datum.emp_no}">
-					\${datum.emp_no}
+					\${datum.emp_name}
 				</td>
 				<td>
 					<input type="hidden" class="subul_note" value="\${datum.subul_note}">
