@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>재고실사 관리</title>
 <style type="text/css">
 	.stockContainer{
 		padding-top: 50px;

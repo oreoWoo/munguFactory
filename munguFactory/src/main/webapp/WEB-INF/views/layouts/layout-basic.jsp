@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>문구공장</title>
  <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/img/pencil.png" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
