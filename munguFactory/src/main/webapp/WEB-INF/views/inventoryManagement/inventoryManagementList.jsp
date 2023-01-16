@@ -40,20 +40,25 @@
 									${subul.serial_no }
 								</a>
 							</c:when>
+							<c:when test="${subul.gubun=='생산실적' }">
+								<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.serial_no },'/user/outputDetail?prod_no=')" href="#">
+									${subul.serial_no }
+								</a>
+							</c:when>
 							<c:otherwise>
 								${subul.serial_no }
 							</c:otherwise>
 						</c:choose>
 					</td>
 					<td>
-						<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.item_no },'/ItemAdminSelect?item_no=')" href="#">
+						<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.item_no },'/user/ItemAdminSelect?item_no=')" href="#">
 							${subul.item_name }
 						</a>
 					</td>
 					<td>${subul.db_amount }</td>
 					<td>${subul.amount }</td>
 					<td>
-						<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.factory_no},'factoryInfo?factory_no=')" href="#">
+						<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.factory_no},'/user/factoryInfo?factory_no=')" href="#">
 							${subul.factory_name }
 						</a>
 					</td>
