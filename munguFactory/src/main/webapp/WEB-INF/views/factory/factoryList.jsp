@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,8 +40,10 @@ $(function(){
 </head>
 <body>
 	  <div class="container-xxl flex-grow-1 container-p-y">
+		<sec:authorize access="hasAnyRole('user','admin')" var="roleUser"/>
+		<sec:authorize access="hasRole('admin')" var="roleAdmin"/>
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Factory /</span> Factory List</h4>
-				
+			
               <!-- Basic Bootstrap Table -->
               <div class="card">
                 <h5 class="card-header">Factory List</h5>
@@ -58,7 +61,11 @@ $(function(){
 					<button type="submit" class="btn btn-primary">검색</button>
 				</form></div>
 				
-                	<div style="margin-left: 1300px"><input type="button" class="btn btn-primary" value="등록" onclick="location.href='${pageContext.request.contextPath }/admin/createFactory'"></div>
+                	
+                	<sec:authorize access="hasRole('admin')">
+                	<div style="margin-left: 1300px">
+                	<input type="button" class="btn btn-primary" value="등록" onclick="location.href='${pageContext.request.contextPath }/admin/createFactory'"></div>
+					</sec:authorize>
                 <div class="table-responsive text-nowrap">
                   <table class="table" style="text-align: center;">
                     <thead>
