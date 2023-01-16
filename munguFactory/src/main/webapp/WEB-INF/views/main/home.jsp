@@ -12,7 +12,7 @@
 	}
 	.forImg img {
 		width: 65%; 
-		height: 65%; 
+		height: 850px; 
 		object-fit: cover;
 	}
 	
@@ -27,7 +27,7 @@
 		<h1>문구 공장 main 화면</h1>
 		<div class="forImg">
 			<img alt="main_img" src="${pageContext.request.contextPath }/img/Manufacturing Process-amico.png">
-			<img alt="main_img2" src="${pageContext.request.contextPath }/img/Factory-amico.png">
+			<%-- <img alt="main_img2" src="${pageContext.request.contextPath }/img/Factory-amico.png"> --%>
 		</div>
 	</div>
 </body>

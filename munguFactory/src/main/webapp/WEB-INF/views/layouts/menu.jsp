@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- =========================================================
 * Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
@@ -29,7 +30,14 @@
 
     <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
 
-   
+   <style type="text/css">
+   	.pencilLogo{
+   		
+   		width:30px;
+   		height:30px;
+   	
+   	}
+   </style>
   </head>
 
 
@@ -43,7 +51,8 @@
           <div class="app-brand demo">
             <a href="${pageContext.request.contextPath }/" class="app-brand-link">
               <span class="app-brand-logo demo">
-                <svg
+              	<img alt="pencil" src="${pageContext.request.contextPath }/img/pencil.png" class="pencilLogo">
+                <!-- <svg
                   width="25"
                   viewBox="0 0 25 42"
                   version="1.1"
@@ -95,7 +104,7 @@
                       </g>
                     </g>
                   </g>
-                </svg>
+                </svg> -->
               </span>
               <span class="app-brand-text demo menu-text fw-bolder ms-2">문구공장</span>
             </a>
@@ -148,17 +157,17 @@
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <i class="menu-icon tf-icons bx bxs-business"></i>
                 <div data-i18n="Account Settings">공통정보</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="/accountList" class="menu-link">
+                  <a href="/user/accountList" class="menu-link">
                     <div data-i18n="Account">거래처 등록</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="/factoryList" class="menu-link">
+                  <a href="/user/factoryList" class="menu-link">
                     <div data-i18n="Notifications">공장 등록</div>
                   </a>
                 </li>
@@ -212,13 +221,13 @@
               <span class="menu-header-text">창고(재고)관리</span>
             </li>
             <li class="menu-item">
-              <a href="${pageContext.request.contextPath }/stocktaking/main" class="menu-link">
+              <a href="${pageContext.request.contextPath }/user/stocktaking/main" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">재고실사 등록</div>
+                <div data-i18n="Basic">재고실사 관리</div>
               </a>
             </li>
              <li class="menu-item">
-              <a href="/inventoryManagement" class="menu-link">
+              <a href="/user/inventoryManagement" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">수불부</div>
               </a>
@@ -234,7 +243,7 @@
               </a>
             </li>
              <li class="menu-item">
-              <a href="/Shipment" class="menu-link">
+              <a href="/user/Shipment" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">출하 등록</div>
               </a>

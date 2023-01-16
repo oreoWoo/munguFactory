@@ -10,7 +10,6 @@
 </head>
 <body>
 	<div class="subulContainer">
-	<c:set var="num" value="${page.total-page.start+1 }"></c:set>
 		<table>
 			<thead>
 				<tr>
@@ -18,6 +17,7 @@
 				</tr>
 			</thead>
 			<tbody>
+				<c:set var="num" value="${page.total-page.start+1 }"></c:set>
 				<tr>
 					<th>품번</th>
 					<th>HS코드</th>
@@ -40,7 +40,7 @@
 		<ul class="pagination justify-content-center">
 			<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 				<li class="page-item"><a class="page-link"
-					href="/item/ItemUserList?currentPage=${i}">${i}</a></li>
+					href="/ProdList?currentPage=${i}">${i}</a></li>
 			</c:forEach>
 		</ul>
 	</nav>

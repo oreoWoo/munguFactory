@@ -14,7 +14,7 @@
 		$("#pageNum").val(pageNum);
 		var formData = $(".searchPlace").serialize();
 		$.ajax({
-			url		: '/inventoryManagementListAjaxChk',
+			url		: '/user/inventoryManagementListAjaxChk',
 			type 	: "POST", 
 			data	: formData,
 			dataType: 'text',
@@ -27,7 +27,6 @@
 		});
 	}
 	function detailInfo(pk,url){
-		alert(url+pk);
 		$.ajax({
 			url		: url+pk,
 			type 	: "GET", 
@@ -39,6 +38,7 @@
 				$('.modal-body').append(html.find("div .subulContainer").html());
 				$('.modal-body').append(html.find("div .inventoryManagementContainer").html());
 				$('.modal-body').append(html.find("div .col-xxl").html());
+				$('.modal-body button, .modal-body input').attr('disabled','disabled');
 			}
 		});
 	}

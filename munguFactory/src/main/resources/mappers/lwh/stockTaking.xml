@@ -42,6 +42,10 @@
 				, sb.db_amount
 				, sb.amount
 				, sb.emp_no
+				, (	SELECT 	e.emp_name
+					FROM 	emp e
+					WHERE	e.emp_no = sb.emp_no
+				) emp_name
 				, sb.subul_note 
 				, sb.gubun
 		FROM subul sb
