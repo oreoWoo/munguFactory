@@ -1,14 +1,17 @@
 package com.oracle.munguFactory.lhj.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.oracle.munguFactory.auth.PrincipalDetails;
 import com.oracle.munguFactory.dto.AccountsDTO;
 import com.oracle.munguFactory.lhj.service.LhjService;
 import com.oracle.munguFactory.lhj.service.Paging;
@@ -24,7 +27,7 @@ public class LhjController {
 	private final LhjService hjs;
 	
 	//-------------거래처 리스트------------------------------------------------
-	@RequestMapping("/accountList")
+	@RequestMapping("/user/accountList")
 	public String accountList(AccountsDTO account, String currentPage, Model model) {
 		System.out.println("LhjController accountList Start...");
 		//account 전체 Count
@@ -49,7 +52,7 @@ public class LhjController {
 	}
 	
 	//-------거래처 등록 페이지---------------------------------------------------
-	@RequestMapping("/accountAddFrom")
+	@RequestMapping("/admin/accountAddFrom")
 	public String accountAddFrom() {
 		System.out.println("LhjController accountAddFrom Start...");
 		return "account/accountAddFrom";
@@ -62,17 +65,18 @@ public class LhjController {
 		int insertResult = hjs.addAccount(account);
 		if( insertResult == 1 ) {
 			model.addAttribute("inMsg",insertResult);
-			return "forward:accountList";
+			return "forward:/user/accountList";
 		}else {
 			model.addAttribute("msg", "입력 실패! 확인해보세요");
-			return "forward:accountAddFrom";
+			return "forward:/admin/accountAddFrom";
 		}
 	}
 	
 	//-------거래처별 상세정보--------------------------------------------------------------
-	@RequestMapping("/accountInfoDetail")
-	public String accountInfiDetail(int account_no, Model model) {
+	@RequestMapping("/user/accountInfoDetail")
+	public String accountInfiDetail(int account_no, Model model,@AuthenticationPrincipal PrincipalDetails principal) {
 		System.out.println("LhjController accountInfiDetail Start...");
+		System.out.println(principal.getEmpDTO());
 		AccountsDTO account = hjs.accountInfoDetail(account_no);
 		System.out.println("LhjController accountInfoDetail.getAccount_no()-->"+ account.getAccount_no());
 		model.addAttribute("account",account);
@@ -80,7 +84,7 @@ public class LhjController {
 	}
 
 	//-------------거래처 수정 페이지---------------------------------------------------------------
-	@RequestMapping("/accountUpdateForm")
+	@RequestMapping("/admin/accountUpdateForm")
 	public String accountUpdateForm(int account_no, Model model ) {
 		System.out.println("LhjController accountUpdateForm Start...");
 		AccountsDTO account = hjs.accountUpdateForm(account_no);
@@ -98,12 +102,12 @@ public class LhjController {
 		
 		if(updateResult == 1) {
 			model.addAttribute("upMsg",updateResult);
-			return "forward:accountList";
+			return "forward:/user/accountList";
 		}
 		else {
 			model.addAttribute("upnoMsg",updateResult);
 			System.out.println("LhjController updateAccount updateResult-->"+updateResult);
-			return "forward:accountUpdateForm";
+			return "forward:/admin/accountUpdateForm";
 		}
 	}
 	
@@ -115,7 +119,7 @@ public class LhjController {
 		model.addAttribute("account",account);
 		if(account > 0) {
 			model.addAttribute("delMsg",account);
-			return	"forward:accountList";
+			return	"forward:/user/accountList";
 		}else {
 			model.addAttribute("delnMsg","삭제에 실패하였습니다. 다시 확인해보세요");
 			return "forward:accountUpdateForm";
@@ -125,7 +129,7 @@ public class LhjController {
 	}
 	
 	//------거래처 검색-------------------------------------------------------
-	@GetMapping("/accountSearch")
+	@GetMapping("/user/accountSearch")
 	public String accountSearch(AccountsDTO accounts,String searchString, String currentPage,Model model) {
 		System.out.println("LhjController accountSearch Start...");
 		

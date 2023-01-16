@@ -162,7 +162,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="/accountList" class="menu-link">
+                  <a href="/user/accountList" class="menu-link">
                     <div data-i18n="Account">거래처 등록</div>
                   </a>
                 </li>
