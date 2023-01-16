@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +13,8 @@
 	<div id="container">
     <h4 class="fw-bold py-3 mb-4" style="padding-left: 80px; margin-top: 50px;">${account.account_name}(${account.account_no})</h4>	
     <form action="">
+    <sec:authorize access="hasRole('admin')" var="roleAdmin"/>
+    <sec:authorize access="hasAnyRole('user','admin')" var="roleUser"/>	
     <input type="hidden" name="account_no" value="${account.account_no}">
 	<table class="table" style="width: 1300px; margin-left:50px;  margin-top: 50px; margin-bottom: 50px;">
 	<tr>
@@ -61,9 +64,13 @@
 	<p>
 	<div style="margin-bottom: 50px;">
 	<input type="button" class="btn btn-primary"  style="margin-left: 560px;"
-		   onclick="location.href='/accountList'" value="목록">
+		   onclick="location.href='/user/accountList'" value="목록">
+		   
+	<sec:authorize access="hasRole('admin')">
 	<input type="button" class="btn btn-primary"  style="margin-left: 30px;"
-		   onclick="location.href='/accountUpdateForm?account_no=${account.account_no}'" value="수정">
+		   onclick="location.href='/admin/accountUpdateForm?account_no=${account.account_no}'" value="수정">
+	</sec:authorize>
+	
 	</div>
 	</form>
 	</div>

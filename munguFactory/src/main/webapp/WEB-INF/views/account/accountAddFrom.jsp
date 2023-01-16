@@ -117,7 +117,7 @@
 	<input  class="btn btn-primary" type="button" value="등록" style="margin-left: 560px;"
 			data-bs-toggle="modal" data-bs-target="#modalToggle">
 	<input type="button" class="btn btn-primary"  style="margin-left: 30px;"
-		   onclick="location.href='/accountList'" value="목록">
+		   onclick="location.href='/user/accountList'" value="목록">
 	</div>
 	
 	<!-- 등록 Modal -->
