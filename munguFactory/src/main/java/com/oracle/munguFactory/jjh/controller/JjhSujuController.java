@@ -73,7 +73,7 @@ public class JjhSujuController {
 	}
 	
 	
-	@PostMapping
+	@PostMapping("/sujuListAction")
 	@ResponseBody
 	public OrdersListDTO sujuListAction(OrdersPaging ordersPaging, Model model) {
 		log.info("sujuList start...");

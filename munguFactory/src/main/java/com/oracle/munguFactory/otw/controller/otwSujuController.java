@@ -11,18 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/user")
 @Slf4j
 public class otwSujuController {
 	
 	private final otwSujuService tws;
-
-	@RequestMapping("/SujuList")
-	public String SujuList(OrdersDTO ordersDTO) {
-		
-		return "suju/sujulist";
-	}
 	
-	@RequestMapping("/SujuCreate")
+	@RequestMapping("/sujuCreate")
 	public String SujuCreate() {
 		
 		return "suju/sujuCreate";
@@ -34,6 +29,6 @@ public class otwSujuController {
 		int result = tws.sujuSave(ordersDTO); 
 		
 		
-		return "redirect:suju/sujulist";
+		return "redirect:/user/sujuList";
 	}
 }

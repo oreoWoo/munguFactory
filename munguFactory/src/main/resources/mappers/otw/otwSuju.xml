@@ -3,11 +3,16 @@
 <mapper namespace="com.oracle.munguFactory.mappers.otw.otwSuju">
 
 <insert id="sujuInsert" parameterType="Orders">
-	Insert all 
-	into orders values (#{suju_no}, #{emp_no}, #{account_no}, NULL, #{suju_date}, #{last_date}, #{order_note})
-	<foreach collection="ordersDetailDTOs"  item="item" separator=" ">
-		into orders_detail values (#{suju_no}, #{item.item_no}, #{item.suju_amount})
+	INSERT INTO 
+	orders values (#{suju_no}, #{emp_no}, #{account_no}, NULL, #{suju_date}, #{last_date}, #{order_note})
+	<selectKey keyProperty="suju_no" resultType="int" order="AFTER">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
+</insert>
+<insert id="sujudetailInsert" parameterType="Orders">
+	INSERT INTO orders_detail VALUES
+	<foreach collection="ordersDetailDTOs" item="item" separator=", ">
+	  (#{suju_no}, #{item.item_no}, #{item.suju_amount} )
 	</foreach>
-	select * from DUAL 
 </insert>
 </mapper>

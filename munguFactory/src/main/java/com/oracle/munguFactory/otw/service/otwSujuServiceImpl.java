@@ -9,9 +9,11 @@ import com.oracle.munguFactory.dto.OrdersDTO;
 import com.oracle.munguFactory.otw.dao.otwSujuDao;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class otwSujuServiceImpl implements otwSujuService {
 	
 	private final otwSujuDao twd;
@@ -19,6 +21,7 @@ public class otwSujuServiceImpl implements otwSujuService {
 
 	@Override
 	public int sujuSave(OrdersDTO ordersDTO) {
+	log.info("otwSujuServiceImpl sujuSave start");
 	int result = twd.sujuSave(ordersDTO);
 		return result;
 	}

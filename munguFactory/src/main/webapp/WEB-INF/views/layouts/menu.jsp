@@ -228,7 +228,7 @@
               <span class="menu-header-text">영업 관리</span>
             </li>
             <li class="menu-item">
-              <a href="/SujuList" class="menu-link">
+              <a href="/user/sujuList" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">수주 등록</div>
               </a>

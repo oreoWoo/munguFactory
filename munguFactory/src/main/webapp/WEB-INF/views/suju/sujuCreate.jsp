@@ -48,7 +48,7 @@ table
 </style>
 <script type="text/javascript">
 	// 유효성 검사
-	function submitCheck(){
+	function submitCheck(f){
 		var suju_date = $("#suju_date").val();
 		var last_date = $("#last_date").val();
 		var today = new Date();
@@ -65,6 +65,18 @@ table
 			} else if(last_date < today ){
 				alert("마감일 다시 확인해주세요.");
 			} else {
+				 $(".itemList").each(
+							function(index, item) {
+								$(this).attr("name", "ordersDetailDTOs["+index+"].item_no")
+								});
+				 $(".itemList2").each(
+							function(index, item) {
+								$(this).attr("name", "ordersDetailDTOs["+index+"].item_name")
+								});
+				 $(".itemList3").each(
+							function(index, item) {
+								$(this).attr("name", "ordersDetailDTOs["+index+"].suju_amount")
+								});
 				$("#ajaxAccountList").empty();
 				$("#ajaxItemList").empty();
 				return true;
@@ -115,7 +127,7 @@ table
 						html2 += "<nav aria-label='Page navigation example'>";
 						html2 += "<ul class='pagination justify-content-center' style='text-align: center;'>";
 						for (var i = 1; i <= pageEndNum; i++) {
-							html2 += "<button type='button' class='page-link' id='page' style='margin: 10px;' onclick='pageNum(this)' value="
+							html2 += "<button type='button' class='page-link' style='margin: 10px;' onclick='pageNum(this)' value="
 									+ i + ">" + i + "</button>";
 						}
 						html2 += "</ul>";
@@ -188,8 +200,8 @@ table
 		var accountInfo = $('input:radio[name="radioBox"]:checked').val();
 		var account_no = accountInfo.split(',')[0];
 		var account_name = accountInfo.split(',')[1];
-		$('input[name=accountNo]').attr('value', account_no);
-		$('input[name=accountName]').attr('value', account_name);
+		$('input[name=account_no]').attr('value', account_no);
+		$('input[name=account_name]').attr('value', account_name);
 		$('#exampleModal').modal('hide');
 	}
 
@@ -206,8 +218,7 @@ table
 							alert("jsonStr2->" + jsonStr2);
 							var html3 = "";
 							if (data.length > 0) {
-								$
-										.each(
+								$.each(
 												data,
 												function(index, obj) {
 													html3 += "<tr>";
@@ -237,7 +248,7 @@ table
 							}
 						},
 						error : function() {
-							alert("거래처 조회 실패");
+							alert("품목 조회 실패");
 						}
 					});
 		} else {
@@ -250,7 +261,7 @@ table
 	function selectItem() {
 
 		var selectItem = [];
-		$('input[name="ordersDetailDTOs.item_no"]').each(function(index, item) {
+		$('.itemList').each(function(index, item) {
 			selectItem.push($(item).val());
 
 		});
@@ -267,13 +278,13 @@ table
 										.inArray(item_no, selectItem), 1);
 							} else {
 								var html4 = "<tr id='"+item_no+"'><td width='180'>"
-										+ "<input type='text' name='ordersDetailDTOs.item_no' id='item_no' readonly='readonly' size='1' style='width: 100%;' value='"
+										+ "<input type='text' id='ordersDetailDTOs.item_no' class='itemList' readonly='readonly' size='1' style='width: 100%;' value='"
 										+ item_no
 										+ "'>"
-										+ "</td><td width='180'><input type='text' name='ordersDetailDTOs.item_name' id='item_name' readonly='readonly' size='1' style='width: 100%;' value='"
+										+ "</td><td width='180'><input type='text'  id='ordersDetailDTOs.item_name' class='itemList2' readonly='readonly' size='1' style='width: 100%;' value='"
 										+ item_name
 										+ "'>"
-										+ "</td><td width='180'><input type='number' name='ordersDetailDTOs.suju_amount' id='suju_amount'required = 'required' ></td>";
+										+ "</td><td width='180'><input type='number'  id='ordersDetailDTOs.suju_amount' class='itemList3' required = 'required' ></td>";
 								$('#itemselect').append(html4);
 							}
 
@@ -294,15 +305,17 @@ table
 				<i class="bi bi-briefcase"></i> 수주 등록
 			</h1>
 		</div>
-		<form action="/user/sujuSave" onsubmit="return submitCheck()">
+		<form action="/user/sujuSave" onsubmit="return submitCheck(this)">
+			<input type="hidden" id="emp_no" name="emp_no" value="${EmpDto.emp_no }">
+			<input type="hidden" id="emp_name" name="emp_name" value="${EmpDto.emp_name }">
 			<div>
 				<table class="table table-bordered Orders-first-table">
 					<tr style="border: solid 1px;">
 						<th style="border: solid 1px;">거래처</th>
 						<td nowrap style="border: 1px solid;">
-						<input type="text" name="accountName" id="accountName" readonly="readonly" size="1"
+						<input type="text" name="account_name" id="account_name" readonly="readonly" size="1"
 							   style="width: 80%;" required="required"> 
-						<input type="hidden" name="accountNo" id="accountNo">
+						<input type="hidden" name="account_no" id="account_no">
 							<button type="button" class="btn btn-primary"
 								data-bs-toggle="modal" data-bs-target="#exampleModal"
 								onclick="accountList()">
@@ -316,7 +329,7 @@ table
 					<tr>
 						<th>비고</th>
 						<td colspan="5"><textarea rows="7"
-								style="width: 100%; resize: none;"></textarea></td>
+								style="width: 100%; resize: none;" id="order_note" name="order_note"></textarea></td>
 					</tr>
 				</table>
 				<!-- =============Modal Start==================== -->
