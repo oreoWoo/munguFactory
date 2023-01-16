@@ -44,7 +44,7 @@ $(function(){
 </script>
 </head>
 <body>
-		<form action="/insertFactory">
+		<form action="/admin/insertFactory">
 		 <table>
 
             <div class="container-xxl flex-grow-1 container-p-y">

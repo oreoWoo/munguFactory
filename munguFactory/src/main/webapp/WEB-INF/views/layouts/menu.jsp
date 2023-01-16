@@ -167,7 +167,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="/factoryList" class="menu-link">
+                  <a href="/user/factoryList" class="menu-link">
                     <div data-i18n="Notifications">공장 등록</div>
                   </a>
                 </li>

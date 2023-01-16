@@ -14,6 +14,7 @@
 		} else {
 			alert("삭제 완료되었습니다.");
 		}
+		
 	});
 </script>
 
@@ -44,7 +45,7 @@ $(function(){
               <div class="card">
                 <h5 class="card-header">Factory List</h5>
                 <c:set var="num" value="${page.total-page.start+1 }"></c:set>
-                <div><form class="frm" action="/factorySearch">
+                <div><form class="frm" action="/user/factorySearch">
 					<input
                           type="text"
                           class="form-control"
@@ -57,7 +58,7 @@ $(function(){
 					<button type="submit" class="btn btn-primary">검색</button>
 				</form></div>
 				
-                	<div style="margin-left: 1300px"><input type="button" class="btn btn-primary" value="등록" onclick="location.href='${pageContext.request.contextPath }/createFactory'"></div>
+                	<div style="margin-left: 1300px"><input type="button" class="btn btn-primary" value="등록" onclick="location.href='${pageContext.request.contextPath }/admin/createFactory'"></div>
                 <div class="table-responsive text-nowrap">
                   <table class="table" style="text-align: center;">
                     <thead>
@@ -70,7 +71,7 @@ $(function(){
                     </thead>
                     <tbody class="table-border-bottom-0" style="text-align: center;">
                       <c:forEach var="factory" items="${factoryList}">
-						<tr><td><a href="factoryInfo?factory_no=${factory.factory_no}">${factory.factory_no}</a></td>
+						<tr><td><a href="/user/factoryInfo?factory_no=${factory.factory_no}">${factory.factory_no}</a></td>
 						<td>${factory.factory_name }</td>
 						<td>${factory.factory_call }</td>
 						<td><c:if test="${factory.factory_use == 1 }">사용</c:if>
@@ -83,7 +84,7 @@ $(function(){
 					<ul class="pagination justify-content-center">
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}" >
 						<li class="page-item">
-							<a  class="page-link" href="/factoryList?currentPage=${i}">${i}</a>
+							<a  class="page-link" href="/user/factoryList?currentPage=${i}">${i}</a>
 						</li>
 					</c:forEach>
 					</ul>

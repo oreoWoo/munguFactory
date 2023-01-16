@@ -87,7 +87,7 @@ $(function(){
                         </div>
                         <div class="row justify-content-end" style="margin-left: 400px">
                           <div class="col-sm-10">
-                            <input type="button" class="btn btn-primary" value="수정" onclick="location.href='${pageContext.request.contextPath }/factoryInfoEdit?factory_no=${factoryDTO.factory_no}'">
+                            <input type="button" class="btn btn-primary" value="수정" onclick="location.href='${pageContext.request.contextPath }/admin/factoryInfoEdit?factory_no=${factoryDTO.factory_no}'">
                             <input type="button" class="btn btn-primary" value="목록" onclick="location.href='${pageContext.request.contextPath }/factoryList'">
                           </div>
                         </div>
