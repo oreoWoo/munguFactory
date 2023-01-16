@@ -15,8 +15,10 @@
 	});
 </script>
 <body>
+<div class="SujuContainer">
 	<h1>Suju List</h1>
-	<a href="" class="">등록</a>
+</div>	
+	<a href="SujuCreate" class="">등록</a>
 	<a href="#" id="sujuDetailTest">상세</a>
 	<form action="/user/sujuDetail" id="sujuDetailFromTest">
 		<input type="hidden" name="suju_no" value="10005">
