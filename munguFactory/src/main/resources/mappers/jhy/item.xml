@@ -3,19 +3,16 @@
 
 <mapper namespace="com.oracle.munguFactory.mapper.jhy">
 	<!-- ItemAdminList -->
-	<select id="jhy_itemAdminList" parameterType="item" resultType="item">
-	select  *from (
-		 
-		 	select rownum as trn, tot.*
-		 	from (
-		 		select rownum as rn , sub.*
-		 		from (
+	<select id="jhy_itemAdminList" resultType="item">
+		SELECT item_no, hs_code, item_name, item_check
+		FROM item   
+	</select>
+	
+	<select id="jhy_itemAdminListPaging"  resultType="item">
 		SELECT item_no, hs_code, item_name, item_check
 		FROM item
-		
-		ORDER BY item_no asc)sub
-			  		ORDER BY rn DESC)tot)
-			        where trn BETWEEN #{start} and #{end}
+		ORDER BY item_no DESC
+		LIMIT 10 offset #{start}
 	</select>
 	
 	<!-- ItemAdminSelect -->
@@ -69,7 +66,7 @@
 	</select>
 	
 	<!-- Paging -->
-	<select id="jhy_totalCount" parameterType="int" resultType="int">
+	<select id="jhy_totalCount" resultType="int">
 		SELECT count(*)
 		FROM item
 	</select>

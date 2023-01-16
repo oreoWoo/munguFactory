@@ -21,19 +21,24 @@ public class ItemAdminController {
 	// admin 품목 목록 조회 ItemAdminList
 	@RequestMapping(value = "/ItemAdminList")
 	public String ItemAdminList(ItemDTO itemDto, Model model, String currentPage) {
-		List<ItemDTO> ItemAdminList = itemService.itemAdminList();
-		System.out.println("ItemAdminList -> " + ItemAdminList);
-
-		model.addAttribute("itemAdminList", ItemAdminList);
 
 		// Paging 작업
 		int totalCount = itemService.totalCount();
-		Paging page = new Paging(totalCount, currentPage);
+		Paging page = new Paging(totalCount, "1");
+		System.out.println("ItemAdminList start page -> " + page.getStart());
 		itemDto.setStart(page.getStart());
 		itemDto.setEnd(page.getEnd());
-		System.out.println("ItemAdminList page" + page);
+		
+		
+		List<ItemDTO> ItemAdminList = itemService.itemAdminList();
+		model.addAttribute("itemDTO", itemDto);
 		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("itemAdminList", ItemAdminList);
 		model.addAttribute("page", page);
+		
+		System.out.println("ItemAdminList -> " + ItemAdminList.size());
+		
+		
 
 		return "item/ItemAdminList";
 	}

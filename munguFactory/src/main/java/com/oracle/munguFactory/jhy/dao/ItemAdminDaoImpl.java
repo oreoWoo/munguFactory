@@ -18,8 +18,16 @@ public class ItemAdminDaoImpl implements ItemAdminDao {
 	//ItemAdminList
 	@Override
 	public List<ItemDTO> itemAdminList() {
-		List<ItemDTO> itemAdminList = session.selectList("jhy_itemAdminList");
+//		List<ItemDTO> itemAdminList = session.selectList("jhy_itemAdminList");
+		List<ItemDTO> itemAdminList = null;
+		try {
+			itemAdminList = session.selectList("jhy_itemAdminListPaging");
+//			itemAdminList = session.selectList("jhy_itemAdminList");
+		} catch (Exception e) {
+			System.out.println("itemAdminList exception -> " + e.getMessage());
+		}
 		return itemAdminList;
+		
 	}
 
 	//ItemAdminSelect
@@ -65,10 +73,10 @@ public class ItemAdminDaoImpl implements ItemAdminDao {
 	public int totalCount() {
 		int totalCount = 0;
 		try {
-			totalCount = session.selectOne("jhy_totalCount");
+			Integer objTotalCount = session.selectOne("jhy_totalCount");
+			totalCount = objTotalCount.intValue();
 			System.out.println("totalCount->" + totalCount);
 		} catch (Exception e) {
-			System.out.println("totalCount->" + totalCount);
 			System.out.println("totalCount exception->" + e.getMessage());
 		}
 		return totalCount;
