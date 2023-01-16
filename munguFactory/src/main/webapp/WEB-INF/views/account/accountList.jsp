@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html>
@@ -30,8 +31,12 @@
 <div class="card mb-6">
 	<h4 class="fw-bold py-3 mb-4" style="padding-left: 80px; margin-top: 50px;">거래처 조회</h4>
 	<div id="container" style="width: 1300px;" >
+	<sec:authorize access="hasRole('admin')" var="roleAdmin"/>
+    <sec:authorize access="hasAnyRole('user','admin')" var="roleUser"/>	
 	<c:set var="num" value="${page.total-page.start+1 }"></c:set>
+	<sec:authorize access="hasRole('admin')">
 	<button id="accAdd" class="btn btn-primary" style="float: right;"  onclick="location.href='/admin/accountAddFrom'">신규등록</button>
+	</sec:authorize>
 	<form action="/user/accountSearch">
 	<div class="input-group" style="width: 300px;float: right; padding-bottom: 50px;  padding-right: 20px; ">
 		<input
