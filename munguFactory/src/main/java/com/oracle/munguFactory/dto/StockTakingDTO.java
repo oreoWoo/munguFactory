@@ -30,6 +30,8 @@ public class StockTakingDTO {
 	private Integer stock_count;
 	private Integer factory_no;
 	
+	private String emp_name;
+	
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
 	private LocalDate startDate;
