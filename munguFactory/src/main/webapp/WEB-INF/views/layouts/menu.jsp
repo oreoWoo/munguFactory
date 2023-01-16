@@ -227,7 +227,7 @@
               </a>
             </li>
              <li class="menu-item">
-              <a href="/inventoryManagement" class="menu-link">
+              <a href="/user/inventoryManagement" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">수불부</div>
               </a>
@@ -243,7 +243,7 @@
               </a>
             </li>
              <li class="menu-item">
-              <a href="/Shipment" class="menu-link">
+              <a href="/user/Shipment" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">출하 등록</div>
               </a>

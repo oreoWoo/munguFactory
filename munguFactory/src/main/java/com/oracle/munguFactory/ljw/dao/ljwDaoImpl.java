@@ -87,6 +87,9 @@ public class ljwDaoImpl implements ljwDao {
 	@Override
 	public int insertShipment(SubulDTO subul) throws Exception{
 		int result = 0;
+		if((int) session.selectOne("getStoragesAmount",subul)<subul.getAmount()) {
+			throw new Exception();
+		}
 		session.insert("insertShipment",subul);
 		session.update("insertShipmentStroage",subul);
 		result = session.update("baljuUpdate",subul);
