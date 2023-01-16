@@ -52,7 +52,7 @@
 		      acc_manager=#{acc_manager},
 		      acc_telnum=#{acc_telnum},
 		      acc_enddate=#{acc_enddate},
-		      acc_state=if(date(acc_enddate) > date(sysdate()), 0,1)
+		      acc_state=if(date(acc_enddate) >= date(sysdate()), 0,1)
 		where account_no=#{account_no}
 		  ]]>
 	</update>
