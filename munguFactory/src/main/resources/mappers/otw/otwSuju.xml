@@ -2,4 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oracle.munguFactory.mappers.otw.otwSuju">
 
+<insert id="sujuInsert" parameterType="Orders">
+	INSERT INTO 
+	orders values (#{suju_no}, #{emp_no}, #{account_no}, NULL, #{suju_date}, #{last_date}, #{order_note})
+	<selectKey keyProperty="suju_no" resultType="int" order="AFTER">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
+</insert>
+<insert id="sujudetailInsert" parameterType="Orders">
+	INSERT INTO orders_detail VALUES
+	<foreach collection="ordersDetailDTOs" item="item" separator=", ">
+	  (#{suju_no}, #{item.item_no}, #{item.suju_amount} )
+	</foreach>
+</insert>
 </mapper>
