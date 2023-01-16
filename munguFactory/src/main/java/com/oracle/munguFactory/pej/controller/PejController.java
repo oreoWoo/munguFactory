@@ -22,7 +22,7 @@ public class PejController {
 	
 	private final PejService ps;
 	
-	@RequestMapping("/factoryList")
+	@RequestMapping("/user/factoryList")
 	public String factoryList(FactoryDTO factory, String currentPage, Model model) {
 		System.out.println("PejController factoryList Start");
 		int totalFactory = ps.totalFactory();
@@ -42,7 +42,7 @@ public class PejController {
 		return "factory/factoryList";
 	}
 	
-	@RequestMapping("/createFactory")
+	@RequestMapping("/admin/createFactory")
 	public String createFactory(Model model, HttpServletRequest request) {
 		/*
 		 * System.out.println("PejController createFactory Start"); List<FactoryDTO>
@@ -52,20 +52,20 @@ public class PejController {
 		return "factory/createFactory";
 	}
 	
-	@RequestMapping("/insertFactory")
+	@RequestMapping("/admin/insertFactory")
 	public String insertFactory(FactoryDTO factoryDTO, Model model) {
 		System.out.println("PejController insertFactory Start");
 		int insertResult = ps.insertFactory(factoryDTO);
 		if (insertResult == 1) {
 			model.addAttribute("insertMsg", insertResult);
-			return "forward:factoryList";
+			return "forward:/user/factoryList";
 		} else {
 			model.addAttribute("insertMsg", insertResult);
-			return "forward:createFactory";
+			return "forward:/admin/createFactory";
 		}
 	}
 	
-	@RequestMapping("/factoryInfo")
+	@RequestMapping("/user/factoryInfo")
 	public String factoryInfo(int factory_no, Model model) {
 		System.out.println("PejController factoryInfo Start");
 		FactoryDTO factoryDTO = ps.factoryInfo(factory_no);
@@ -73,7 +73,7 @@ public class PejController {
 		return "factory/factoryInfo";
 	}
 	
-	@RequestMapping("/factoryInfoEdit")
+	@RequestMapping("/admin/factoryInfoEdit")
 	public String factoryInfoEdit(int factory_no, Model model) {
 		System.out.println("PejController factoryInfo Start");
 		FactoryDTO factoryDTO = ps.factoryInfoEdit(factory_no);
@@ -81,7 +81,7 @@ public class PejController {
 		return "factory/factoryInfoEdit";
 	}
 	
-	@RequestMapping("/deleteFactory")
+	@RequestMapping("/admin/deleteFactory")
 	public String deleteFactory(int factory_no, Model model) {
 		System.out.println("PejController deleteFactory Start");
 		int factoryDTO = ps.deleteFactory(factory_no);
@@ -89,14 +89,14 @@ public class PejController {
 		
 		if (factoryDTO == 0) {
 			model.addAttribute("delMsg", factoryDTO);
-			return "forward:factoryList";
+			return "forward:/user/factoryList";
 		} else {
 			model.addAttribute("delMsg", factoryDTO);
-			return "forward:factoryList";
+			return "forward:/user/factoryList";
 		}
 	}
 	
-	@RequestMapping("/factorySearch")
+	@RequestMapping("/user/factorySearch")
 	public String factorySearch(FactoryDTO factoryDTO, String searchString, String currentPage, Model model) {
 		System.out.println("PejController factorySearch Start");
 		
@@ -120,17 +120,17 @@ public class PejController {
 		return "factory/factoryList";
 	}
 	
-	@RequestMapping("/updateFactory")
+	@RequestMapping("/admin/updateFactory")
 	public String updateFactory(FactoryDTO factory, Model model) {
 		System.out.println("PejController updateFactory Start");
 		int updateFactoryCount = ps.updateFactory(factory);
 		System.out.println("PejController updateFactory updateFactoryCount-> "+updateFactoryCount);
 		if (updateFactoryCount == 1) {
 			model.addAttribute("upMsg", updateFactoryCount);
-			return "forward:factoryList";
+			return "forward:/user/factoryList";
 		} else {
 			model.addAttribute("upMsg", updateFactoryCount);
-			return "forward:factoryInfo";
+			return "forward:/user/factoryInfo";
 		}
 	}
 }
