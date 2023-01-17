@@ -41,6 +41,7 @@
    	.login-stat{
    		
    		margin-top:10px;
+   		margin-bottom:10px;
    		margin-left:30px;
    		list-style: none;
    	}
@@ -137,29 +138,15 @@
 		           	<sec:authentication property="principal.EmpDTO.emp_name"/> 님 안녕하세요 !
             	</a>
             </li>
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">로그인</span>
-            </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">로그인</div>
+            <li class="login-stat">
+            <sec:authorize access="isAuthenticated()">
+              <a href="/user/logoutForm" class="menu-link">
+              	<i class='menu-icon tf-icons bx bx-log-out' ></i>
+                <div data-i18n="Account">로그아웃</div>
               </a>
-              
-              <ul class="menu-sub">
-              <!-- 로그인시 변경되는 메뉴 -->
-	              <sec:authorize access="isAuthenticated()">
-		             <li class="menu-item">
-	                  <a href="/user/MyPageForm" class="menu-link">
-	                    <div data-i18n="Account">마이페이지</div>
-	                  </a>
-	                </li>
-	                <li class="menu-item">
-	                  <a href="/user/logoutForm" class="menu-link">
-	                    <div data-i18n="Account">로그아웃</div>
-	                  </a>
-	                </li>
-	              </sec:authorize>
+            </sec:authorize>
+            </li>
+<%--            
 				<sec:authorize access="isAnonymous()">
 					<li class="menu-item">
 	                  <a href="/signUp" class="menu-link">
@@ -171,7 +158,7 @@
 	                    <div data-i18n="Notifications">아이디/비밀번호 찾기</div>
 	                  </a>
 	                </li>
-				</sec:authorize>
+				</sec:authorize> --%>
                
               </ul>
             </li>
