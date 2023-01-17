@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -15,7 +16,7 @@
 		$("#pageNum").val(pageNum);
 		var formData = $(".searchPlace").serialize();
 		$.ajax({
-			url		: '/inventoryManagementListAjaxChk',
+			url		: '/user/inventoryManagementListAjaxChk',
 			type 	: "POST", 
 			data	: formData,
 			dataType: 'text',
@@ -30,7 +31,7 @@
 	function ajaxInsertShipmentForm(){
 		if($(".insertShipment").html()==null){
 			$.ajax({
-				url		: '/ajaxInsertShipmentForm',
+				url		: '/user/ajaxInsertShipmentForm',
 				type 	: "GET", 
 				dataType: 'text',
 				success	: function(data){
@@ -46,17 +47,18 @@
 		}
 	}
 	function detailInfo(pk,url){
+		$('.modal-body').html("");
 		$.ajax({
 			url		: url+pk,
 			type 	: "GET", 
 			dataType: 'text',
 			success	: function(data){
 				var html = $('<div>').html(data);
-				$('.modal-body').html("");
 				$('.modal-body').append(html.find("div #container").html());
 				$('.modal-body').append(html.find("div .subulContainer").html());
 				$('.modal-body').append(html.find("div .inventoryManagementContainer").html());
 				$('.modal-body').append(html.find("div .col-xxl").html());
+				$('.modal-body button, .modal-body input').attr('disabled','disabled');
 			}
 		});
 	}
@@ -68,6 +70,7 @@
 <body>
 	<div class="shipmentContainer">
 		<h1>출하등록</h1>
+		<sec:authentication property="principal.empDTO" var="myEmp"/>
 		<div class="modal fade" id="fullsizemodal" tabindex="-1"
 			aria-hidden="true">
 			<div class="modal-dialog fullsizemodal modal-dialog-scrollable" role="document">
@@ -89,10 +92,10 @@
 					<option value="50">50개씩 보기</option>
 					<option value="100">100개씩 보기</option>
 				</select>
-				<select class="form-select" name="factory_no" onchange="ajaxChk(1)">
-					<option selected="selected" value="0">창고선택(전체)</option>
-					<c:forEach var="factory" items="${factoryList }">
-						<option value="${factory.factory_no }">${factory.factory_name } 창고</option>
+				<select class="form-select" name="account_no" onchange="ajaxChk(1)">
+					<option selected="selected" value="0">거래처선택(전체)</option>
+					<c:forEach var="account" items="${accountList }">
+						<option value="${account.account_no }">${account.account_name }</option>
 					</c:forEach>
 				</select>
 				<input type="date" class="form-control" name="subul_date" value="" onchange="ajaxChk(1)">

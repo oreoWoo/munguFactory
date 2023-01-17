@@ -6,16 +6,32 @@
 		select Count(*) 
 		from orders o inner Join accounts a on o.account_no = a.account_no
 		<choose>
-			<when test="searchName!=null and !searchName.equals('') and startDate!=null and !startDate.equals('')">
+			<when test="searchName!=null and !searchName.equals('') and startDate!=null and !startDate.equals('') and endDate!=null and !endDate.equals('')">
 				where a.account_name like concat(#{searchName} ,'%') 
 				and  Suju_date between #{startDate} and #{endDate}
 			</when>
-			<when test="startDate!=null and !startDate.equals('')">
+			<when test="searchName!=null and !searchName.equals('') and startDate!=null and !startDate.equals('')">
+				where a.account_name like concat(#{searchName} ,'%')
+				and	  Suju_date &gt; #{startDate}
+			</when>
+			<when test="searchName!=null and !searchName.equals('') and endDate!=null and !endDate.equals('')">
+				where a.account_name like concat(#{searchName} ,'%')
+				and	  Suju_date &lt; #{endDate}
+			</when>
+			<when test="startDate!=null and !startDate.equals('') and endDate!=null and !endDate.equals('')">
 				where Suju_date between #{startDate} and #{endDate}
 			</when>
 			<when test="searchName!=null and !searchName.equals('')">
 				where a.account_name like concat(#{searchName} ,'%')
 			</when>
+			<when test="startDate!=null and !startDate.equals('')">
+				where Suju_date &gt; #{startDate}
+			</when>
+			<when test="endDate!=null and !endDate.equals('')">
+				where Suju_date &lt; #{endDate}
+			</when>
+			<otherwise>
+			</otherwise>
 		</choose>
 		
 	</select>
@@ -25,19 +41,35 @@
 		from orders o 
 		left outer Join accounts a on o.account_no = a.account_no 
 		<choose>
-			<when test="searchName!=null and !searchName.equals('') and startDate!=null and !startDate.equals('')">
+			<when test="searchName!=null and !searchName.equals('') and startDate!=null and !startDate.equals('') and endDate!=null and !endDate.equals('')">
 				where a.account_name like concat(#{searchName} ,'%') 
 				and  Suju_date between #{startDate} and #{endDate}
 			</when>
-			<when test="startDate!=null and !startDate.equals('')">
+			<when test="searchName!=null and !searchName.equals('') and startDate!=null and !startDate.equals('')">
+				where a.account_name like concat(#{searchName} ,'%')
+				and	  Suju_date &gt; #{startDate}
+			</when>
+			<when test="searchName!=null and !searchName.equals('') and endDate!=null and !endDate.equals('')">
+				where a.account_name like concat(#{searchName} ,'%')
+				and	  Suju_date &lt; #{endDate}
+			</when>
+			<when test="startDate!=null and !startDate.equals('') and endDate!=null and !endDate.equals('')">
 				where Suju_date between #{startDate} and #{endDate}
 			</when>
 			<when test="searchName!=null and !searchName.equals('')">
 				where a.account_name like concat(#{searchName} ,'%')
 			</when>
+			<when test="startDate!=null and !startDate.equals('')">
+				where Suju_date &gt; #{startDate}
+			</when>
+			<when test="endDate!=null and !endDate.equals('')">
+				where Suju_date &lt; #{endDate}
+			</when>
+			<otherwise>
+			</otherwise>
 		</choose>
-		limit #{rowPage}
-		offset #{startPage};
+		 limit #{rowPage}
+		offset #{start};
 	</select>
 	
 	<select id="sujuInfo" parameterType="int" resultType="Orders">
@@ -60,4 +92,34 @@
 		where suju_no = #{suju_no}
 		and not exists (select * from production_order where suju_no = #{suju_no} and prod_state != '생산지시')
 	</delete>
+	
+	<delete id="sujuModifyDelete" parameterType="Orders">
+		delete 
+		from orders_detail
+		where suju_no = 1004
+		and item_no not in(105,107,126)
+		and not exists (select * from production_order where suju_no = #{suju_no} and prod_state != '생산지시')
+	</delete>
+	
+	<update id="sujuModifyOrders" parameterType="Orders">
+		update
+		orders
+		set
+		account_no = #{account_no},
+	    suju_date = #{suju_date},
+	    last_date = #{last_date},
+	    order_note = #{order_note}
+	    where suju_no = #{suju_no}
+	    and not exists (select * from production_order where suju_no = #{suju_no} and prod_state != '생산지시')
+	</update>
+	
+	<insert id="sujuModifyDetails" parameterType="Orders">
+		insert into orders_detail (suju_no, item_no, suju_amount, balju_no)
+		<foreach collection="ordersDetailDTOs" item="item" separator=" union all ">
+			select #{suju_no}, #{item.item_no}, #{item.suju_amount}, #{item.balju_no}
+			where not exists (select * from production_order where suju_no = #{suju_no} and prod_state != '생산지시')
+		</foreach>
+		on duplicate key update
+		suju_amount = VALUES(suju_amount);
+	</insert>
 </mapper>

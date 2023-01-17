@@ -78,7 +78,7 @@ public class MainController
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/")
 	public String goHome() {
-		return "main/home";
+		return "redirect:/loginSuccess";
 	}
 	
 	@GetMapping("/signUp")

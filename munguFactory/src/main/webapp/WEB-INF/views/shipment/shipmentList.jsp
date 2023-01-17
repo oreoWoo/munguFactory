@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +33,7 @@
 						<tr>
 							<td>${subul.subul_num }</td>
 							<td>
-								<a data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.account_no },'/accountInfoDetail?account_no=')" href="#">
+								<a data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.account_no },'/user/accountInfoDetail?account_no=')" href="#">
 									${subul.account_name }
 								</a>
 								<%-- <a href="/accountInfoDetail?account_no=${subul.account_no }">${subul.account_name }</a> --%>
@@ -44,7 +45,7 @@
 							</td>
 							<%-- <td><a href="/user/sujuDetail?suju_no=${subul.serial_no }">${subul.serial_no }</a></td> --%>
 							<td>
-								<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.item_no },'/ItemAdminSelect?item_no=')" href="#">
+								<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.item_no },'/user/ItemAdminSelect?item_no=')" href="#">
 									${subul.item_name }
 								</a>
 							</td>
@@ -86,7 +87,7 @@
 	<script type="text/javascript">
 		$(".ajaxGetSujuList").change(function(){
 			$.ajax({
-				url		: '/ajaxGetSujuList',
+				url		: '/user/ajaxGetSujuList',
 				data	: {account_no	:	$(this).val()},
 				type 	: "GET",
 				dataType: 'text',
@@ -120,7 +121,7 @@
 		<script type="text/javascript">
 			$(".ajaxGetItemList").change(function(){
 				$.ajax({
-					url		: '/ajaxGetItemList',
+					url		: '/user/ajaxGetItemList',
 					data	: {suju_no	:	$(this).val()},
 					type 	: "GET",
 					dataType: 'text',
@@ -162,7 +163,7 @@
 		<script type="text/javascript">
 			$(".ajaxGetOrdersDetail").change(function(){
 				$.ajax({
-					url		: '/ajaxGetOrdersDetail',
+					url		: '/user/ajaxGetOrdersDetail',
 					data	: {	suju_no	:	$(".ajaxGetItemList").val(),
 								item_no	:	$(this).val()},
 					type 	: "GET",
@@ -190,6 +191,7 @@
 		</script>
 	</c:if>
 	<c:if test="${OrdersDetail!=null}">
+		<sec:authentication property="principal.empDTO" var="myEmp"/>
 		<c:choose>
 			<c:when test="${OrdersDetail.suju_amount>OrdersDetail.stock_count }">
 				<ul>
@@ -206,16 +208,16 @@
 			</c:otherwise>
 		</c:choose>
 		<script type="text/javascript">
-			if(${OrdersDetail.suju_amount>50 }{
+			if(${OrdersDetail.suju_amount>OrdersDetail.stock_count }){
 				alert("재고가 부족하여 출하가 불가능합니다!");
 				$('.insertShipmentButton').attr("disabled","disabled").text("출하불가");
 			} else {
 				$('.insertShipmentButton').removeAttr("disabled").text("출하");
 			}
 			function ajaxInsertShipment(){
-				if(confirm("출하 등록 후 수정이 불가능 합니다. \n정확히 확인 후 등록하여 주세요. \n등록하시겠습니까?")){
+				if(confirm("${myEmp.emp_name} 님 ! \n출하 등록 후 수정이 불가능 합니다. \n정확히 확인 후 등록하여 주세요. \n등록하시겠습니까?")){
 					$.ajax({
-						url		: '/ajaxInsertShipment',
+						url		: '/user/ajaxInsertShipment',
 						data	: {	serial_no	:	$(".ajaxGetItemList").val(),
 									item_no		:	$(".ajaxGetOrdersDetail").val(),
 									amount		:	$("#suju_amount").val()},

@@ -123,7 +123,7 @@
 	<div class="outputContainer">
 		<h1 class="display-3">생산실적</h1>
 		<!-- 생산실적 등록 -->
-		<div class="alert alert-primary" role="alert" style="width: 70px; text-align: center;translate: 1250px 107px;height:40px;padding: 9px 2px 0px 1px;font-weight: bold;"><a href="writeFormOutput">등록</a></div>
+		<div class="alert alert-primary" role="alert" style="width: 70px; text-align: center;translate: 1250px 107px;height:40px;padding: 9px 2px 0px 1px;font-weight: bold;"><a href="${pageContext.request.contextPath }/user/writeFormOutput">등록</a></div>
 
 		<!-- 생산실적 관련 정보 조회 -->
 		<form action="listSearch" style="translate: 2px 52px;">
@@ -192,7 +192,7 @@
                <ul class="pagination justify-content-center">
                   <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
                      <li class="page-item"><a class="page-link"
-                        href="/outputList?currentPage=${i}">${i}</a></li>
+                        href="${pageContext.request.contextPath }/user/outputList?currentPage=${i}">${i}</a></li>
                   </c:forEach>
                </ul>
 		</nav>

@@ -6,6 +6,7 @@
 		SELECT COUNT(*)
 		FROM emp e, item i, factory f, SUBUL s
 		LEFT JOIN orders o ON s.serial_no=o.suju_no
+		LEFT JOIN accounts a on o.account_no=a.account_no
 		WHERE s.EMP_NO=e.EMP_NO
 		AND s.item_no=i.item_no
 		AND i.factory_no=f.factory_no
@@ -25,6 +26,7 @@
 		</if>
 		<if test='gubun!=null and !gubun.equals("")'>AND s.gubun=#{gubun}</if>
 		<if test="factory_no!=null and factory_no!=0">AND i.factory_no=#{factory_no}</if>
+		<if test="account_no!=null and account_no!=0">AND a.account_no=#{account_no}</if>
 		<if test="subul_date!=null and !subul_date.equals('')">AND s.subul_date like concat('%',#{subul_date},'%')</if>
 	</select>
 	
@@ -52,6 +54,7 @@
 		</if>
 		<if test='gubun!=null and !gubun.equals("")'>AND s.gubun=#{gubun}</if>
 		<if test="factory_no!=null and factory_no!=0">AND i.factory_no=#{factory_no}</if>
+		<if test="account_no!=null and account_no!=0">AND a.account_no=#{account_no}</if>
 		<if test="subul_date!=null and !subul_date.equals('')">AND s.subul_date like concat('%',#{subul_date},'%')</if>
 		ORDER BY s.subul_num DESC
 		LIMIT #{rowPageOption} offset #{offset};
@@ -105,5 +108,15 @@
 		AND od.item_no=#{item_no}
 		AND s.item_no=#{item_no} 
 		AND i.item_no=od.item_no
+	</select>
+	<select id="getStoragesAmount" resultType="int" parameterType="Subul">
+		SELECT stock_count FROM storages WHERE item_no=#{item_no};
+	</select>
+	<select id="StoragesInfo" parameterType="int" resultType="Storages">
+		SELECT *
+		FROM storages s, factory f, item i
+		WHERE s.factory_no=#{factory_no}
+		AND s.factory_no=f.factory_no
+		AND s.item_no=i.item_no
 	</select>
 </mapper>

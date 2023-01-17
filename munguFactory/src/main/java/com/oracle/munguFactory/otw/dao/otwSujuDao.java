@@ -1,11 +1,9 @@
 package com.oracle.munguFactory.otw.dao;
 
-import java.util.List;
-
-import com.oracle.munguFactory.dto.AccountsDTO;
+import com.oracle.munguFactory.dto.OrdersDTO;
 
 public interface otwSujuDao {
 	
-	public List<AccountsDTO> selectByRow(int fromRow, int wirtePages);
+	public int sujuSave(OrdersDTO ordersDTO);
 
 }

@@ -35,3 +35,6 @@
 	.fullsizemodal{
 		min-width: 80%;
 	}
+	.modal-body button, .modal-body input {
+		display: none;
+	}

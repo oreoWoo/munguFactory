@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +26,8 @@ $(function(){
 		 <table>
 			
             <div class="container-xxl flex-grow-1 container-p-y">
+            <sec:authorize access="hasAnyRole('user','admin')" var="roleUser"/>
+			<sec:authorize access="hasRole('admin')" var="roleAdmin"/>
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Factory /</span> Factory Info</h4>
                 <!-- Basic with Icons -->
                 <div class="col-xxl">
@@ -87,8 +90,10 @@ $(function(){
                         </div>
                         <div class="row justify-content-end" style="margin-left: 400px">
                           <div class="col-sm-10">
+                          	<sec:authorize access="hasRole('admin')">
                             <input type="button" class="btn btn-primary" value="수정" onclick="location.href='${pageContext.request.contextPath }/admin/factoryInfoEdit?factory_no=${factoryDTO.factory_no}'">
-                            <input type="button" class="btn btn-primary" value="목록" onclick="location.href='${pageContext.request.contextPath }/factoryList'">
+                            </sec:authorize>
+                            <input type="button" class="btn btn-primary" value="목록" onclick="location.href='${pageContext.request.contextPath }/user/factoryList'">
                           </div>
                         </div>
                       </form>

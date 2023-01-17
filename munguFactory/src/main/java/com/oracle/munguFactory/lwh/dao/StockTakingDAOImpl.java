@@ -74,7 +74,6 @@ public class StockTakingDAOImpl implements StockTakingDAO {
 
 	@Override
 	public int updateTempSilsa(StockTakingDTO stockTakingDTO) {
-		System.out.println("뭘담아왔니?: " + stockTakingDTO);
 		return session.update("updateTempSilsa", stockTakingDTO);
 	}
 

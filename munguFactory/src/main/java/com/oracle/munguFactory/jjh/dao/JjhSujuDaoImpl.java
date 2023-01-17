@@ -56,7 +56,9 @@ public class JjhSujuDaoImpl implements JjhSujuDao {
 			totCnt = session.selectOne("sujuTotCnt", ordersPaging);
 			System.out.println("totCnt?->" + totCnt);
 			ordersPaging.setInfo(totCnt);
+			//ordersPaging.setCurrentPage(ordersPaging.getCurrentPage()-1);
 			ordersDTOs = session.selectList("sujuList", ordersPaging);
+			//ordersPaging.setCurrentPage(ordersPaging.getCurrentPage()+1);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -64,5 +66,19 @@ public class JjhSujuDaoImpl implements JjhSujuDao {
 		
 		System.out.println("ordersListDTO?->" + ordersListDTO);
 		return ordersListDTO;
+	}
+
+	@Override
+	public int sujuModify(OrdersDTO ordersDTO) {
+		log.info("sujuDelete start...");
+		int result = 0;
+		try {
+			result = session.delete("sujuModifyDelete", ordersDTO);
+			result = session.update("sujuModifyOrders", ordersDTO);
+			result = session.insert("sujuModifyDetails", ordersDTO);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return result;
 	}
 }

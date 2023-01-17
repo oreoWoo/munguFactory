@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!-- =========================================================
 * Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
@@ -36,6 +37,13 @@
    		width:30px;
    		height:30px;
    	
+   	}
+   	.login-stat{
+   		
+   		margin-top:10px;
+   		margin-bottom:10px;
+   		margin-left:30px;
+   		list-style: none;
    	}
    </style>
   </head>
@@ -124,8 +132,23 @@
                 <div data-i18n="Analytics">메인</div>
               </a>
             </li>
+            <li class="login-stat">
+            	<a href="${pageContext.request.contextPath }/user/MyPageForm" class="menu-link">
+		           	<i class="menu-icon tf-icons bx bx-user"></i>
+		           	<sec:authentication property="principal.EmpDTO.emp_name"/> 님 안녕하세요 !
+            	</a>
+            </li>
+            <li class="login-stat">
+            <sec:authorize access="isAuthenticated()">
+              <a href="/user/logoutForm" class="menu-link">
+              	<i class='menu-icon tf-icons bx bx-log-out' ></i>
+                <div data-i18n="Account">로그아웃</div>
+              </a>
+            </sec:authorize>
+            </li>
             
-            <li class="menu-header small text-uppercase">
+            
+         <%--    <li class="menu-header small text-uppercase">
               <span class="menu-header-text">로그인</span>
             </li>
             <li class="menu-item">
@@ -133,24 +156,54 @@
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Account Settings">로그인</div>
               </a>
+              
               <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="/user/MyPageForm" class="menu-link">
-                    <div data-i18n="Account">마이페이지</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="/signUp" class="menu-link">
-                    <div data-i18n="Account">회원가입</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="/findIdPwForm" class="menu-link">
-                    <div data-i18n="Notifications">아이디/비밀번호 찾기</div>
-                  </a>
-                </li>
+              <!-- 로그인시 변경되는 메뉴 -->
+	              <sec:authorize access="isAuthenticated()">
+		             <li class="menu-item">
+	                  <a href="/user/MyPageForm" class="menu-link">
+	                    <div data-i18n="Account">마이페이지</div>
+	                  </a>
+	                </li>
+	                <li class="menu-item">
+	                  <a href="/user/logoutForm" class="menu-link">
+	                    <div data-i18n="Account">로그아웃</div>
+	                  </a>
+	                </li>
+	              </sec:authorize>
+				<sec:authorize access="isAnonymous()">
+					<li class="menu-item">
+	                  <a href="/signUp" class="menu-link">
+	                    <div data-i18n="Account">회원가입</div>
+	                  </a>
+	                </li>
+	                <li class="menu-item">
+	                  <a href="/findIdPwForm" class="menu-link">
+	                    <div data-i18n="Notifications">아이디/비밀번호 찾기</div>
+	                  </a>
+	                </li>
+				</sec:authorize>
+               
               </ul>
-            </li>
+            </li> --%>
+            
+            <sec:authorize access="hasRole('ROLE_admin')">
+				<li class="menu-header small text-uppercase">
+	              <span class="menu-header-text">관리자 기능</span>
+	            </li>
+	            <li class="menu-item">
+	              <a href="/admin/userlist" class="menu-link">
+	                <i class="menu-icon tf-icons bx bx-collection"></i>
+	                <div data-i18n="Basic">유저리스트</div>
+	              </a>
+	            </li>
+	             <li class="menu-item">
+	              <a href="/admin/makeUserList" class="menu-link">
+	                <i class="menu-icon tf-icons bx bx-collection"></i>
+	                <div data-i18n="Basic">유저리스트 생성</div>
+	              </a>
+	            </li>
+			</sec:authorize>
 			
 			<li class="menu-header small text-uppercase">
               <span class="menu-header-text">기준정보</span>
@@ -210,7 +263,7 @@
               <span class="menu-header-text">공정관리</span>
             </li>
             <li class="menu-item">
-              <a href="/outputList" class="menu-link">
+              <a href="/user/outputList" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">생산실적</div>
               </a>
@@ -227,7 +280,7 @@
               </a>
             </li>
              <li class="menu-item">
-              <a href="/inventoryManagement" class="menu-link">
+              <a href="/user/inventoryManagement" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">수불부</div>
               </a>
@@ -237,33 +290,20 @@
               <span class="menu-header-text">영업 관리</span>
             </li>
             <li class="menu-item">
-              <a href="/SujuList" class="menu-link">
+              <a href="/user/sujuList" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">수주 등록</div>
               </a>
             </li>
              <li class="menu-item">
-              <a href="/Shipment" class="menu-link">
+              <a href="/user/Shipment" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">출하 등록</div>
               </a>
             </li>
 			
-			 <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">관리자 기능</span>
-            </li>
-            <li class="menu-item">
-              <a href="/admin/userlist" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">유저리스트</div>
-              </a>
-            </li>
-             <li class="menu-item">
-              <a href="/admin/makeUserList" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">유저리스트 생성</div>
-              </a>
-            </li>
+			
+			
             
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Pages</span>
