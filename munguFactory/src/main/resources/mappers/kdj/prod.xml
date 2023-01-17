@@ -39,10 +39,10 @@
 								         ,prod_state
 								         ,factory_no
 					    FROM
-					        production_order P, (SELECT @ROWNUM:=0) TMP
+					        production_order P, (SELECT @ROWNUM:=2) TMP
 					    ORDER BY suju_no DESC) SUB
                        ORDER BY SUB.ROWNUM ASC)the
-                        <![CDATA[where ROWNUM >#{start} and ROWNUM <=#{end}]]>                 
+                        <![CDATA[where ROWNUM >#{start} and ROWNUM <=#{end}+1]]>                 
                       
 	</select>
 	
@@ -62,6 +62,7 @@
 					from 
 					        production_order p, item i
 				    where   p.suju_No =#{suju_no}
+				    and     p.item_no =#{item_no}
 				    and     p.item_no =i.item_no
 		 
 		
@@ -78,5 +79,15 @@
 	        Suju_No =#{suju_no}
 	 and    
 	 		item_no =#{item_no}
+	</select>
+	<select id="delete" parameterType="Prod">
+	delete
+		FROM
+		    production_order
+		WHERE
+			Suju_No =#{suju_no}
+	    and    
+			item_no =#{item_no}
+	
 	</select>
 </mapper>
