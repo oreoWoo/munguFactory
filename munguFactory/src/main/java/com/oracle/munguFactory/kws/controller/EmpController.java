@@ -205,25 +205,6 @@ public class EmpController
 			return "emp/userMyPageForm";
 		}
 		
-		//로그아웃 
-		@RequestMapping("/logoutForm")
-		public String logout(@AuthenticationPrincipal PrincipalDetails principal, HttpSession session)
-		{
-			session.setAttribute("emp", principal.getEmpDTO()); // 세션 적용
-			System.out.println("session" + session);
-			session.invalidate();
-			return "emp/logoutForm";
-		}
 		
-		@RequestMapping("/denied")
-		public String denied(@AuthenticationPrincipal PrincipalDetails principal, HttpSession session, Model model) {
-			session.setAttribute("emp", principal.getEmpDTO()); // 세션 적용
-			model.addAttribute("msg","권한이 없습니다.");
-			if(session != null) {
-				return "/user/emp/admin";
-			}else {
-				return "/emp/loginForm";
-			}	
-		}
 		
 }

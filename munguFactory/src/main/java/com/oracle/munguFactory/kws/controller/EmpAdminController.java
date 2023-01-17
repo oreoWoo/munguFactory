@@ -159,7 +159,7 @@ public class EmpAdminController
 		int dept_no = 0; 
 		model.addAttribute("dept_no",dept_no);
 		
-		return "/emp/userlist";
+		return "emp/userlist";
 	}
 	
 	@RequestMapping("/userlistDeptSearch")
