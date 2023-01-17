@@ -35,6 +35,9 @@
 					<td>${subul.subul_num }</td>
 					<td>
 						<c:choose>
+							<c:when test="${subul.serial_no eq null ||subul.serial_no eq 0 }">
+									${subul.subul_num }
+							</c:when>
 							<c:when test="${subul.gubun=='출하' }">
 								<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.serial_no },'/user/sujuDetail?suju_no=')" href="#">
 									${subul.serial_no }
@@ -62,7 +65,11 @@
 							${subul.factory_name }
 						</a>
 					</td>
-					<td>${subul.factory_name }창고</td>
+					<td>
+						<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.factory_no},'/user/storagesInfo?factory_no=')" href="#">
+							${subul.factory_name }창고
+						</a>
+					</td>
 					<td>${subul.gubun }</td>
 					<td>${subul.emp_name }</td>
 					<td>

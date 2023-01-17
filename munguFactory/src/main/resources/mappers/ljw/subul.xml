@@ -112,4 +112,11 @@
 	<select id="getStoragesAmount" resultType="int" parameterType="Subul">
 		SELECT stock_count FROM storages WHERE item_no=#{item_no};
 	</select>
+	<select id="StoragesInfo" parameterType="int" resultType="Storages">
+		SELECT *
+		FROM storages s, factory f, item i
+		WHERE s.factory_no=#{factory_no}
+		AND s.factory_no=f.factory_no
+		AND s.item_no=i.item_no
+	</select>
 </mapper>

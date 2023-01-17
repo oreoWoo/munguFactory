@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -190,6 +191,7 @@
 		</script>
 	</c:if>
 	<c:if test="${OrdersDetail!=null}">
+		<sec:authentication property="principal.empDTO" var="myEmp"/>
 		<c:choose>
 			<c:when test="${OrdersDetail.suju_amount>OrdersDetail.stock_count }">
 				<ul>
@@ -213,7 +215,7 @@
 				$('.insertShipmentButton').removeAttr("disabled").text("출하");
 			}
 			function ajaxInsertShipment(){
-				if(confirm("출하 등록 후 수정이 불가능 합니다. \n정확히 확인 후 등록하여 주세요. \n등록하시겠습니까?")){
+				if(confirm("${myEmp.emp_name} 님 ! \n출하 등록 후 수정이 불가능 합니다. \n정확히 확인 후 등록하여 주세요. \n등록하시겠습니까?")){
 					$.ajax({
 						url		: '/user/ajaxInsertShipment',
 						data	: {	serial_no	:	$(".ajaxGetItemList").val(),

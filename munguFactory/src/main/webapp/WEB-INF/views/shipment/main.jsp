@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -46,13 +47,13 @@
 		}
 	}
 	function detailInfo(pk,url){
+		$('.modal-body').html("");
 		$.ajax({
 			url		: url+pk,
 			type 	: "GET", 
 			dataType: 'text',
 			success	: function(data){
 				var html = $('<div>').html(data);
-				$('.modal-body').html("");
 				$('.modal-body').append(html.find("div #container").html());
 				$('.modal-body').append(html.find("div .subulContainer").html());
 				$('.modal-body').append(html.find("div .inventoryManagementContainer").html());
@@ -69,6 +70,7 @@
 <body>
 	<div class="shipmentContainer">
 		<h1>출하등록</h1>
+		<sec:authentication property="principal.empDTO" var="myEmp"/>
 		<div class="modal fade" id="fullsizemodal" tabindex="-1"
 			aria-hidden="true">
 			<div class="modal-dialog fullsizemodal modal-dialog-scrollable" role="document">

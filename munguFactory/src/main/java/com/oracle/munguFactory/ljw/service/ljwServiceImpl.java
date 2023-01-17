@@ -10,6 +10,7 @@ import com.oracle.munguFactory.dto.FactoryDTO;
 import com.oracle.munguFactory.dto.OrdersDTO;
 import com.oracle.munguFactory.dto.OrdersDetailDTO;
 import com.oracle.munguFactory.dto.PageDTO;
+import com.oracle.munguFactory.dto.StoragesDTO;
 import com.oracle.munguFactory.dto.SubulDTO;
 import com.oracle.munguFactory.ljw.dao.ljwDao;
 
@@ -52,6 +53,10 @@ public class ljwServiceImpl implements ljwService {
 	@Override
 	public OrdersDetailDTO getOrdersDetail(int suju_no, int item_no) {
 		return dao.getOrdersDetail(suju_no,item_no);
+	}
+	@Override
+	public List<StoragesDTO> getStoragesInfo(int factory_no) {
+		return dao.getStoragesInfo(factory_no);
 	}
 
 }
