@@ -135,4 +135,10 @@ public class HomeController {
 	public String goForgotPw() {
 		return "blank/auth-forgot-password-basic";
 	}
+	
+	@GetMapping(value = "/charts")
+	public String goCharts() {
+		return "chart/chart";
+	}
+
 }
