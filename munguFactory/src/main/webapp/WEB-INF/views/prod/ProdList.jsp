@@ -37,9 +37,7 @@
 };  */
 
 	function click_add(v_suju_no , v_item_no){
-		/* alert('v_sujuNo->'+v_sujuNo)
-		alert('v_itemNo->'+v_itemNo) */
-		var url = "/ProdModPop?suju_no="+v_suju_no + "&item_no="+v_item_no;
+		var url = "/user/ProdModPop?suju_no="+v_suju_no + "&item_no="+v_item_no;
 		var name = "생산지시 팝업";
 		var option = "width = 600, height = 600, left = 100, top=50, location=no";
 		var w = window.open(url,name,option);
@@ -87,7 +85,7 @@
 							<tr>
 								<%-- <th scope="row">${list.rn}</th>  --%>
 								<td>
-									<a href="/ProdModPop?suju_no=${list.suju_no}">${list.suju_no}</a>
+									<a href="/user/ProdModPop?suju_no=${list.suju_no}">${list.suju_no}</a>
 								</td>
 								<td>${list.item_no}</td>
 								<td>${list.factory_no}</td>
@@ -111,7 +109,7 @@
 					<ul class="pagination justify-content-center">
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 							<li class="page-item"><a class="page-link"
-								href="/ProdList?currentPage=${i}">${i}</a></li>
+								href="/user/ProdList?currentPage=${i}">${i}</a></li>
 						</c:forEach>
 					</ul>
 				</nav>
