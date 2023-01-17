@@ -201,7 +201,7 @@
               <span class="menu-header-text">생산계획</span>
             </li>
            <li class="menu-item">
-              <a href="/ProdList" class="menu-link">
+              <a href="/user/ProdList" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">생산지시</div>
               </a>

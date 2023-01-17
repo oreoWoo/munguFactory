@@ -15,13 +15,14 @@
 		
 		// 지시하기 버튼 이벤트 등록
 		$("#updateChk").on("click", function(){
+			
 			if(confirm("생산을 지시하시겠습니까?")){
 				var frm = $("#frm").serialize();
 				console.log("frm : " + frm);
 	
 				$.ajax({
 					type: "post",
-					url : '/modContent',
+					url : '/user/modContent',
 					data: frm,
 					dataType: "text",
 					success : function(data){
@@ -51,7 +52,44 @@ function makeFinishDate() {
 	$('#finish_date').prop('min', finishDate);
 }	 
 	
-	</script>
+</script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	// 지시하기 버튼 이벤트 등록
+	$("#delChk").on("click", function(){
+		if(confirm("생산을 지시를 삭제 하시겠습니까?")){
+			var frm = $("#frm").serialize();
+			console.log("frm : " + frm);
+
+			$.ajax({
+				type: "post",
+				url : '/user/delete',
+				data: frm,
+				dataType: "text",
+				success : function(data){
+					if (data == 0){
+						alert("삭제를 실패하였습니다.");
+					}else{
+						alert("삭제가 완료되었습니다.");
+					}
+					opener.location.reload();
+					self.close();
+				}
+			});
+		}
+	});
+});
+
+
+/* function delChk(){
+	if(confirm("생산지시를 삭제 하십니까?")){
+		location.href="/user/delete?suju_no=${prodDto.suju_no}"
+	}                  
+} */
+
+</script>
 </head>
 <body>
 
@@ -110,8 +148,10 @@ function makeFinishDate() {
 				<th></th>
 				<th class="d-flex justify-content-end">
 					<button type="button" class="btn btn-outline-secondary mx-2"
-					onclick="location.href='/ProdList?suju_no=${prodDto.suju_no}'">
+					onclick="location.href='/user/ProdList?suju_no=${prodDto.suju_no}'">
 					목록 보기</button>	
+					
+					<button id="delChk" class="btn btn-outline-secondary  mx-2 justify-content-end">삭제</button>
 
 					<button id="updateChk" class="btn btn-outline-secondary  mx-2 justify-content-end">지시 하기</button>
 				</th>

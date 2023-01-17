@@ -48,6 +48,13 @@ public class ProdServiceImpl implements ProdService {
 		return prod;
 	}
 
+	@Override
+	public ProdDTO delete(ProdDTO prodDto) {
+		System.out.println("ProdServiceImpl delete start~! ");
+		prodDto = pd.delete(prodDto);
+		return prodDto;
+	}
+
 	
 
 	}

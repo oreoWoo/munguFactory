@@ -23,7 +23,7 @@ public class ProdController {
 	
 	private final ProdService ps;
 
-	@RequestMapping("/ProdList")
+	@RequestMapping("/user/ProdList")
 	//public String ProdList(ProdDTO prodDto, String currentPage, Model model, int sujuNo, int itemNo) {
 	public String ProdList(String currentPage, Model model) {
 		System.out.println("ProdListController start~!");
@@ -43,10 +43,12 @@ public class ProdController {
 		model.addAttribute("page",page);
 		
 		return "prod/ProdList";
+		//return "prod/ProdList";
+
 	}
 	
 	//수정 Form
-	@RequestMapping(value="/ProdModPop", method = RequestMethod.GET)
+	@RequestMapping(value="/user/ProdModPop", method = RequestMethod.GET)
 	public String detailModContent(Model model, int suju_no, int item_no) {
 		System.out.println("detailContent start sujuNo->"+suju_no);
 		System.out.println("detailContent start itemNo->"+item_no);
@@ -55,20 +57,29 @@ public class ProdController {
 	
 		System.out.println("ProdController detailModContent prodDto.getSujuNo()->"+prodDto.getSuju_no());
 		System.out.println("ProdController detailModContent prodDto.getItemNo()->"+prodDto.getItem_no());
-		System.out.println("잘 받아오는지??????-> "+ prodDto.getItem_name());
+		System.out.println("ItemName 잘 받아오는지?-> "+ prodDto.getItem_name());
 		model.addAttribute("prodDto", prodDto);
 		
 		return "prod/detailContent";
+		//return "prod/detailContent";
 		
 	}
 	
 	// 수정 액션
-	@RequestMapping(value ="/modContent", method = RequestMethod.POST)
+	@RequestMapping(value ="/user/modContent", method = RequestMethod.POST)
 	@ResponseBody
 	public int modContent(ProdDTO prodDto, Model model) {
 		System.out.println("modContent prodDto=> " + prodDto);
 		int prod = ps.modContent(prodDto);
 		
 		return prod;
+	}
+	
+	@RequestMapping("/user/delete")
+	public String delete(ProdDTO prodDto, Model model) {
+		
+		prodDto = ps.delete(prodDto);
+		
+		return "prod/ProdList";
 	}
 }

@@ -13,6 +13,8 @@ public interface ProdService {
 	ProdDTO ContentModProd(int suju_no, int item_no);
 	//수정update
 	int modContent(ProdDTO prodDto);
+	//delete
+	ProdDTO delete(ProdDTO prodDto);
 
 
 }

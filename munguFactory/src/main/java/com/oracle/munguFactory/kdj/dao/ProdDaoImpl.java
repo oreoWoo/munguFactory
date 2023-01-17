@@ -71,5 +71,15 @@ public class ProdDaoImpl implements ProdDao {
 		}
 		return prod;
 	}
+	@Override
+	public ProdDTO delete(ProdDTO prodDto) {
+		int prod = 0;
+		try {
+			prod = session.delete("delete", prodDto);
+		} catch (Exception e) {
+			System.out.println("delete"+ e.getMessage());
+		}
+		return null;
+	}
 
 }
