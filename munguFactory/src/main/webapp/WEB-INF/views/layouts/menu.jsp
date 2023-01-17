@@ -194,17 +194,12 @@
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="/user/accountList" class="menu-link">
-                    <div data-i18n="Account">거래처 등록</div>
+                    <div data-i18n="Account">거래처 관리</div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="/user/factoryList" class="menu-link">
-                    <div data-i18n="Notifications">공장 등록</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="menu-link">
-                    <div data-i18n="Connections">창고 등록</div>
+                    <div data-i18n="Notifications">공장 관리</div>
                   </a>
                 </li>
               </ul>
@@ -218,11 +213,6 @@
                 <li class="menu-item">
                   <a href="ItemAdminList" class="menu-link">
                     <div data-i18n="Account">품목 등록</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="menu-link">
-                    <div data-i18n="Notifications">공장별 품목 등록</div>
                   </a>
                 </li>
               </ul>
