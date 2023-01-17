@@ -238,7 +238,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="ItemAdminList" class="menu-link">
+                  <a href="/user/ItemAdminList" class="menu-link">
                     <div data-i18n="Account">품목 등록</div>
                   </a>
                 </li>

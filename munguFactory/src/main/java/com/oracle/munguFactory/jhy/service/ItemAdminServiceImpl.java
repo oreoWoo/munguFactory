@@ -17,8 +17,8 @@ public class ItemAdminServiceImpl implements ItemAdminService {
 
 	//ItemAdminList
 	@Override
-	public List<ItemDTO> itemAdminList() {
-		List<ItemDTO> itemAdminList = itemDao.itemAdminList();
+	public List<ItemDTO> itemAdminList(Paging page) {
+		List<ItemDTO> itemAdminList = itemDao.itemAdminList(page);
 		return itemAdminList;
 	}
 

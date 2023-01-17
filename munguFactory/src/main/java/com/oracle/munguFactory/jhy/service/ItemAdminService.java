@@ -8,7 +8,7 @@ import com.oracle.munguFactory.dto.ItemDTO;
 public interface ItemAdminService {
 
 	//ItemAdminList
-	List<ItemDTO> itemAdminList();
+	List<ItemDTO> itemAdminList(Paging page);
 
 	//ItemAdminSelect
 	List<ItemDTO> itemAdminSelect(ItemDTO itemDto);

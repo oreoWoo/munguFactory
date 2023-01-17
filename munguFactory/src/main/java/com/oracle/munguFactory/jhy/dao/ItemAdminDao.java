@@ -4,11 +4,12 @@ import java.util.List;
 
 import com.oracle.munguFactory.dto.FactoryDTO;
 import com.oracle.munguFactory.dto.ItemDTO;
+import com.oracle.munguFactory.jhy.service.Paging;
 
 public interface ItemAdminDao {
 
 	//ItemAdminList
-	List<ItemDTO> itemAdminList();
+	List<ItemDTO> itemAdminList(Paging page);
 
 	//ItemAdminSelect
 	List<ItemDTO> itemAdminSelect(ItemDTO itemDTO);

@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="subulContainer">
-		<form action="/ItemAdminInsertConfirm" method="post">
+		<form action="/admin/ItemAdminInsertConfirm" method="post">
 			<table>
 				<thead>
 					<tr>

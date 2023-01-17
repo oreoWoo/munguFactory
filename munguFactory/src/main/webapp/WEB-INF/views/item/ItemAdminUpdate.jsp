@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="subulContainer">
-		<form action="/ItemAdminUpdateConfirm" method="post">
+		<form action="/admin/ItemAdminUpdateConfirm" method="post">
 			<c:forEach var="iaus" items="${ItemAdminUpSelect }">
 				<table>
 					<thead>

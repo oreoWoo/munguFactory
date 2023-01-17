@@ -44,7 +44,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<button type="button" onclick="location.href='/ItemUserList'">목록</button>
+		<button type="button" onclick="location.href='/user/ItemUserList'">목록</button>
 	</div>
 </body>
 </html>
