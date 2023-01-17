@@ -132,8 +132,10 @@
               </a>
             </li>
             <li class="login-stat">
-            	<i class="menu-icon tf-icons bx bx-user"></i>
-            	<sec:authentication property="principal.EmpDTO.emp_name"/> 님 안녕하세요 !
+            	<a href="${pageContext.request.contextPath }/user/MyPageForm" class="menu-link">
+		           	<i class="menu-icon tf-icons bx bx-user"></i>
+		           	<sec:authentication property="principal.EmpDTO.emp_name"/> 님 안녕하세요 !
+            	</a>
             </li>
            
             <li class="menu-header small text-uppercase">
