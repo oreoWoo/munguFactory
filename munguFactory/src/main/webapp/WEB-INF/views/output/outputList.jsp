@@ -192,7 +192,7 @@
                <ul class="pagination justify-content-center">
                   <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
                      <li class="page-item"><a class="page-link"
-                        href="/outputList?currentPage=${i}">${i}</a></li>
+                        href="${pageContext.request.contextPath }/user/outputList?currentPage=${i}">${i}</a></li>
                   </c:forEach>
                </ul>
 		</nav>
