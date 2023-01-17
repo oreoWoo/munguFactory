@@ -315,18 +315,21 @@ function addRow() {
 // 값을 모두 입력했는지 Validation 체크 함수
 function isAllEnter() {
 	
-	if(!$('#factorySelect>option:selected').val()) {
+	if(!$('#factorySelectI>option:selected').val()) {
 		alert('공장을 선택해주세요.');
+		$('#factorySelectI').focus();
 		return false;
 	}
 	
-	if(!$('#itemSelect>option:selected').val()) {
+	if(!$('#itemSelectI>option:selected').val()) {
 		alert('품번을 선택해주세요.');
+		$('#itemSelectI').focus();
 		return false;
 	}
 	
-	if(!$('#realStockCnt').val()) {
+	if(!$('#realStockCntI').val()) {
 		alert('수량을 입력해주세요.');
+		$('#realStockCntI').focus();
 		return false;
 	}
 	
@@ -503,9 +506,35 @@ function openUpdateTempSilsa(target) {
 	
 }
 
+function isUpdateAllEnter() {
+	
+	if(!$('.factorySelect>option:selected').val()) {
+		alert('공장을 선택해주세요.');
+		$('.factorySelect').focus();
+		return false;
+	}
+	
+	if(!$('.updateItemSelect>option:selected').val()) {
+		alert('품번을 선택해주세요.');
+		$('.updateItemSelect').focus();
+		return false;
+	}
+	
+	if(!$('.realStockCnt').val()) {
+		alert('수량을 입력해주세요.');
+		$('.realStockCnt').focus();
+		return false;
+	}
+	
+}
+
 
 //'임시실사' 데이터 수정 함수
 function updateTempSilsa(data) {
+	
+	if(!isUpdateAllEnter()) {
+   		return false;
+   	} 
 	
 	let targetTr = $(data).closest('tr');
 	
@@ -514,8 +543,6 @@ function updateTempSilsa(data) {
 	let emp_no = targetTr.find('#updateEmp_no').val();
 	let subul_note = targetTr.find('#updateMemo').val();
 	let subul_num = targetTr.find('.subul_num').val();
-	
-	console.log('얍 '+ subul_note);
 	
 	if(!confirm("변경사항을 적용하시겠습니까?")) {
 		alert("수정이 취소되었습니다.")
