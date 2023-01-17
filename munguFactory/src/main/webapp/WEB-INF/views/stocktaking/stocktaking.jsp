@@ -86,7 +86,8 @@
 		width : 100px;
 	}
 	.dropdown .gubunText {
-		color : blue;
+		color : #696cff;
+		font-weight: bold;
 	}
 	
 	.dropdown-item {
