@@ -33,7 +33,7 @@ public class SecurityConfig {
 		// authenticated -> user/**은 인증필요-->인증만되면 들어갈 수 있음
 		//http.authorizeRequests().anyRequest().permitAll();
 		http.exceptionHandling().accessDeniedPage("/denied");
-		http.logout().logoutUrl("/logout").logoutSuccessUrl("/logoutForm");
+		http.logout().logoutUrl("/logout").logoutSuccessUrl("/logoutForm").invalidateHttpSession(true).deleteCookies("JSESSIONID", "remember-me");
 
 		return http.build();
 		
