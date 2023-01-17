@@ -310,64 +310,69 @@
 </head>
 <body>
  	<div class="container">
+ 	<div class="row justify-content-center">
+    	<div class="col-xl-7 col-lg-12 col-md-9" style="height:100% !important">
+	    	<div class="card o-hidden border-0 shadow-lg my-5">
+	        	<div class="card-body p-0">
+	          		<div class="p-5">
 		<form action="/empSignUp" method="post">
-			<div class="form-group">
+			<div class="form-group textbox">
 				<label for="emp_no">사번</label>
-				<input type="text" id="emp_no" name ="emp_no" required="required" >
+				<input type="text" class="form-control" id="emp_no" name ="emp_no" required="required" ></p>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group textbox">
 				<label for="emp_name">이름</label>
-				<input type="text" id="emp_name" name ="emp_name" required="required" >
-				<input type="button" onclick="empCheck()" value="사원 확인"> <p id="empCheckmsg"></p>
+				<input type="text" class="form-control" id="emp_name" name ="emp_name" required="required" ></p>
+				<input type="button" class="btn btn-primary" onclick="empCheck()" value="사원 확인"> <p id="empCheckmsg"></p>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group textbox">
 				<label for="emp_id">아이디</label>
-				<input type="text" id="emp_id" name ="emp_id" required="required" >
-				<input type="button" onclick="idCheck()" value="아이디 중복 확인"> <p id="idCheckMsg"></p> 
+				<input type="text" class="form-control" id="emp_id" name ="emp_id" required="required" ></p>
+				<input type="button" class="btn btn-primary" onclick="idCheck()" value="아이디 중복 확인"> <p id="idCheckMsg"></p> 
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group textbox">
 				<label for="emp_passwoed">비밀번호</label>
-				<input type="password" id="emp_password" name="emp_password" required="required" >
+				<input type="password" class="form-control" id="emp_password" name="emp_password" required="required" ></p>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group textbox">
 				<label for="chk_emp_password">비밀번호 확인</label>
-				<input type="password" id="chk_emp_password" name="chk_emp_password" required="required" >
+				<input type="password" class="form-control" id="chk_emp_password" name="chk_emp_password" required="required" ></p>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group textbox">
 				<table>
 					<tr>
 						<th><label for="user_email">이메일</label><br><sub>* 필수항목</sub></th>
-						<td><input type="text" class="email" name="user_email1" id="user_email1" required="required"> @ <input type="text" class="email" name="user_email2" id="user_email2" required="required">
-							<select name="email" class="email" id="domain_list" onclick="changeDomain()">
+						<td><input type="text" class="form-control" name="user_email1" id="user_email1" required="required" style="width: auto; display: inline;"> @ <input type="text" class="form-control" name="user_email2" id="user_email2" required="required" style="width: auto; display: inline;">
+							<select name="email" class="form-select" id="domain_list" onclick="changeDomain()" >
 								<option value="naver.com">naver.com</option>
 								<option value="daum.net">daum.net</option>
 								<option value="gmail.com">gmail.com</option>
 								<option value="type" selected="selected">직접 입력</option>
-							</select>
+							</select></p>
 						</td>
 					</tr>
 				</table>
 			</div>
 		
 			<!-- 주소 -->
-			<div class="input-group">
+			<div class="form-group textbox">
 			<div class="form-group textbox mr-3"> 
-				<label for="postcode">우편번호</label>
+				</p><label for="postcode">우편번호</label>
 				<a href="#" data-toggle="tooltip" data-placement="left" title="필수입력사항"></a>
-				<input type="text" class="form-control" id="postcode" name="member_address1" readonly tabindex="-1">	
+				<input type="text" class="form-control" id="postcode" name="member_address1" readonly tabindex="-1">	</p>
 			</div>
 			<div class="form-group textbox">
-				<input type="button" class="btn btn-primary" onclick="DaumPostcode()" value="우편번호 찾기">
+				<input type="button" class="btn btn-primary" onclick="DaumPostcode()" value="우편번호 찾기"></p>
 			</div>
 			</div>
 			<div class="form-group textbox">
 				<label for="address">주소</label>
-				<input type="text" class="form-control" id="address" name="member_address2" readonly tabindex="-1">
+				<input type="text" class="form-control" id="address" name="member_address2" readonly tabindex="-1"></p>
 			</div>
 			<div class="form-group textbox">
 				<label for="detailAddress">상세주소</label>
@@ -375,13 +380,13 @@
 				<input type="hidden" id="extraAddress" placeholder="참고항목">
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group textbox">
 				<label for="emp_gender">성별</label>
 				남자 <input type="radio" name="emp_gender" value="남자" checked="checked">
 				여자 <input type="radio" name="emp_gender" value="여자" >
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group textbox">
 				<input type="hidden" id="posit_no" name="posit_no"> <p/>
 				<input type="hidden" id="auth_no" name="auth_no"> <p/>
 				<input type="hidden" id="dept_no" name="dept_no"> <p/>
@@ -394,6 +399,11 @@
 
 			<input type="submit" onclick="return signUpCheck()" value="회원 가입">
 		</form>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
 	</div>
 </body>
 </html>

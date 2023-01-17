@@ -208,7 +208,7 @@
 					<th>성별</th> 
 					<td>
 						<c:choose>
-							<c:when test="${emp.emp_gender eq '남'}">
+							<c:when test="${emp.emp_gender eq '남자'}">
 								<input type="radio" name="emp_gender" value="남" checked="checked">남성  
 								
 								<input type="radio" name="emp_gender" value="여" onclick="return false">여성  
@@ -225,7 +225,7 @@
 					<th><label for="user_email">이메일</label></th>
 					<td><input type="text" class="form-control" name="user_email1" id="user_email1" required="required"> <br> 
 					<input type="text" class="form-control" class="email" name="user_email2" id="user_email2" required="required">
-					<select name="email" class="form-control" id="domain_list" onclick="changeDomain()">
+					<select name="email" class="form-select" id="domain_list" onclick="changeDomain()" style="width: auto; display: inline;">
 						<option value="naver.com">naver.com</option>
 						<option value="daum.net">daum.net</option>
 						<option value="gmail.com">gmail.com</option>
