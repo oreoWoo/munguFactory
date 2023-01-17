@@ -53,6 +53,7 @@
 		LEFT JOIN factory f ON i.factory_no = f.factory_no
 		LEFT JOIN storages s ON sb.item_no = s.item_no
 		WHERE f.factory_use = '1'
+		AND (sb.gubun= '재고실사' OR sb.gubun='임시실사')
 		<if test="factory_no != null">
 			AND f.factory_no = #{factory_no}
 		</if>

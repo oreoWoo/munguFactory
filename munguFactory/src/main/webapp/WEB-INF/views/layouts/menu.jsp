@@ -38,6 +38,12 @@
    		height:30px;
    	
    	}
+   	
+   	.login-stat {
+	    margin-left: 30px;
+	    margin-top: 10px;
+	    list-style: none;
+   	}
    </style>
   </head>
 
@@ -125,7 +131,11 @@
                 <div data-i18n="Analytics">메인</div>
               </a>
             </li>
-            
+            <li class="login-stat">
+            	<i class="menu-icon tf-icons bx bx-user"></i>
+            	<sec:authentication property="principal.EmpDTO.emp_name"/> 님 안녕하세요 !
+            </li>
+           
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">로그인</span>
             </li>
@@ -242,7 +252,7 @@
             <li class="menu-item">
               <a href="${pageContext.request.contextPath }/user/stocktaking/main" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">재고실사 관리</div>
+                <div data-i18n="Basic">재고실사</div>
               </a>
             </li>
              <li class="menu-item">

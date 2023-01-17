@@ -315,17 +315,17 @@ function addRow() {
 // 값을 모두 입력했는지 Validation 체크 함수
 function isAllEnter() {
 	
-	if(!$('#factorySelect>option:selected').val()) {
+	if(!$('#factorySelectI>option:selected').val()) {
 		alert('공장을 선택해주세요.');
 		return false;
 	}
 	
-	if(!$('#itemSelect>option:selected').val()) {
+	if(!$('#itemSelectI>option:selected').val()) {
 		alert('품번을 선택해주세요.');
 		return false;
 	}
 	
-	if(!$('#realStockCnt').val()) {
+	if(!$('#realStockCntI').val()) {
 		alert('수량을 입력해주세요.');
 		return false;
 	}
