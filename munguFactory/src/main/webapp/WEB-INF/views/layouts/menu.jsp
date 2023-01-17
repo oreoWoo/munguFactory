@@ -38,6 +38,12 @@
    		height:30px;
    	
    	}
+   	.login-stat{
+   		
+   		margin-top:10px;
+   		margin-left:30px;
+   		list-style: none;
+   	}
    </style>
   </head>
 
@@ -125,7 +131,12 @@
                 <div data-i18n="Analytics">메인</div>
               </a>
             </li>
-            
+            <li class="login-stat">
+            	<a href="${pageContext.request.contextPath }/user/MyPageForm" class="menu-link">
+		           	<i class="menu-icon tf-icons bx bx-user"></i>
+		           	<sec:authentication property="principal.EmpDTO.emp_name"/> 님 안녕하세요 !
+            	</a>
+            </li>
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">로그인</span>
             </li>
@@ -164,6 +175,24 @@
                
               </ul>
             </li>
+            
+            <sec:authorize access="hasRole('ROLE_admin')">
+				<li class="menu-header small text-uppercase">
+	              <span class="menu-header-text">관리자 기능</span>
+	            </li>
+	            <li class="menu-item">
+	              <a href="/admin/userlist" class="menu-link">
+	                <i class="menu-icon tf-icons bx bx-collection"></i>
+	                <div data-i18n="Basic">유저리스트</div>
+	              </a>
+	            </li>
+	             <li class="menu-item">
+	              <a href="/admin/makeUserList" class="menu-link">
+	                <i class="menu-icon tf-icons bx bx-collection"></i>
+	                <div data-i18n="Basic">유저리스트 생성</div>
+	              </a>
+	            </li>
+			</sec:authorize>
 			
 			<li class="menu-header small text-uppercase">
               <span class="menu-header-text">기준정보</span>
@@ -262,23 +291,7 @@
               </a>
             </li>
 			
-			<sec:authorize access="hasRole('ROLE_admin')">
-				<li class="menu-header small text-uppercase">
-	              <span class="menu-header-text">관리자 기능</span>
-	            </li>
-	            <li class="menu-item">
-	              <a href="/admin/userlist" class="menu-link">
-	                <i class="menu-icon tf-icons bx bx-collection"></i>
-	                <div data-i18n="Basic">유저리스트</div>
-	              </a>
-	            </li>
-	             <li class="menu-item">
-	              <a href="/admin/makeUserList" class="menu-link">
-	                <i class="menu-icon tf-icons bx bx-collection"></i>
-	                <div data-i18n="Basic">유저리스트 생성</div>
-	              </a>
-	            </li>
-			</sec:authorize>
+			
 			
             
             <li class="menu-header small text-uppercase">
