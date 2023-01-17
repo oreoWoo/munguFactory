@@ -56,7 +56,9 @@ public class JjhSujuDaoImpl implements JjhSujuDao {
 			totCnt = session.selectOne("sujuTotCnt", ordersPaging);
 			System.out.println("totCnt?->" + totCnt);
 			ordersPaging.setInfo(totCnt);
+			//ordersPaging.setCurrentPage(ordersPaging.getCurrentPage()-1);
 			ordersDTOs = session.selectList("sujuList", ordersPaging);
+			//ordersPaging.setCurrentPage(ordersPaging.getCurrentPage()+1);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}

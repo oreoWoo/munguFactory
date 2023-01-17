@@ -36,8 +36,8 @@
 				where a.account_name like concat(#{searchName} ,'%')
 			</when>
 		</choose>
-		limit #{rowPage}
-		offset #{startPage};
+		 limit #{rowPage}
+		offset #{start};
 	</select>
 	
 	<select id="sujuInfo" parameterType="int" resultType="Orders">

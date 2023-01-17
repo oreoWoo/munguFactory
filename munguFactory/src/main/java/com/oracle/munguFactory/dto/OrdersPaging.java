@@ -12,8 +12,8 @@ import lombok.Data;
 @Data
 public class OrdersPaging {
 	private int currentPage = 1;
-	private int rowPage = 15;
-	private int pageBlock = 5;
+	private int rowPage = 2;
+	private int pageBlock = 2;
 	private int total;
 	private int start;
 	private int totalPage;
