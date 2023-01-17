@@ -89,7 +89,7 @@
 </style>
 <body>
 		
-		<div class="container-fluid" >
+		<div class="container-xxl flex-grow-1 container-p-y" style="width: 1600px;">
 			<div class="card mb-6">
 
 			 

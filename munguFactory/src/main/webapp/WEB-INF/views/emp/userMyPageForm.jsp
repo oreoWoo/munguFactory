@@ -180,10 +180,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="container-fluid">
-		<h3>마이페이지</h3>
+	<div class="container-xxl flex-grow-1 container-p-y" style="width: 1600px;">
+	<div class="card mb-6">
+
+			 
+			<h4 class="fw-bold py-3 mb-4" style="padding-left: 80px; margin-top: 50px;">마이페이지</h4>
+
 		<form action="/user/editInfo" method="post">
-			<table class="table table-hover text-center">
+			<table class="table" style="width: 1300px; margin-left:50px;  margin-top: 50px; margin-bottom: 50px;">
 				<tr>
 					<th><label for="emp_no">사번</label></th>
 					<td><input type="text"   class="form-control" readonly tabindex="-1" id="emp_no" name="emp_no" value="${emp.emp_no}"}></td>
@@ -259,6 +263,7 @@
 			<input type="hidden" id="emp_address" name ="emp_address"> 
 			<input type="hidden" id="emp_email" name = "emp_email"> 
 		</form>
+			</div>
 	</div>
 </body>
 </html>

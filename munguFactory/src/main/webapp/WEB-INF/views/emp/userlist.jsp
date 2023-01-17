@@ -27,12 +27,11 @@ function userlistDeptSearch()
 	<!-- <h4 class="fw-bold py-3 mb-4" style="padding-left: 80px; margin-top: 50px;">거래처 조회</h4> -->
 	<div class="container-xxl flex-grow-1 container-p-y" style="width: 1600px;">
 	<div class="card mb-6">
-	<div id="container" style="width: 1300px;">
 	<c:set var="no" value="${page.total-page.start+1 }"></c:set>
 	</p>
-		<h3>사원 목록</h3>
+		<h4 class="fw-bold py-3 mb-4" style="padding-left: 80px; margin-top: 50px;">사원목록</h4>
 		<div>
-			부서별 조회:
+				<tr>&nbsp;&nbsp;&nbsp;&nbsp; 부서별 조회:</tr>
 			<select name="dept_no" id="dept_no" class="form-select" style="width: auto; display: inline;">
 				<option value="0">전체</option>
 				<c:forEach var="dept" items="${deptlist}">
@@ -41,7 +40,7 @@ function userlistDeptSearch()
 			</select>
 			<button class="btn btn-primary" onclick="userlistDeptSearch()">조회하기</button>
 		</div>
-		<table class="table table-hover text-center">
+		<table class="table" style="width: 1300px; margin-left:50px;  margin-top: 50px; margin-bottom: 50px;">
 			<tr><th>사원명</th><th>사원 번호</th><th>사원 아이디</th><th>부서명</th><th>직급</th><th>사용자 등급</th><th>정보 수정</th></tr>
 			<c:forEach var="emp" items="${emplist}">
 				<tr>
@@ -85,7 +84,6 @@ function userlistDeptSearch()
 		</c:choose>
 		</div>
 		
-	</div>
 	</div>
 	</div>
 </body>
