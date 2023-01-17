@@ -28,12 +28,14 @@
 <script type="text/javascript">
 
 	$(function(){
-		
+		if('${not empty msg}' && '${msg}' != ''){
+			alert("${msg}");
+		}
 	});
 	
 	
 	function deleteOrder(suju_no){
-		location.href = "/sujuDelete?suju_no=" + suju_no;
+		location.href = "/user/sujuDelete?suju_no=" + suju_no + "&emp_no=${orders.emp_no }";
 	}
 
 </script>
@@ -63,7 +65,9 @@
 			<h1>수주 상세</h1>
 			<form action="sujuModifyForm" method="post">
 				<input type="hidden" name="suju_no" value="${orders.suju_no }">
+				<input type="hidden" name="emp_no" value="${orders.emp_no }">
 				<input type="hidden" name="emp_name" value="${orders.emp_name }">
+				<input type="hidden" name="account_no" value="${orders.account_no }">
 				<input type="hidden" name="account_name" value="${orders.account_name }">
 				<input type="hidden" name="suju_date" value="${orders.suju_date }">
 				<input type="hidden" name="last_date" value="${orders.last_date }">

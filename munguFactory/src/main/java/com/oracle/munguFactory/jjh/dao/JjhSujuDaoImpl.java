@@ -67,4 +67,18 @@ public class JjhSujuDaoImpl implements JjhSujuDao {
 		System.out.println("ordersListDTO?->" + ordersListDTO);
 		return ordersListDTO;
 	}
+
+	@Override
+	public int sujuModify(OrdersDTO ordersDTO) {
+		log.info("sujuDelete start...");
+		int result = 0;
+		try {
+			result = session.delete("sujuModifyDelete", ordersDTO);
+			result = session.update("sujuModifyOrders", ordersDTO);
+			result = session.insert("sujuModifyDetails", ordersDTO);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return result;
+	}
 }
