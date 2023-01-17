@@ -81,10 +81,8 @@ $(function(){
 			alert("이메일을 입력해 주세요");
 			check = false;
 		}
-		alert("클릭체크");
 		if(check == true)
 		{
-			alert("클릭체크");
 			$.ajax({
 				url: "<%=context%>/findId",
 				type: 'post',
@@ -95,13 +93,12 @@ $(function(){
 				success: function(data){
 					if(data.result > 0)
 					{
-						alert("클릭체크");
 						var result = '<table class="table table-hover text-center">';
 						result += data.msg;
 						result += '</table>';
 						
 						$('.modal-body').html(result);
-						$("#modal_findId").modal();			
+						$('#modal_findId').modal('show');			
 					}
 					else{
 						alert("아이디 찾기에 실패했습니다. 다시 입력해주세요");
@@ -165,7 +162,7 @@ $(function(){
 						
 						$('#result_emp_no').attr('value',data.emp_no);
 						$('.modal-body').html(result);
-						$("#modal_findPw").modal();			
+						$("#modal_findPw").modal('show');			
 					}
 					else{
 						alert(data.msg);
@@ -263,6 +260,21 @@ function changeDomain()
 		$('#user_email4').attr("readonly", true);
 	}
 }
+
+$(function () {
+    // actvie 활성화 
+    $(".nav-item > .active");
+    
+    $('.nav-link').click(function () {
+        // .nav-link 클릭시 이전의 active 값 해제 후, 
+        
+        $('.nav-link').removeClass('active');
+
+        // 클릭한 위치 active 적용 
+        $(this).addClass('active');
+        $(".nav-item > .active");
+    });
+});
 </script>
 
 
@@ -320,7 +332,7 @@ function changeDomain()
 									<label for="user_email1">이메일</label>
 									<input type="text" class="form-control" name="user_email1" id="user_email1"> <br> 
 									<input type="text" class="form-control" placeholder="도메인 입력, @는 자동으로 입력됩니다."  class="email" name="user_email2" id="user_email2">
-									<select name="email" class="form-control" id="domain_list" onclick="changeDomain()">
+									<select name="email" class="form-select"" id="domain_list" onclick="changeDomain()">
 										<option value="naver.com">naver.com</option>
 										<option value="daum.net">daum.net</option>
 										<option value="gmail.com">gmail.com</option>
@@ -364,7 +376,7 @@ function changeDomain()
 									<label for="user_email3">이메일</label>
 									<input type="text" class="form-control" name="user_email3" id="user_email3"> <br> 
 									<input type="text" class="form-control" placeholder="도메인을 입력해 주세요 @는 자동으로 입력됩니다."  class="email" name="user_email4" id="user_email4">
-									<select name="email" class="form-control" id="domain_list2" onclick="changeDomain()">
+									<select name="email" class="form-select"" id="domain_list2" onclick="changeDomain()">
 										<option value="naver.com">naver.com</option>
 										<option value="daum.net">daum.net</option>
 										<option value="gmail.com">gmail.com</option>
@@ -390,14 +402,13 @@ function changeDomain()
 		</div>
 	</div>
 
-	<div class="modal fade" id="modal_findId">
-	  <div class="modal-dialog">
+	<div class="modal fade" id="modal_findId" tabindex="-1" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      
 	     <!-- Modal Header -->
 	     <div class="modal-header">
 	        <h4 class="modal-title">검색 결과</h4>
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
 	     </div>
 	        
 	     <!-- Modal body -->
@@ -407,8 +418,9 @@ function changeDomain()
 	        
 	     <!-- Modal footer -->
 	     <div class="modal-footer">
-	     	<button type="button" id="find_pw" class="btn btn-primary btn-sm" data-dismiss="modal">비밀번호 찾기</button>
-	        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">닫기</button>
+	     	<button type="button" id="find_pw" class="btn btn-primary btn-sm" data-bs-dismiss="modal" aria-label="Close" >비밀번호 찾기</button>
+	        <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal"
+                                  aria-label="Close" >닫기</button>
 	     </div>
 	     
 	     </div>
@@ -422,7 +434,7 @@ function changeDomain()
 	        <!-- Modal Header -->
 	        <div class="modal-header">
 	          <h4 class="modal-title"></h4>
-	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
 	        </div>
 	        
 	        <!-- Modal body -->

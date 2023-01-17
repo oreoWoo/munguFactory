@@ -50,7 +50,7 @@ public class MainController
 	public String login(@AuthenticationPrincipal PrincipalDetails principal, HttpSession session) {
 		session.setAttribute("EmpDto", principal.getEmpDTO()); // 세션 적용
 		System.out.println("EmpDto"+ principal.getEmpDTO());
-		return "emp/admin";
+		return "main/home";
 	}
 	
 	@RequestMapping("/login")
@@ -336,7 +336,26 @@ public class MainController
 			}
 			
 		
-	
+			//로그아웃 
+			@RequestMapping("/logoutForm")
+			public String logout(@AuthenticationPrincipal PrincipalDetails principal, HttpSession session)
+			{
+				System.out.println("session" + session);
+				session.invalidate();
+				return "emp/logoutForm";
+			}
+			
+			@RequestMapping("/denied")
+			public String denied(@AuthenticationPrincipal PrincipalDetails principal, HttpSession session, Model model) {
+				session.setAttribute("emp", principal.getEmpDTO()); // 세션 적용
+				System.out.println("session"+session);
+				model.addAttribute("msg","권한이 없습니다.");
+				if(session != null) {
+					return "/main/home";
+				}else {
+					return "/emp/loginForm";
+				}	
+			}
 
 		
 		

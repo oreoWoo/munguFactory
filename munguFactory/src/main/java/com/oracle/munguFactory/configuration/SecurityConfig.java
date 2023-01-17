@@ -29,12 +29,11 @@ public class SecurityConfig {
 		//authorization 인가 (인증은 받았지만 권한을 확인)
 		http.authorizeRequests().antMatchers("/user/**").authenticated()
 		.antMatchers("/admin/**").access("hasRole('ROLE_admin')")
-		.and().formLogin().loginPage("/loginForm").loginProcessingUrl("/login").failureUrl("/loginFail").defaultSuccessUrl("/loginSuccess");
+		.and().formLogin().loginPage("/loginForm").loginProcessingUrl("/login").failureUrl("/loginFail").defaultSuccessUrl("/loginSuccess")
 		// authenticated -> user/**은 인증필요-->인증만되면 들어갈 수 있음
 		//http.authorizeRequests().anyRequest().permitAll();
+		.and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutForm").invalidateHttpSession(true).deleteCookies("JSESSIONID", "remember-me");
 		http.exceptionHandling().accessDeniedPage("/denied");
-		http.logout().logoutUrl("/logout").logoutSuccessUrl("/logoutForm").invalidateHttpSession(true).deleteCookies("JSESSIONID", "remember-me");
-
 		return http.build();
 		
 	}
