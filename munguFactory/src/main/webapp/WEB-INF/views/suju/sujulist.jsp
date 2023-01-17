@@ -49,6 +49,9 @@
 	function sujuSaveForm() {
 		location.href = "/user/sujuCreate";
 	}
+	function sujuDetail(suju_no) {
+		location.href = "/user/sujuDetail?suju_no=" + suju_no;
+	}
 	
 	// 거래처 페이징
 	function sujuPaging(currentPage) {
@@ -71,7 +74,7 @@
 						var str = "";
 				 			$(data.ordersDTOs).each(
 				 					function (){
-									str += "<tr><td>"+this.suju_no+"</td>";
+									str += "<tr onclick='sujuDetail(" + this.suju_no +")'><td>"+this.suju_no+"</td>";
 									str += "<td>"+this.account_name+"</td>";
 									str += "<td>"+this.suju_date+"</td>";
 									str += "<td>"+this.last_date+"</td>";
@@ -126,7 +129,7 @@
 				</thead>
 				<tbody id="ajaxordersList">
 					<c:forEach var="orders" items="${ordersListDTO.ordersDTOs}">
-						<tr>
+						<tr onclick="sujuDetail(${orders.suju_no})">
 							<td>${orders.suju_no}</td>
 							<td>${orders.account_name}</td>
 							<td>${orders.suju_date}</td>

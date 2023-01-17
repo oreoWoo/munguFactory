@@ -15,4 +15,6 @@ public interface JjhSujuService {
 
 	OrdersListDTO sujuList(OrdersPaging ordersPaging);
 
+	int sujuModify(OrdersDTO ordersDTO);
+
 }

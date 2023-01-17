@@ -39,4 +39,11 @@ public class JjhSujuServiceImpl implements JjhSujuService {
 		OrdersListDTO ordersListDTO = jjhSujuDao.sujuList(ordersPaging);
 		return ordersListDTO;
 	}
+
+	@Override
+	public int sujuModify(OrdersDTO ordersDTO) {
+		log.info("sujuModify start...");
+		int result = jjhSujuDao.sujuModify(ordersDTO);
+		return result;
+	}
 }
