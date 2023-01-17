@@ -8,12 +8,25 @@
 		FROM item   
 	</select>
 	
-	<select id="jhy_itemAdminListPaging"  resultType="item">
+	<!-- <select id="jhy_itemAdminListPaging"  resultType="item">
 		SELECT item_no, hs_code, item_name, item_check
 		FROM item
 		ORDER BY item_no DESC
 		LIMIT 10 offset #{start}
-	</select>
+	</select> -->
+	
+	<select id="jhy_itemAdminListPaging" resultType="item">
+		SELECT  *   FROM
+              (SELECT  *   FROM 
+               	(SELECT 
+                       @ROWNUM:=@ROWNUM + 1 AS ROWNUM, 
+                                    item_no, hs_code, item_name, item_check
+                   FROM
+                      item, (SELECT @ROWNUM:=2) TMP
+                   ORDER BY item_no DESC) SUB
+                       ORDER BY SUB.ROWNUM ASC)the
+                          <![CDATA[where ROWNUM >#{start} and ROWNUM <=#{end}+1]]> 
+    </select>
 	
 	<!-- ItemAdminSelect -->
 	<select id="jhy_itemAdminSelect" parameterType="int" resultType="item">
