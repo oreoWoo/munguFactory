@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!-- =========================================================
 * Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
@@ -151,6 +152,24 @@
                 </li>
               </ul>
             </li>
+            
+			<sec:authorize access="hasRole('admin')">
+			 <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">관리자 기능</span>
+            </li>
+		      <li class="menu-item">
+              <a href="/admin/userlist" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">유저리스트</div>
+              </a>
+            </li>
+             <li class="menu-item">
+              <a href="/admin/makeUserList" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">유저리스트 생성</div>
+              </a>
+            </li>
+			</sec:authorize>
 			
 			<li class="menu-header small text-uppercase">
               <span class="menu-header-text">기준정보</span>
@@ -246,22 +265,6 @@
               <a href="/user/Shipment" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">출하 등록</div>
-              </a>
-            </li>
-			
-			 <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">관리자 기능</span>
-            </li>
-            <li class="menu-item">
-              <a href="/admin/userlist" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">유저리스트</div>
-              </a>
-            </li>
-             <li class="menu-item">
-              <a href="/admin/makeUserList" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">유저리스트 생성</div>
               </a>
             </li>
             
