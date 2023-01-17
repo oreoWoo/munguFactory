@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.oracle.munguFactory.dto.FactoryDTO;
 import com.oracle.munguFactory.dto.ItemDTO;
+import com.oracle.munguFactory.jhy.service.Paging;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,11 +18,11 @@ public class ItemAdminDaoImpl implements ItemAdminDao {
 
 	//ItemAdminList
 	@Override
-	public List<ItemDTO> itemAdminList() {
+	public List<ItemDTO> itemAdminList(Paging page) {
 //		List<ItemDTO> itemAdminList = session.selectList("jhy_itemAdminList");
 		List<ItemDTO> itemAdminList = null;
 		try {
-			itemAdminList = session.selectList("jhy_itemAdminListPaging");
+			itemAdminList = session.selectList("jhy_itemAdminListPaging", page);
 //			itemAdminList = session.selectList("jhy_itemAdminList");
 		} catch (Exception e) {
 			System.out.println("itemAdminList exception -> " + e.getMessage());

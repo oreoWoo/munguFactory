@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,9 +53,11 @@
 				</tr>
 			</tbody>
 		</table>
-		<button type="button" onclick="location.href='/ItemAdminList'">목록</button>
-		<button type="button" onclick="location.href='/ItemAdminUpdate?item_no=${ias.item_no}'">수정</button>
-		<button type="button" onclick="location.href='/ItemAdminDelete?item_no=${ias.item_no}'">삭제</button>
+		<button type="button" onclick="location.href='/user/ItemAdminList'">목록</button>
+		<sec:authorize access="hasRole('admin')">
+		<button type="button" onclick="location.href='/admin/ItemAdminUpdate?item_no=${ias.item_no}'">수정</button>
+		<button type="button" onclick="location.href='/admin/ItemAdminDelete?item_no=${ias.item_no}'">삭제</button>
+		</sec:authorize>
 		<%-- <button type="button" onclick="deleteChk(${ias.item_no})'">삭제</button> --%>
 	</div>
 </body>

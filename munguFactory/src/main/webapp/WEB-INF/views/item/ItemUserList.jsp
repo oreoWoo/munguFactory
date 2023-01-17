@@ -29,7 +29,7 @@
 						<td scope="row">${iul.rn}</td>
 						<td>${iul.item_no }</td>
 						<td>${iul.hs_code }</td>
-						<td><a href="ItemUserSelect?item_no=${iul.item_no}">${iul.item_name }</a></td>
+						<td><a href="user/ItemUserSelect?item_no=${iul.item_no}">${iul.item_name }</a></td>
 						<td>${iul.item_check }</td>
 					</tr>
 				</c:forEach>
@@ -40,7 +40,7 @@
 		<ul class="pagination justify-content-center">
 			<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 				<li class="page-item"><a class="page-link"
-					href="/ProdList?currentPage=${i}">${i}</a></li>
+					href="/user/ItemUserList?currentPage=${i}">${i}</a></li>
 			</c:forEach>
 		</ul>
 	</nav>
