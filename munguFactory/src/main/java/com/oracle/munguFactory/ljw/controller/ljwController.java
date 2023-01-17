@@ -1,11 +1,13 @@
 package com.oracle.munguFactory.ljw.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.oracle.munguFactory.auth.PrincipalDetails;
 import com.oracle.munguFactory.dto.AccountsDTO;
 import com.oracle.munguFactory.dto.PageDTO;
 import com.oracle.munguFactory.dto.SubulDTO;
@@ -73,9 +75,9 @@ public class ljwController {
 //	(Ajax) 출하등록 실행(transaction rollback기능)
 	@ResponseBody
 	@PostMapping("/user/ajaxInsertShipment")
-	public int ajaxInsertShipment(Model model, SubulDTO subul) {
+	public int ajaxInsertShipment(Model model, SubulDTO subul,@AuthenticationPrincipal PrincipalDetails principal) {
 		log.info("ajaxInsertShipment() start...");
-		subul.setEmp_no(2301001);
+		subul.setEmp_no(principal.getEmpDTO().getEmp_no());
 		int result = 0;
 		try {
 			result = service.insertShipment(subul);
@@ -85,4 +87,10 @@ public class ljwController {
 		}
 		return result;
 	}
+@GetMapping("/user/storagesInfo")
+public String storagesInfo(Model model, int factory_no) {
+	log.info("storagesInfo start...");
+	model.addAttribute("storagesInfo", service.getStoragesInfo(factory_no));
+	return "storages/storagesInfo";
+}
 }

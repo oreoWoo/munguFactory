@@ -10,6 +10,7 @@ import com.oracle.munguFactory.dto.FactoryDTO;
 import com.oracle.munguFactory.dto.OrdersDTO;
 import com.oracle.munguFactory.dto.OrdersDetailDTO;
 import com.oracle.munguFactory.dto.PageDTO;
+import com.oracle.munguFactory.dto.StoragesDTO;
 import com.oracle.munguFactory.dto.SubulDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -105,6 +106,16 @@ public class ljwDaoImpl implements ljwDao {
 			result = session.selectOne("getOrdersDetail",param);
 		} catch (Exception e) {
 			log.info("insertShipment() e.getMessage... : "+e.getMessage());
+		}
+		return result;
+	}
+	@Override
+	public List<StoragesDTO> getStoragesInfo(int factory_no) {
+		List<StoragesDTO> result = null;
+		try {
+			result = session.selectList("StoragesInfo",factory_no);
+		} catch (Exception e) {
+			log.info("getStoragesInfo() e.getMessages : "+e.getMessage());
 		}
 		return result;
 	}

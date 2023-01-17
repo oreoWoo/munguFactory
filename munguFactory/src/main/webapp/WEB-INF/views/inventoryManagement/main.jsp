@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -27,13 +28,13 @@
 		});
 	}
 	function detailInfo(pk,url){
+		$('.modal-body').html("");
 		$.ajax({
 			url		: url+pk,
 			type 	: "GET", 
 			dataType: 'text',
 			success	: function(data){
 				var html = $('<div>').html(data);
-				$('.modal-body').html("");
 				$('.modal-body').append(html.find("div #container").html());
 				$('.modal-body').append(html.find("div .subulContainer").html());
 				$('.modal-body').append(html.find("div .inventoryManagementContainer").html());
@@ -49,13 +50,12 @@
 </head>
 <body>
 	<div class="inventoryManagementContainer">
+		<sec:authentication property="principal.empDTO.emp_name" var="myName"/>
 		<h1>수불부</h1>
-		<div class="modal fade" id="fullsizemodal" tabindex="-1"
-			aria-hidden="true">
+		<div class="modal fade" id="fullsizemodal" tabindex="-1" aria-hidden="true">
 			<div class="modal-dialog fullsizemodal modal-dialog-scrollable" role="document">
 				<div class="modal-content">
-					<div class="modal-body">
-					</div>
+					<div class="modal-body" style="display: flex; flex-direction:column; justify-content:center; align-content: center;"></div>
 				</div>
 			</div>
 		</div>
