@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div id=setHtml>
-		<table class="table table-striped table-hover ajaxContents">
+		<table class="table ajaxContents">
 			<thead>
 				<tr>
 					<th>등록번호</th>

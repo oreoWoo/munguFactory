@@ -11,7 +11,7 @@
 </head>
 <body>
 <div id=setHtml>
-	<table class="table table-striped table-hover ajaxContents">
+	<table class="table ajaxContents">
 		<thead>
 			<tr>
 				<th>등록번호</th>
@@ -19,6 +19,7 @@
 				<th>물품명</th>
 				<th>전산재고</th>
 				<th>수량</th>
+				<th>결과값</th>
 				<th>생산공장</th>
 				<th>저장창고</th>
 				<th>구분</th>
@@ -60,6 +61,13 @@
 					</td>
 					<td>${subul.db_amount }</td>
 					<td>${subul.amount }</td>
+					<td>
+						<b style="color: green;"><c:choose>
+							<c:when test="${subul.gubun=='출하' }">${subul.db_amount-subul.amount }</c:when>
+							<c:when test="${subul.gubun=='입고' }">${subul.db_amount+subul.amount }</c:when>
+							<c:when test="${subul.gubun=='재고실사' }">${subul.amount }</c:when>
+						</c:choose></b>
+					</td>
 					<td>
 						<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.factory_no},'/user/factoryInfo?factory_no=')" href="#">
 							${subul.factory_name }
