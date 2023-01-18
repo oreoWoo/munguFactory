@@ -77,4 +77,9 @@ public class StockTakingDAOImpl implements StockTakingDAO {
 		return session.update("updateTempSilsa", stockTakingDTO);
 	}
 
+	@Override
+	public List<StockTakingDTO> selectItemStockCnt() {
+		return session.selectList("selectItemStockCnt");
+	}
+
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,10 +25,13 @@
 
 <body>
 	<div class="homeContainer">
-		<h1>문구 공장 main 화면</h1>
 		<div class="forImg">
-			<img alt="main_img" src="${pageContext.request.contextPath }/img/Manufacturing Process-amico.png">
-			<%-- <img alt="main_img2" src="${pageContext.request.contextPath }/img/Factory-amico.png"> --%>
+			<sec:authorize access="hasRole('ROLE_user')">
+				<img alt="main_img" src="${pageContext.request.contextPath }/img/Manufacturing Process-amico.png">
+			</sec:authorize>
+			<sec:authorize access="hasRole('ROLE_admin')">
+				<img alt="main_img2" src="${pageContext.request.contextPath }/img/Factory-amico.png">
+			</sec:authorize>
 		</div>
 	</div>
 </body>
