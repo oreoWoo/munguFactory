@@ -10,6 +10,7 @@
 		WHERE s.EMP_NO=e.EMP_NO
 		AND s.item_no=i.item_no
 		AND i.factory_no=f.factory_no
+		AND s.gubun!="임시실사"
 		<if test="searchOption!=null">
 			<choose>
 				<when test="searchOption.equals('전체')">
@@ -38,6 +39,7 @@
 		WHERE s.EMP_NO=e.EMP_NO
 		AND s.item_no=i.item_no
 		AND i.factory_no=f.factory_no
+		AND s.gubun!="임시실사"
 		<if test="searchOption!=null">
 			<choose>
 				<when test="searchOption.equals('전체')">
