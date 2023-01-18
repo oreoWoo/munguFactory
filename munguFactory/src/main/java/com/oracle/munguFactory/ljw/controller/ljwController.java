@@ -87,10 +87,11 @@ public class ljwController {
 		}
 		return result;
 	}
-@GetMapping("/user/storagesInfo")
-public String storagesInfo(Model model, int factory_no) {
-	log.info("storagesInfo start...");
-	model.addAttribute("storagesInfo", service.getStoragesInfo(factory_no));
-	return "storages/storagesInfo";
-}
+//	(Ajax) 수불부 페이지 창고정보 모달데이터 불러오기
+	@GetMapping("/user/storagesInfo")
+	public String storagesInfo(Model model, int factory_no) {
+		log.info("storagesInfo start...");
+		model.addAttribute("storagesInfo", service.getStoragesInfo(factory_no));
+		return "storages/storagesInfo";
+	}
 }

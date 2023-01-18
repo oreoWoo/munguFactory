@@ -114,6 +114,7 @@
 					<button type="button" class="btn btn-outline-primary" onclick="ajaxInsertShipmentForm()"><span class="tf-icons bx bx-pie-chart-alt"></span>&nbsp;추가</button>
 				</div>
 			</form>
+			<br>
 		</div>
 	</div>
 </body>
