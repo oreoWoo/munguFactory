@@ -9,7 +9,6 @@
 <title>Insert title here</title>
 <style type="text/css">
 .inventoryManagementContainer{
-	background-color:white;
 	width: 80%;
 	margin :5% 10% 10% 10%;
 	padding: 2%;
@@ -17,6 +16,11 @@
 	flex-direction: column;
 	justify-content: center;
 	align-content: center;
+}
+
+.sujuDetailContainer{
+	background-color:white; 
+	padding : 10px;
 }
 .searchPlace{
 	display: flex;
@@ -39,6 +43,8 @@
 	}
 
 </script>
+
+
 <body>
 		<%-- <table class="table table-striped table-hover ajaxContents">
 			<thead>
@@ -63,6 +69,7 @@
 		
 		<div class="inventoryManagementContainer">
 			<h1>수주 상세</h1>
+			<div class="sujuDetailContainer">
 			<form action="sujuModifyForm" method="post">
 				<input type="hidden" name="suju_no" value="${orders.suju_no }">
 				<input type="hidden" name="emp_no" value="${orders.emp_no }">
@@ -73,7 +80,7 @@
 				<input type="hidden" name="last_date" value="${orders.last_date }">
 				<input type="hidden" name="order_note" value="${orders.order_note }">
 				<div class="category">
-					<table class="table table-striped table-hover ajaxContents">
+					<table class="table table-hover ajaxContents table-bordered">
 						<tbody>
 								<tr>
 									<td>거래처</td>
@@ -96,7 +103,7 @@
 				</div>
 			<h3>상세 정보</h3>
 				<div class="searchBox">
-					<table class="table table-striped table-hover ajaxContents">
+					<table class="table table-hover ajaxContents table-bordered">
 						<thead>
 								<tr>
 									<th>품번</th>
@@ -130,9 +137,12 @@
 						</tbody>
 					</table>
 				</div>
+				<div style="float: right;">
 					<input type="submit" value="수주 수정"  class="btn btn-outline-primary">
 					<input type="button" value="수주 삭제"  class="btn btn-outline-primary" onclick="deleteOrder(${orders.suju_no })">
+				</div>
 			</form>
+		</div>
 		</div>
 </body>
 </html>

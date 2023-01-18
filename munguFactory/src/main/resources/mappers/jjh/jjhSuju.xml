@@ -79,11 +79,9 @@
 	</select>
 	
 	<select id="sujuDetail" parameterType="int" resultType="OrdersDetail">
-		select distinct od.Suju_No, od.item_no, i.item_Name, od.Suju_Amount, po.Prod_State, od.balju_no
-		from orders_detail od, item i, production_order po
+		select od.Suju_No, od.item_no, i.item_Name, od.Suju_Amount, po.Prod_State, od.balju_no
+		from orders_detail od left outer join item i on od.item_no = i.item_no left outer join production_order po on po.suju_no = od.Suju_No and po.item_no = od.item_no
 		where od.Suju_No= #{suju_no}
-		and od.item_no = i.item_no
-		and po.suju_no = od.Suju_No
 	</select>
 	
 	<delete id="sujuDelete" parameterType="int">
