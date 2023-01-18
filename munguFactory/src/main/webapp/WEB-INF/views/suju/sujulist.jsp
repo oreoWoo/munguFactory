@@ -6,6 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.sujulist-search{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+</style>
 </head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
@@ -32,6 +38,7 @@
 			} else {
 				$("#startDate").attr("max", $(this).val())
 			}
+			sujuPaging(1);
 		});
 		// 페이지 이전
 		$(document).on("click", "#prev", function() {
@@ -110,55 +117,74 @@
 	};
 </script>
 <body>
-	<div class="SujuContainer">
+	<div class="SujuContainer container-xxl flex-grow-1 container-p-y">
 		<h1>Suju List</h1>
-		<input type="date" class="form-control" name="startDate" id="startDate">
-		~
-		<input type="date" class="form-control" name=endDate  id="endDate">
-		<input type="text" class="form-control" name="searchName" id="searchName" placeholder="검색어를 입력해주세요.">
-		<button type="button" class="btn btn-outline-primary" id="searchAction" >검색</button>
-		<div>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>수주번호</th>
-						<th>거래처</th>
-						<th>수주일자</th>
-						<th>납기일</th>
-					</tr>
-				</thead>
-				<tbody id="ajaxordersList">
-					<c:forEach var="orders" items="${ordersListDTO.ordersDTOs}">
-						<tr onclick="sujuDetail(${orders.suju_no})">
-							<td>${orders.suju_no}</td>
-							<td>${orders.account_name}</td>
-							<td>${orders.suju_date}</td>
-							<td>${orders.last_date}</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			<nav aria-label='Page navigation example' id="ajaxPaging">
-				<c:if test="${ordersListDTO.ordersPaging.startPage > ordersListDTO.ordersPaging.pageBlock }">
-					<ul class='pagination justify-content-center' style='text-align: center;'>
-						<button type='button' class='page-link' style= "margin: 10px;" id="prev">이전</button>
-					</ul>
-				</c:if>
-				<c:forEach var="i" begin="${ordersListDTO.ordersPaging.startPage}" end="${ordersListDTO.ordersPaging.endPage}" >
-					<ul class='pagination justify-content-center' style='text-align: center;'>
-						<button type='button' class='page-link pageNum' style= "margin: 10px;" value="${i}">${i}</button>
-					</ul>
-				</c:forEach>
-				<c:if test="${ordersListDTO.ordersPaging.endPage < ordersListDTO.ordersPaging.totalPage }">
-					<ul class='pagination justify-content-center' style='text-align: center;'>
-						<button type='button' class='page-link' style= "margin: 10px;" id="next">다음</button>
-					</ul>
-				</c:if>	
-			</nav>
+		<div class=" card">
+			<div class="table-responsive text-nowrap">
+				<div style="display: flex; justify-content: space-between; margin: 15px; align-items: center;">
+					<div style="display:flex; height: 38.94px; justify-content: space-between;">
+						<input class="sujulist-search" type="date" name="startDate" id="startDate"> 
+						<label class="sujulist-search" style="font-size: 32px; align-content: center;">~</label>
+						<input class="sujulist-search" type="date" name=endDate id="endDate">
+					</div>
+					<div style="display: flex;">
+						<input type="text" name="searchName" id="searchName" placeholder="검색어를 입력해주세요." style="margin-right: 5px;">
+						<button type="button" class="btn btn-outline-primary" id="searchAction" style="margin-left: 5px;">검색</button>
+					</div>
+				</div>
+				<div>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>수주번호</th>
+								<th>거래처</th>
+								<th>수주일자</th>
+								<th>납기일</th>
+							</tr>
+						</thead>
+						<tbody id="ajaxordersList">
+							<c:forEach var="orders" items="${ordersListDTO.ordersDTOs}">
+								<tr onclick="sujuDetail(${orders.suju_no})">
+									<td>${orders.suju_no}</td>
+									<td>${orders.account_name}</td>
+									<td>${orders.suju_date}</td>
+									<td>${orders.last_date}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<nav aria-label='Page navigation example' id="ajaxPaging" style="display: flex; justify-content:center; ">
+						<c:if
+							test="${ordersListDTO.ordersPaging.startPage > ordersListDTO.ordersPaging.pageBlock }">
+							<ul class='pagination justify-content-center'
+								>
+								<button type='button' class='page-link' style="margin: 10px;"
+									id="prev">이전</button>
+							</ul>
+						</c:if>
+						<c:forEach var="i" begin="${ordersListDTO.ordersPaging.startPage}"
+							end="${ordersListDTO.ordersPaging.endPage}">
+							<ul class='pagination justify-content-center'
+								>
+								<button type='button' class='page-link pageNum'
+									style="margin: 10px;" value="${i}">${i}</button>
+							</ul>
+						</c:forEach>
+						<c:if
+							test="${ordersListDTO.ordersPaging.endPage < ordersListDTO.ordersPaging.totalPage }">
+							<ul class='pagination justify-content-center'
+								>
+								<button type='button' class='page-link' style="margin: 10px;"
+									id="next">다음</button>
+							</ul>
+						</c:if>
+					</nav>
+				</div>
+				<button class="btn btn-outline-primary" onclick="sujuSaveForm()" style="float: right; margin: 15px;">등록</button>
+			</div>
 		</div>
-		<button class="btn btn-outline-primary" onclick="sujuSaveForm()">
-			등록</button>
 	</div>
+
 
 	<a href="#" id="sujuDetailTest">상세</a>
 	<form action="/user/sujuDetail" id="sujuDetailFromTest">
