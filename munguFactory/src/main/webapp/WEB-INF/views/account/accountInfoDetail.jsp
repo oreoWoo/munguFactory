@@ -10,9 +10,9 @@
 </head>
 <body>
 <div class="container-xxl flex-grow-1 container-p-y" style="width: 1600px;">
+<h4 class="fw-bold py-3 mb-4">${account.account_name}(${account.account_no})</h4>
 <div class="card mb-6">
 	<div id="container">
-    <h4 class="fw-bold py-3 mb-4" style="padding-left: 80px; margin-top: 50px;">${account.account_name}(${account.account_no})</h4>	
     <form action="">
     <sec:authorize access="hasRole('admin')" var="roleAdmin"/>
     <sec:authorize access="hasAnyRole('user','admin')" var="roleUser"/>	

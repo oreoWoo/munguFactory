@@ -20,9 +20,9 @@
 </script>
 <body>
 <div class="container-xxl flex-grow-1 container-p-y" style="width: 1600px;">
+<h4 class="fw-bold py-3 mb-4">거래처 신규등록</h4>
 <div class="card mb-6">
 	<div id="container">
-    <h4 class="fw-bold py-3 mb-4" style="padding-left: 80px; margin-top: 50px;">거래처등록</h4>	
     <form action="/accountAdd">
 	<table class="table" style="width: 1300px; margin-left:50px;  margin-top: 50px; margin-bottom: 50px;">
 	<tr>
