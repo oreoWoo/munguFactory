@@ -34,7 +34,6 @@
 		SELECT * FROM output WHERE prod_no = #{prod_no}	
 	</select>
 	
-	
 	<!-- 생산실적 등록 -->
 	<insert id="insertOutput" parameterType="Output">
 		INSERT INTO output(factory_no, item_no, item_name, emp_no, finish_date, prod_amount, poor_quantity, yield)
@@ -78,6 +77,7 @@
 				AND factory_no LIKE concat('%', #{keyword}, '%')
 			</when>
 			
+			<!-- 전체 검색일 때 -->
 			<otherwise>
 				AND item_no    LIKE CONCAT('%', #{keyword}, '%')
 				OR  item_name  LIKE CONCAT('%', #{keyword}, '%')
@@ -86,18 +86,6 @@
 			</otherwise>
 		</choose>
 		ORDER BY prod_no DESC
-	</select>
-	
-	
-	<!-- select option용 -->
-	<!-- 공장 목록 -->
-	<select id="factoryList" resultType="Factory">
-		SELECT * FROM factory
-	</select>
-	
-	<!-- 사원 목록 -->
-	<select id="empList" resultType="Emp">
-		SELECT * FROM emp
 	</select>
 	
 	<select id="getOutputListSize" resultType="int" parameterType="Output">
@@ -121,6 +109,7 @@
 		</if>
 	</select>
 	
+	<!-- 트랜잭션용 -->
 	<insert id="insertOutputSubul" useGeneratedKeys="true" keyProperty="">
 		INSERT INTO subul(item_no, emp_no, serial_no, subul_date, amount, gubun)
 		VALUES (#{item_no}, #{emp_no}, (SELECT max(prod_no) FROM output), now(), #{prod_amount}, "입고")
@@ -134,27 +123,17 @@
 		 			 FROM storages
 		 			 WHERE item_no=#{item_no}) a)
 		 WHERE item_no=#{item_no}
-	</update>	
+	</update>
 	
-      
-<!--     	SELECT *
-    	FROM   output
-    	WHERE true
-		<if test="searchOption != null">
-			<choose>
-				<when test="searchOption.equals('전체')">
-					품번,품명, 사원번호, 공장
-					AND item_no    LIKE CONCAT('%', #{searchString}, '%')
-					OR  item_name  LIKE CONCAT('%', #{searchString}, '%')
-					OR  emp_no	   LIKE CONCAT('%', #{searchString}, '%')
-					OR  factory_no LIKE CONCAT('%', #{searchString}, '%')
-				</when>
-				<when test="searchOption.equals('품번')">AND item_no 	   LIKE CONCAT('%', #{searchString}, '%')</when>
-				<when test="searchOption.equals('품번')">AND item_name  LIKE CONCAT('%', #{searchString}, '%')</when>
-				<when test="searchOption.equals('품번')">AND emp_no 	   LIKE CONCAT('%', #{searchString}, '%')</when>
-				<when test="searchOption.equals('품번')">AND factory_no LIKE CONCAT('%', #{searchString}, '%')</when>
-			</choose>
-		</if>
-		ORDER BY prod_no DESC
-		LIMIT 15 offset #{offset};  --> 
+	<!-- select option용 -->
+	<!-- 공장 목록 -->
+	<select id="factoryList" resultType="Factory">
+		SELECT * FROM factory
+	</select>
+	
+	<!-- 사원 목록 -->
+	<select id="empList" resultType="Emp">
+		SELECT * FROM emp
+	</select>
+	
 </mapper>
