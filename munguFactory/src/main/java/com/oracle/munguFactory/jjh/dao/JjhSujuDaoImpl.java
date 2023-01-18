@@ -26,7 +26,9 @@ public class JjhSujuDaoImpl implements JjhSujuDao {
 		OrdersDTO ordersDTO = null;
 		try {
 			ordersDTO = session.selectOne("sujuInfo", suju_no);
+			System.out.println(ordersDTO);
 			ordersDetailDTOs = session.selectList("sujuDetail", suju_no);
+			System.out.println(ordersDetailDTOs.size());
 			ordersDTO.setOrdersDetailDTOs(ordersDetailDTOs);
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -74,8 +76,11 @@ public class JjhSujuDaoImpl implements JjhSujuDao {
 		int result = 0;
 		try {
 			result = session.delete("sujuModifyDelete", ordersDTO);
+			System.out.println(result);
 			result = session.update("sujuModifyOrders", ordersDTO);
+			System.out.println(result);
 			result = session.insert("sujuModifyDetails", ordersDTO);
+			System.out.println(result);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}

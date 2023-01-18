@@ -299,21 +299,23 @@ table
 </script>
 </head>
 <body>
-	<div class="SujuContainer">
-		<div style="color: green;" class="">
+	<div class="SujuContainer container-xxl flex-grow-1 container-p-y">
+		<div class="SujuContainer-title" style="position: relative; right: 120px; margin-bottom: 30px;">
 			<h1>
 				<i class="bi bi-briefcase"></i> 수주 수정
 			</h1>
 		</div>
 		<form action="/user/sujuModify" onsubmit="return submitCheck(this)" method="post">
-			<input type="hidden" id="emp_no" name="emp_no" value="${ordersDTO.emp_no }">
+<input type="hidden" id="emp_no" name="emp_no" value="${ordersDTO.emp_no }">
 			<input type="hidden" id="emp_name" name="emp_name" value="${ordersDTO.emp_name }">
 			<input type="hidden" id="suju_no" name="suju_no" value="${ordersDTO.suju_no }">
-			<div>
-				<table class="table table-bordered Orders-first-table">
-					<tr style="border: solid 1px;">
-						<th style="border: solid 1px;">거래처</th>
-						<td nowrap style="border: 1px solid;">
+			<div class="card">
+				<div class="card-body">
+					<div class="table-responsive text-nowrap">
+				<table class="table table-bordered">
+					<tr >
+						<th style="width: 100px;">거래처</th>
+						<td nowrap style="width: 300px;">
 						<input type="text" name="account_name" id="account_name" readonly="readonly" size="1"
 							   style="width: 80%;" required="required" value="${ordersDTO.account_name }"> 
 						<input type="hidden" name="account_no" id="account_no" value="${ordersDTO.account_no }">
@@ -322,10 +324,10 @@ table
 								onclick="accountList()">
 								<i class="bi bi-search"></i>
 							</button></td>
-						<th>수주일</th>
-						<td><input type="date" id="suju_date" name="suju_date" style="width: 100%;" value="${ordersDTO.suju_date }"/></td>
-						<td>마감일</td>
-						<td><input type="date" id="last_date" name="last_date" style="width: 100%;" value="${ordersDTO.last_date }"/></td>
+						<th style="width: 100px;">수주일</th>
+						<td style="width: 300px;"><input type="date" id="suju_date" name="suju_date" style="width: 100%;" value="${ordersDTO.suju_date }"/></td>
+						<th style="width: 100px;">마감일</th>
+						<td style="width: 300px;"><input type="date" id="last_date" name="last_date" style="width: 100%;" value="${ordersDTO.last_date }"/></td>
 					</tr>
 					<tr>
 						<th>비고</th>
@@ -333,6 +335,9 @@ table
 								style="width: 100%; resize: none;" id="order_note" name="order_note">${ordersDTO.order_note }</textarea></td>
 					</tr>
 				</table>
+					</div>
+				</div>
+			</div>
 				<!-- =============Modal Start==================== -->
 				<div class="modal fade" id="exampleModal" tabindex="-1"
 					aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -374,17 +379,17 @@ table
 					</div>
 				</div>
 				<!-- =================Modal end====================== -->
+			<hr class="my-5">
+			<div style="position: relative; right: 120px; margin-bottom: 30px;">
+				<h2><i class="bi bi-list-check"></i> 상세 정보
+					<button type="button"
+						style="padding: 0; border: none; font: inherit; color: inherit; background-color: transparent; cursor: pointer;"
+						data-bs-toggle="modal" data-bs-target="#exampleModal2"
+						onclick="itemList()">
+						<i class="bi bi-plus-square-fill" style="font-size: 30px;"></i>
+					</button>
+				</h2>
 			</div>
-			<hr>
-			<h2>
-				<i class="bi bi-list"></i> 상세 정보
-				<button type="button"
-					style="padding: 0; border: none; font: inherit; color: inherit; background-color: transparent; cursor: pointer;"
-					data-bs-toggle="modal" data-bs-target="#exampleModal2"
-					onclick="itemList()">
-					<i class="bi bi-plus-square-fill" style="font-size: 30px;"></i>
-				</button>
-			</h2>
 			<!-- =============Modal Start==================== -->
 			<div class="modal fade" id="exampleModal2" tabindex="-1"
 				aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -425,33 +430,37 @@ table
 				</div>
 				<!-- =================Modal end====================== -->
 			</div>
-			<div class="Orders-detail-content">
-				<table class="table table-bordered Orders-second-table">
-					<thead>
-						<tr>
-							<th>품번</th>
-							<th>품명</th>
-							<th>수주수량</th>
-						</tr>
-					</thead>
-					<tbody id="itemselect">
-						<c:forEach var="orders" items="${ordersDTO.ordersDetailDTOs }">
-							<tr id="${orders.item_no }">
-								<td width="180">
-									<input type="text" id="ordersDetailDTOs.item_no" class="itemList" readonly="readonly" size="1" style="width: 100%;" value="${orders.item_no }">
-								</td>
-								<td width="180">
-									<input type="text" id="ordersDetailDTOs.item_name" class="itemList2" readonly="readonly" size="1" style="width: 100%;" value="${orders.item_name }">
-								</td>
-								<td width="180">
-									<input type="number" id="ordersDetailDTOs.suju_amount" class="itemList3" required="required" value="${orders.suju_amount }">
-								</td>
+			<div class="Orders-detail-content card" >
+				<div class="table-responsive text-nowrap" style="overflow-y: hidden">
+					<table class="table" style="text-align: center;">
+						<thead>
+							<tr>
+								<th style="width: 200px;">품번</th>
+								<th>품명</th>
+								<th style="width: 200px;">수주수량</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+						</thead>
+						<tbody id="itemselect" class="table-border-bottom-0">
+							<c:forEach var="orders" items="${ordersDTO.ordersDetailDTOs }">
+								<tr id="${orders.item_no }">
+									<td width="180">
+										<input type="text" id="ordersDetailDTOs.item_no" class="itemList" readonly="readonly" size="1" style="width: 100%;" value="${orders.item_no }">
+									</td>
+									<td width="180">
+										<input type="text" id="ordersDetailDTOs.item_name" class="itemList2" readonly="readonly" size="1" style="width: 100%;" value="${orders.item_name }">
+									</td>
+									<td width="180">
+										<input type="number" id="ordersDetailDTOs.suju_amount" class="itemList3" required="required" value="${orders.suju_amount }">
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
 			</div>
-			<button type="submit" class="btn btn-outline-primary" >수정</button>
+			<div style="position: relative; float: right; margin-top: 30px;">
+			<button type="submit" class="btn btn-outline-primary btn-lg" >수정</button>
+			</div>
 		</form>
 	</div>
 </body>
