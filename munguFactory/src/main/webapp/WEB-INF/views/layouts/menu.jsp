@@ -213,38 +213,21 @@
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="/user/accountList" class="menu-link">
-                    <div data-i18n="Account">거래처 등록</div>
+                    <div data-i18n="Account">거래처 관리</div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="/user/factoryList" class="menu-link">
-                    <div data-i18n="Notifications">공장 등록</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="menu-link">
-                    <div data-i18n="Connections">창고 등록</div>
+                    <div data-i18n="Notifications">공장 관리</div>
                   </a>
                 </li>
               </ul>
             </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">품목정보</div>
+           	<li class="menu-item">
+              <a href="/user/ItemAdminList" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-package"></i>
+                <div data-i18n="Basic">품목 관리</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="/user/ItemAdminList" class="menu-link">
-                    <div data-i18n="Account">품목 등록</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="menu-link">
-                    <div data-i18n="Notifications">공장별 품목 등록</div>
-                  </a>
-                </li>
-              </ul>
             </li>
             
             <li class="menu-header small text-uppercase">
@@ -252,7 +235,7 @@
             </li>
            <li class="menu-item">
               <a href="/user/ProdList" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <i class="menu-icon tf-icons bx bx-cog"></i>
                 <div data-i18n="Basic">생산지시</div>
               </a>
             </li>
@@ -261,7 +244,7 @@
             </li>
             <li class="menu-item">
               <a href="/user/outputList" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <i class="menu-icon tf-icons bx bx-clipboard"></i>
                 <div data-i18n="Basic">생산실적</div>
               </a>
             </li>
@@ -272,13 +255,13 @@
             </li>
             <li class="menu-item">
               <a href="${pageContext.request.contextPath }/user/stocktaking/main" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">재고실사 관리</div>
+                <i class="menu-icon tf-icons bx bx-list-check"></i>
+                <div data-i18n="Basic">재고실사</div>
               </a>
             </li>
              <li class="menu-item">
               <a href="/user/inventoryManagement" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
                 <div data-i18n="Basic">수불부</div>
               </a>
             </li>
@@ -288,14 +271,14 @@
             </li>
             <li class="menu-item">
               <a href="/user/sujuList" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">수주 등록</div>
+                <i class="menu-icon tf-icons bx bx-briefcase"></i>
+                <div data-i18n="Basic">수주 관리</div>
               </a>
             </li>
              <li class="menu-item">
               <a href="/user/Shipment" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">출하 등록</div>
+                <i class="menu-icon tf-icons bx bx-archive-out"></i>
+                <div data-i18n="Basic">출하 관리</div>
               </a>
             </li>
 			

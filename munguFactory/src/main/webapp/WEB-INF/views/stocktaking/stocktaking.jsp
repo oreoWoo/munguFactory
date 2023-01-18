@@ -13,9 +13,30 @@
 		padding-right: 50px;
 		
 	}
-
-	.card {
+	
+	.stockPaging {
 		margin-top: 20px;
+	}
+	
+	.pgnumclick {
+		cursor: pointer;
+	}
+
+	.searchStock{
+		padding-left: 20px;
+		padding-right: 20px;
+	
+	}
+	
+	.table-responsive {
+		margin-top: 30px;
+		padding-left: 20px;
+		padding-right: 20px;
+	
+	}
+	
+	.card {
+		margin-top: 40px;
 	}
 	
 	.realSearchTbl {
@@ -101,98 +122,95 @@
 	<div class="stockContainer">
 		<h1 class="display-3">재고실사 관리</h1>
 		<!-- 검색 옵션 영역 -->
-		<div class="searchStock row">
-			<div class="col-sm-6">
-				<!-- 공장선택 -->
-				<select class='form-select selectFactory' id="searchFactory">
-				</select>
+		<div class="card">
+			<div class="searchStock row">
+				<div class="col-sm-6">
+					<!-- 공장선택 -->
+					<select class='form-select selectFactory' id="searchFactory">
+					</select>
+					
+					<!-- 상태선택 -->
+					<select class='form-select selectGubun' id="searchGubun">
+						<option value="">상태선택</option>
+						<option value="재고실사">재고실사</option>
+						<option value="임시실사">임시실사</option>
+					</select>  
+					
+					<!-- 날짜선택 -->
+					<input class="form-control" type="date" value="" id="startDate" max="">
+					<input class="form-control" type="date" value="" id="endDate" max="">
+					
+					<button type="button" class="btn btn-primary searchBtn" onclick="selectStockTakingList()">검색</button>
+				</div>
 				
-				<!-- 상태선택 -->
-				<select class='form-select selectGubun' id="searchGubun">
-					<option value="">상태선택</option>
-					<option value="재고실사">재고실사</option>
-					<option value="임시실사">임시실사</option>
-				</select>  
+				<!-- 행 추가 -->
+				<div class="col-sm-6" style="text-align : right;">
+					<button type="button" class="btn rounded-pill btn-primary" id="plusBtn" onclick="addRow()"><strong>+</strong></button>
+				</div>
 				
-				<!-- 날짜선택 -->
-				<input class="form-control" type="date" value="" id="startDate" max="">
-				<input class="form-control" type="date" value="" id="endDate" max="">
-				
-				<button type="button" class="btn btn-info searchBtn" onclick="selectStockTakingList()">검색</button>
 			</div>
 			
-			<!-- 행 추가 -->
-			<div class="col-sm-6" style="text-align : right;">
-				<button type="button" class="btn rounded-pill btn-info" id="plusBtn" onclick="addRow()"><strong>+</strong></button>
-			</div>
+			<!-- 재고실사 데이터 등록 -->
+			<form action="${pageContext.request.contextPath }/user/stocktaking/insertStockTaking" name="insertForm" method="post">
+					<div class="table-responsive text-nowrap">
+						<table class="table insertStockTbl" id="stockInsertTbl">
+							<thead>
+								<tr>
+									<th>실사일자</th>
+									<th>공장</th>
+									<th>품번</th>
+									<th>품명</th>
+									<th>창고수량</th>
+									<th>실사수량</th>
+									<th>승인자</th>
+									<th>비고</th>
+									<th>상태</th>
+								</tr>
+							</thead>
+							<tbody class="table-border-bottom-0"  id="insertStockTbl">
+								
+							</tbody>
+						
+						</table>
+					
+					</div>
+				
+			</form>
 			
-		</div>
-		
-		<!-- 재고실사 데이터 등록 -->
-		<form action="${pageContext.request.contextPath }/user/stocktaking/insertStockTaking" name="insertForm" method="post">
-			<div class="card">
+			<!-- 검색결과 영역 -->
 				<div class="table-responsive text-nowrap">
-					<table class="table table-bordered insertStockTbl" id="stockInsertTbl">
+					<table class="table realSearchTbl">
 						<thead>
 							<tr>
+								<th>요청번호</th>
 								<th>실사일자</th>
 								<th>공장</th>
 								<th>품번</th>
 								<th>품명</th>
 								<th>창고수량</th>
 								<th>실사수량</th>
+								<th>차이량</th>
 								<th>승인자</th>
 								<th>비고</th>
 								<th>상태</th>
 							</tr>
 						</thead>
-						<tbody class="table-border-bottom-0"  id="insertStockTbl">
+						<tbody class="table-border-bottom-0"  id="realStockTbl">
 							
 						</tbody>
 					
 					</table>
 				
 				</div>
-			
-			</div>
-		</form>
 		
-		<!-- 검색결과 영역 -->
-		<div class="card">
-			<div class="table-responsive text-nowrap">
-				<table class="table table-bordered realSearchTbl">
-					<thead>
-						<tr>
-							<th>요청번호</th>
-							<th>실사일자</th>
-							<th>공장</th>
-							<th>품번</th>
-							<th>품명</th>
-							<th>창고수량</th>
-							<th>실사수량</th>
-							<th>차이량</th>
-							<th>승인자</th>
-							<th>비고</th>
-							<th>상태</th>
-						</tr>
-					</thead>
-					<tbody class="table-border-bottom-0"  id="realStockTbl">
-						
-					</tbody>
-				
-				</table>
-			
-			</div>
-	
+		
+			<!-- 페이지 영역 -->
+			<nav aria-label="Page navigation" class="stockPaging">
+		    	<ul class="pagination justify-content-center" id="stockTakingPaginationUl">
+		    	
+				</ul>
+			</nav>
 		</div>
-	
-		<!-- 페이지 영역 -->
-		<nav aria-label="Page navigation">
-	    	<ul class="pagination justify-content-center" id="stockTakingPaginationUl">
-	    	
-			</ul>
-		</nav>
-		
 	</div> <!-- stockContainer 끝 -->
 	
 </body>
@@ -779,7 +797,7 @@ function makePaginationLi(pageData){
 		
 		for( let i = pageData.startPage; i <= pageData.endPage ; i++) {
 			innerHTML += `
-				<li class="page-item pgnum\${i}">
+				<li class="page-item pgnumclick pgnum\${i}">
 					<a class="page-link" onclick="changePage(event,\${i})">\${i}</a>
 				</li>
 			`
