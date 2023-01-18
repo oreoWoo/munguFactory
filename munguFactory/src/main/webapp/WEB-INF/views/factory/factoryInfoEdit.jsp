@@ -49,7 +49,7 @@ function changUse(obj) {
                       <small class="text-muted float-end"></small>
                     </div>
                     <div class="card-body">
-                      <form action="/admin/updateFactory">
+                      <form action="/admin/updateFactory" method="post">
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">공장코드</label>
                           <div class="col-sm-10">
@@ -163,7 +163,7 @@ function changUse(obj) {
                         </div>
                         <div class="row justify-content-end" style="margin-left: 400px">
                           <div class="col-sm-10">
-                            <input type="submit" class="btn btn-primary" value="수정">
+                            <input type="submit" class="btn btn-primary" value="저장">
                             <input type="button" class="btn btn-primary" value="취소" onclick="location.href='${pageContext.request.contextPath }/user/factoryInfo?factory_no=${factoryDTO.factory_no }'">
                             <input type="button" class="btn btn-primary" value="삭제" onclick="location.href='${pageContext.request.contextPath }/admin/deleteFactory?factory_no=${factoryDTO.factory_no }'">
                           </div>
