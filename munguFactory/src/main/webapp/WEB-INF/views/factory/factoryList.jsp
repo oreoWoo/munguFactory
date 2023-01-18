@@ -40,14 +40,14 @@ $(function(){
 </head>
 <body>
 	  <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Factory /</span> Factory List</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>공장 조회</h4>
 	  <div class="card mb-6">
 		<sec:authorize access="hasAnyRole('user','admin')" var="roleUser"/>
 		<sec:authorize access="hasRole('admin')" var="roleAdmin"/>
 			
               <!-- Basic Bootstrap Table -->
               <div class="card">
-                <h5 class="card-header">Factory List</h5>
+                <h5 class="card-header"></h5>
                 <c:set var="num" value="${page.total-page.start+1 }"></c:set>
                 <div><form class="frm" action="/user/factorySearch">
                 	<sec:authorize access="hasRole('admin')">
@@ -61,7 +61,7 @@ $(function(){
                           type="text"
                           class="form-control"
                           id="defaultFormControlInput"
-                          placeholder="FACTORY NAME"
+                          placeholder="공장명을 입력해 주세요. ex) 파주"
                           aria-describedby="defaultFormControlHelp"
                           style="float: left; width: 300px; margin-right: 5px; margin-left: 20px;"
                           name = "searchString"
@@ -75,10 +75,10 @@ $(function(){
                   <table class="table" style="width: 1300px; margin-left:50px;  margin-top: 50px; margin-bottom: 50px;"">
                     <thead>
                       <tr>
-                        <th>factory Code</th>
-                        <th>factory Name</th>
-                        <th>factory Call</th>
-                        <th>factory Use</th>
+                        <th>공장코드</th>
+                        <th>공장명</th>
+                        <th>전화번호</th>
+                        <th>사용여부</th>
                       </tr>
                     </thead>
                     <!-- <tbody class="table-border-bottom-0" style="text-align: center;"> -->

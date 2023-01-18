@@ -28,18 +28,18 @@ $(function(){
             <div class="container-xxl flex-grow-1 container-p-y">
             <sec:authorize access="hasAnyRole('user','admin')" var="roleUser"/>
 			<sec:authorize access="hasRole('admin')" var="roleAdmin"/>
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Factory /</span> Factory Info</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>공장 정보</h4>
                 <!-- Basic with Icons -->
                 <div class="col-xxl">
                   <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                      <h5 class="mb-0">Factory Info</h5>
+                      <h5 class="mb-0"></h5>
                       <small class="text-muted float-end"></small>
                     </div>
                     <div class="card-body">
                       <form>
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Factory No</label>
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">공장코드</label>
                           <div class="col-sm-10">
                             <div class="input-group input-group-merge">
                             	${factoryDTO.factory_no}
@@ -48,7 +48,7 @@ $(function(){
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-icon-default-company">Factory Name</label>
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-company">공장명</label>
                           <div class="col-sm-10">
                             <div class="input-group input-group-merge">
                               ${factoryDTO.factory_name }
@@ -56,7 +56,7 @@ $(function(){
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-icon-default-company">Factory Address</label>
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-company">주소</label>
                           <div class="col-sm-10">
                             <div class="input-group input-group-merge">
                               ${factoryDTO.factory_address1 }
@@ -64,7 +64,7 @@ $(function(){
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-icon-default-company">Detailed Address</label>
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-company">상세주소</label>
                           <div class="col-sm-10">
                             <div class="input-group input-group-merge">
                               ${factoryDTO.factory_address2 }
@@ -72,7 +72,7 @@ $(function(){
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label class="col-sm-2 form-label" for="basic-icon-default-phone">Factory Call</label>
+                          <label class="col-sm-2 form-label" for="basic-icon-default-phone">전화번호</label>
                           <div class="col-sm-10">
                             <div class="input-group input-group-merge">
                               ${factoryDTO.factory_call }
@@ -80,7 +80,7 @@ $(function(){
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label class="col-sm-2 form-label" for="basic-icon-default-message">Factory Use</label>
+                          <label class="col-sm-2 form-label" for="basic-icon-default-message">사용여부</label>
                           <div class="col-sm-10">
                             <div class="input-group input-group-merge">
                               <c:if test="${factoryDTO.factory_use == 1 }">사용</c:if>
