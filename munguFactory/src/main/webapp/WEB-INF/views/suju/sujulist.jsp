@@ -118,7 +118,9 @@
 </script>
 <body>
 	<div class="SujuContainer container-xxl flex-grow-1 container-p-y">
-		<h1>Suju List</h1>
+		<div style="position: relative; right: 120px; margin-bottom: 30px;">
+			<h1>수주 관리</h1>
+		</div>
 		<div class=" card">
 			<div class="table-responsive text-nowrap">
 				<div style="display: flex; justify-content: space-between; margin: 15px; align-items: center;">
@@ -184,11 +186,5 @@
 			</div>
 		</div>
 	</div>
-
-
-	<a href="#" id="sujuDetailTest">상세</a>
-	<form action="/user/sujuDetail" id="sujuDetailFromTest">
-		<input type="hidden" name="suju_no" value="10005">
-	</form>
 </body>
 </html>
