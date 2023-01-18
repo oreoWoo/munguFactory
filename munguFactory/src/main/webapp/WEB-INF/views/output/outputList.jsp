@@ -122,10 +122,9 @@
 	<div class="outputContainer">
 		<h1 class="display-3">생산실적</h1>
 		<!-- 생산실적 등록 -->
-		<div class="alert alert-primary" role="alert" style="width: 70px; text-align: center;translate: 1300px 107px;height:40px;padding: 9px 2px 0px 1px;font-weight: bold;"><a href="${pageContext.request.contextPath }/user/writeFormOutput">등록</a></div>
-
+		<button type="button" class="alert alert-primary" onclick="location.href='${pageContext.request.contextPath }/user/writeFormOutput'" style="width: 70px; text-align: center;translate: 1300px 107px;height:40px;padding: 9px 2px 0px 1px;font-weight: bold;">등록</button>
 		<!-- 생산실적 관련 정보 조회 -->
-		<form action="listSearch" style="translate: 2px 52px;">
+		<form action="listSearch" style="translate: 2px 52px; width:1000px;">
 			<input type="hidden" value="1" name="pageNum" id="pageNum">
 		
 			<div class="searchBox">
