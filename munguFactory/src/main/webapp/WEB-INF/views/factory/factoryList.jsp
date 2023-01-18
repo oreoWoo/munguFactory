@@ -40,15 +40,23 @@ $(function(){
 </head>
 <body>
 	  <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Factory /</span> Factory List</h4>
+	  <div class="card mb-6">
 		<sec:authorize access="hasAnyRole('user','admin')" var="roleUser"/>
 		<sec:authorize access="hasRole('admin')" var="roleAdmin"/>
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Factory /</span> Factory List</h4>
 			
               <!-- Basic Bootstrap Table -->
               <div class="card">
                 <h5 class="card-header">Factory List</h5>
                 <c:set var="num" value="${page.total-page.start+1 }"></c:set>
                 <div><form class="frm" action="/user/factorySearch">
+                	<sec:authorize access="hasRole('admin')">
+                	<!-- <div style="margin-left: 1300px"> -->
+                	<div style="float: right; margin-right: 50px;" >
+                	<input type="button" class="btn btn-primary" value="등록" onclick="location.href='${pageContext.request.contextPath }/admin/createFactory'">
+                	</div>
+					</sec:authorize>
+					<div style="float: right; margin-right: 30px;">
 					<input
                           type="text"
                           class="form-control"
@@ -59,15 +67,12 @@ $(function(){
                           name = "searchString"
                         />
 					<button type="submit" class="btn btn-primary">검색</button>
+					</div>
 				</form></div>
 				
                 	
-                	<sec:authorize access="hasRole('admin')">
-                	<div style="margin-left: 1300px">
-                	<input type="button" class="btn btn-primary" value="등록" onclick="location.href='${pageContext.request.contextPath }/admin/createFactory'"></div>
-					</sec:authorize>
-                <div class="table-responsive text-nowrap">
-                  <table class="table" style="text-align: center;">
+               <!--  <div class="table-responsive text-nowrap"> -->
+                  <table class="table" style="width: 1300px; margin-left:50px;  margin-top: 50px; margin-bottom: 50px;"">
                     <thead>
                       <tr>
                         <th>factory Code</th>
@@ -76,7 +81,8 @@ $(function(){
                         <th>factory Use</th>
                       </tr>
                     </thead>
-                    <tbody class="table-border-bottom-0" style="text-align: center;">
+                    <!-- <tbody class="table-border-bottom-0" style="text-align: center;"> -->
+                    <tbody>
                       <c:forEach var="factory" items="${factoryList}">
 						<tr><td><a href="/user/factoryInfo?factory_no=${factory.factory_no}">${factory.factory_no}</a></td>
 						<td>${factory.factory_name }</td>
@@ -98,9 +104,10 @@ $(function(){
 					</nav>
 				
                 </div>
+  </div>             
               </div>
               <!--/ Basic Bootstrap Table -->
-            </div>
+            <!-- </div> -->
             <!-- / Content -->
 </body>
 </html>
