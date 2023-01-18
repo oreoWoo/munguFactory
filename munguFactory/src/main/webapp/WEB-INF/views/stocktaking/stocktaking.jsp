@@ -132,7 +132,7 @@
 		<form action="${pageContext.request.contextPath }/user/stocktaking/insertStockTaking" name="insertForm" method="post">
 			<div class="card">
 				<div class="table-responsive text-nowrap">
-					<table class="table table-bordered insertStockTbl" id="stockInsertTbl">
+					<table class="table insertStockTbl" id="stockInsertTbl">
 						<thead>
 							<tr>
 								<th>실사일자</th>
@@ -160,7 +160,7 @@
 		<!-- 검색결과 영역 -->
 		<div class="card">
 			<div class="table-responsive text-nowrap">
-				<table class="table table-bordered realSearchTbl">
+				<table class="table realSearchTbl">
 					<thead>
 						<tr>
 							<th>요청번호</th>
