@@ -145,4 +145,11 @@
 		WHERE subul_num = #{subul_num}
 	</update>
 	
+	<select id="selectItemStockCnt">
+		SELECT amount, subul_date, item_no
+		FROM subul
+		WHERE item_no = #{item_no};
+	
+	</select>
+	
 </mapper>

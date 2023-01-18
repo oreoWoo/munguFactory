@@ -32,4 +32,6 @@ public interface StockTakingService {
 	int deleteTempSilsa(StockTakingDTO stockTakingDTO);
 
 	int updateTempSilsa(StockTakingDTO stockTakingDTO);
+
+	List<StockTakingDTO> selectItemStockCnt();
 }

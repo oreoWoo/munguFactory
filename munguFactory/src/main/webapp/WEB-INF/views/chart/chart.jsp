@@ -44,6 +44,37 @@
 	google.charts.setOnLoadCallback(drawChart);
 	
 	function drawChart() {
+		var createMemb = msg.createMemb;//최상위멤버
+		var relationMember = msg.groupRelationMember;//리스트
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Name');//하위그룹
+    data.addColumn('string', 'Manager');//상위그룹
+    data.addColumn('string', 'ToolTip');//툴팁
+
+    data.addRow([{v:createMemb , f: '<p>'+createMemb+'</p>'+'<div style=" color:#5D5D5D; font-style:bold">그룹장</div>'},'','그룹장']);
+    data.addRow([{v:relationMember[0].memberId , f: '<p>'+relationMember[0].memberName+'</p>'+'<div style=" color:#5D5D5D; font-style:bold">그룹원</div>'},createMemb,'']);
+    data.addRow([{v:relationMember[1].memberId , f: '<p>'+relationMember[1].memberName+'</p>'+'<div style=" color:#5D5D5D; font-style:bold">그룹원</div>'},createMemb,'']);
+     for(var i=2; i < relationMember.length; i++){
+    	 data.addRow([{v:relationMember[i].memberId, f: '<p>'+relationMember[i].memberName+'</p>'+'<div style=" color:#5D5D5D; font-style:bold">그룹원</div>'},relationMember[i-1].memberId,'']);
+    	 data.addRow([{v:relationMember[1].memberId , f: '<p>'+relationMember[1].memberName+'</p>'+'<div style=" color:#5D5D5D; font-style:bold">그룹원</div>'},relationMember[i-2].memberId,'']);
+ 	} //v: 연결되는 아이디 값. f: 화면에 보여지는 부분, ['하위그룹','상위그룹Id','']
+ 	console.log(data);
+	
+    // Create the chart.
+    var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+    // Draw the chart, setting the allowHtml option to true for the tooltips.
+    chart.draw(data, {allowHtml:true,nodeClass:'maman'});
+	}
+	});
+
+	request.fail(function( jqXHR, textStatus ) {
+		  alert( "Request failed: " + textStatus );
+		});
+	
+	
+	
+	function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Year', 'Sales', 'Expenses'],
           ['2004',  1000,      400],
@@ -62,5 +93,22 @@
 
         chart.draw(data, options);
       }
+	
+	function stockChart() {
+		
+		$.ajax({
+			
+			url: "${pageContext.request.contextPath }/user/stocktaking/selectItemStockCnt",
+			data: { item_no },
+			dataType: "json",
+			success: function(result){
+				
+				drawChart(result);
+				
+			}
+			
+		});
+		
+	}
 </script>
 </html>

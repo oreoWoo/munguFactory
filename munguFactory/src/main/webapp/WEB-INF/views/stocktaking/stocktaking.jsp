@@ -14,8 +14,18 @@
 		
 	}
 	
+	
+	.insertTblDiv {
+		margin-bottom: 35px;
+	}
+	
 	.stockPaging {
 		margin-top: 20px;
+	}
+	
+	.hrLine {
+		margin-left : 20px;
+		margin-right : 20px;
 	}
 	
 	.pgnumclick {
@@ -75,6 +85,7 @@
 	.insertStockTbl {
 		text-align: center;
 	}
+	
 	
 	.itemName {
 		width: 305px;
@@ -149,10 +160,9 @@
 				</div>
 				
 			</div>
-			
 			<!-- 재고실사 데이터 등록 -->
 			<form action="${pageContext.request.contextPath }/user/stocktaking/insertStockTaking" name="insertForm" method="post">
-					<div class="table-responsive text-nowrap">
+					<div class="table-responsive text-nowrap insertTblDiv">
 						<table class="table insertStockTbl" id="stockInsertTbl">
 							<thead>
 								<tr>
@@ -174,9 +184,11 @@
 						</table>
 					
 					</div>
-				
+					
 			</form>
+		</div>
 			
+			<div class="card">
 			<!-- 검색결과 영역 -->
 				<div class="table-responsive text-nowrap">
 					<table class="table realSearchTbl">

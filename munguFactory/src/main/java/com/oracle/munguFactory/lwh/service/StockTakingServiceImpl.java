@@ -116,4 +116,9 @@ public class StockTakingServiceImpl implements StockTakingService {
 		}
 	}
 
+	@Override
+	public List<StockTakingDTO> selectItemStockCnt() {
+		return st.selectItemStockCnt();
+	}
+
 }
