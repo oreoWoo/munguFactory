@@ -23,7 +23,6 @@
 	thead, tbody, tfoot, tr, td, th {
 	    border-color: inherit;
 	    border-style: solid;
-	    border-width: 1px;
 	    width: 1250px;
 	}
 	
@@ -123,13 +122,13 @@
 	<div class="outputContainer">
 		<h1 class="display-3">생산실적</h1>
 		<!-- 생산실적 등록 -->
-		<div class="alert alert-primary" role="alert" style="width: 70px; text-align: center;translate: 1250px 107px;height:40px;padding: 9px 2px 0px 1px;font-weight: bold;"><a href="${pageContext.request.contextPath }/user/writeFormOutput">등록</a></div>
+		<div class="alert alert-primary" role="alert" style="width: 70px; text-align: center;translate: 1300px 107px;height:40px;padding: 9px 2px 0px 1px;font-weight: bold;"><a href="${pageContext.request.contextPath }/user/writeFormOutput">등록</a></div>
 
 		<!-- 생산실적 관련 정보 조회 -->
 		<form action="listSearch" style="translate: 2px 52px;">
 			<input type="hidden" value="1" name="pageNum" id="pageNum">
 		
-			<div class="searchBox" style="translate: 45px;">
+			<div class="searchBox">
 				<select name="search" class="form-select" style="width: 110px;">
 					<option value="">전체</option>
 					<option value="item_no">품번</option>
@@ -143,52 +142,54 @@
 				<button type="submit" class="btn btn-outline-primary btn_submit" id="btnSearch" style="translate: 360px -70px;"><img src="https://cdn-icons-png.flaticon.com/512/71/71403.png" style="width: 20px;height: 20px;translate: -10px -10px;"></button>
 			</div>
 		</form>
-		<div class="card mb-2" style="width: 1280px; translate: 45px;">
-			<div class="card-body table-responsive text-nowrap container">
-				<table class="outputTbl" style="background: white;">
-					<thead style="background-color: #FFFAFA;">
-						<tr>
-							<th>생산번호</th>
-							<th>품번</th>
-							<th>품명</th>
-							<th>사원번호</th>
-							<th>공장코드</th>
-							<th>작업일시</th>
-							<th>생산수량</th>
-							<th>불량수량</th>
-							<th>수율</th>
-						</tr>
-					</thead>
-	
-					<tbody>
+		
+		      <!-- Basic Bootstrap Table -->
+              <div class="card">
+                <div class="table-responsive text-nowrap">
+                  <table class="table">
+                    <thead>
+                      <tr>
+						<th>생산번호</th>
+						<th>품번</th>
+						<th>품명</th>
+						<th>사원번호</th>
+						<th>공장코드</th>
+						<th>작업일시</th>
+						<th>생산수량</th>
+						<th>불량수량</th>
+						<th>수율</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
 						<c:forEach var="output" items="${outputList}">
-							<tr>
-								<td><a href="outputDetail?prod_no=${output.prod_no}">${output.prod_no}</a></td>
-								<td>${output.item_no}</td>
-								<td>${output.item_name}</td>
-								<td>${output.emp_no}</td>
-								<td>${output.factory_no}</td>
-								<td><fmt:formatDate value="${output.finish_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-								<td>${output.prod_amount}</td>
-								<td>${output.poor_quantity}</td>
-								<td>
-									<c:set var="yield" value="${output.yield}"/>
-									
-									<c:choose>
-										<c:when test="${yield eq 0}">-</c:when>
-										<c:otherwise><fmt:formatNumber value="${output.yield}" pattern="0.0"/></c:otherwise>
-									</c:choose>
-									
-								</td>
-							</tr>
+								<tr>
+									<td><a href="outputDetail?prod_no=${output.prod_no}">${output.prod_no}</a></td>
+									<td>${output.item_no}</td>
+									<td>${output.item_name}</td>
+									<td>${output.emp_no}</td>
+									<td>${output.factory_no}</td>
+									<td><fmt:formatDate value="${output.finish_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+									<td>${output.prod_amount}</td>
+									<td>${output.poor_quantity}</td>
+									<td>
+										<c:set var="yield" value="${output.yield}"/>
+										
+										<c:choose>
+											<c:when test="${yield eq 0}">-</c:when>
+											<c:otherwise><fmt:formatNumber value="${output.yield}" pattern="0.0"/></c:otherwise>
+										</c:choose>
+										
+									</td>
+								</tr>
 						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!--/ Basic Bootstrap Table -->
+		
 		<!-- 페이징 처리 -->
-		<nav aria-label="Page navigation example">
+		<nav aria-label="Page navigation example" style="translate: 0 20px;">
                <ul class="pagination justify-content-center">
                   <c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
                      <li class="page-item"><a class="page-link"
