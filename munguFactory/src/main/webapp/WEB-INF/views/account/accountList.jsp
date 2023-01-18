@@ -28,17 +28,17 @@
 </head>
 <body>
 <div class="container-xxl flex-grow-1 container-p-y" style="width: 1600px;">
+<h4 class="fw-bold py-3 mb-4">거래처 리스트</h4>
 <div class="card mb-6">
-	<h4 class="fw-bold py-3 mb-4" style="padding-left: 80px; margin-top: 50px;">거래처 조회</h4>
 	<div id="container" style="width: 1300px;" >
 	<sec:authorize access="hasRole('admin')" var="roleAdmin"/>
     <sec:authorize access="hasAnyRole('user','admin')" var="roleUser"/>	
 	<c:set var="num" value="${page.total-page.start+1 }"></c:set>
 	<sec:authorize access="hasRole('admin')">
-	<button id="accAdd" class="btn btn-primary" style="float: right;"  onclick="location.href='/admin/accountAddFrom'">신규등록</button>
+	<button id="accAdd" class="btn btn-primary" style="float: right; margin-top: 50px;"  onclick="location.href='/admin/accountAddFrom'">신규등록</button>
 	</sec:authorize>
 	<form action="/user/accountSearch">
-	<div class="input-group" style="width: 300px;float: right; padding-bottom: 50px;  padding-right: 20px; ">
+	<div class="input-group" style="width: 300px;float: right; padding-bottom: 50px;  padding-right: 20px; padding-top: 50px;">
 		<input
 	     	type="text"
 	     	name="searchString"
@@ -50,7 +50,6 @@
 	<input class="btn btn-primary" type="submit" value="검색">
 	</div>
 	</form>
-	
 	<table class="table" style="width: 1300px; margin-left:50px;  margin-top: 50px; margin-bottom: 50px;">
 	<thead>
 	<tr>
