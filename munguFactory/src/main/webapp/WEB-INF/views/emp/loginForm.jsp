@@ -187,7 +187,7 @@ function DaumPostcode() {
 							
 							<!-- 로그인 버튼 -->
 							<div class="form-group textbox">
-								<input type="submit" class="btn btn-primary btn-user btn-block" id="btn_login" value="로그인" style="">
+								<input type="submit" class="btn btn-primary btn-user btn-block" id="btn_login" value="로그인" style="background-color: #696cff;" >
 							</div>
 							
 						</form>
