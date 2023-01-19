@@ -121,8 +121,8 @@ public class LhjController {
 			model.addAttribute("delMsg",account);
 			return	"forward:/user/accountList";
 		}else {
-			model.addAttribute("delnMsg","삭제에 실패하였습니다. 다시 확인해보세요");
-			return "forward:accountUpdateForm";
+			model.addAttribute("delMsg",account);
+			return "forward:/user/accountList";
 		}
 		
 	
