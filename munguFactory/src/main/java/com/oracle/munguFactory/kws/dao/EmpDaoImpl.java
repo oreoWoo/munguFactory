@@ -121,7 +121,7 @@ public class EmpDaoImpl implements EmpDao {
 		try {
 			System.out.println("getStart ->"+pg.getStart());
 			System.out.println("getEnd ->"+pg.getEnd());
-			pg.setStart((pg.getStart()-1)*10);
+			pg.setStart(pg.getStart()-1);
 			System.out.println("getStart ->"+pg.getStart());
 			emplist = session.selectList("getAllUserInfo_Paging",pg);
 			System.out.println("EmpDaoImpl emplist.size: " + emplist.size());
