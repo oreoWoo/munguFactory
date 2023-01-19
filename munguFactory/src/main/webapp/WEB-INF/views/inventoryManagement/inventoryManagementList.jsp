@@ -44,7 +44,7 @@
 									${subul.serial_no }
 								</a>
 							</c:when>
-							<c:when test="${subul.gubun=='생산실적' }">
+							<c:when test="${subul.gubun=='입고' }">
 								<a	data-bs-toggle="modal" data-bs-target="#fullsizemodal" onclick="detailInfo(${subul.serial_no },'/user/outputDetail?prod_no=')" href="#">
 									${subul.serial_no }
 								</a>
