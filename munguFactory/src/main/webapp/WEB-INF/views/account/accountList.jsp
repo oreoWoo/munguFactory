@@ -13,11 +13,21 @@
 		if(${upMsg == 1}){
 			 alert ("거래처 정보가 수정되었습니다");
 		}
-		if(${delMsg == 1}){
-			 alert ("거래처 정보가 삭제되었습니다");
-		}
 		if(${inMsg == 1}){
 			 alert ("거래처 정보가 등록 되었습니다");
+		}
+		
+	});
+
+</script>
+
+<script type="text/javascript">
+
+	$(function(){
+		if(${delMsg} == 0) {
+			alert("해당 거래처를 삭제 할 수 없습니다. ");
+		} else {
+			alert("거래처 정보가 삭제 되었습니다.");
 		}
 		
 	});
