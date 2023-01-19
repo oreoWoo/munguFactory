@@ -28,6 +28,9 @@
 			}
 		});
 	}
+	function cancelInsert(){
+		$(".ajaxContents tbody tr:first").remove();
+	}
 	function ajaxInsertShipmentForm(){
 		if($(".insertShipment").html()==null){
 			$.ajax({
@@ -55,6 +58,7 @@
 			success	: function(data){
 				var html = $('<div>').html(data);
 				$('.modal-body').append(html.find("div #container").html());
+				$('.modal-body').append(html.find("div .card-body").html());
 				$('.modal-body').append(html.find("div .subulContainer").html());
 				$('.modal-body').append(html.find("div .inventoryManagementContainer").html());
 				$('.modal-body').append(html.find("div .col-xxl").html());
