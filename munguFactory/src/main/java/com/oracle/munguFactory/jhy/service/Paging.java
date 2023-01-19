@@ -18,7 +18,7 @@ public class Paging {
 			this.currentPage = Integer.parseInt(currentPage1);	// 2		
 		}
 		//           1               10
-		start = (currentPage - 1) * rowPage + 1;  // 시작시 1     11   
+		start = (currentPage - 1) * rowPage;  // 시작시 1     11   
 		end   = start + rowPage - 1;              // 시작시 10    20   
 		                 //                 25     /   10 
 		totalPage = (int) Math.ceil((double)total / rowPage);  // 시작시 3  5  14
