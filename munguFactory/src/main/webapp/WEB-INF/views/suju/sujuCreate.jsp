@@ -54,9 +54,7 @@ table
 		var today = new Date();
 		suju_date = new Date(suju_date);
 		last_date = new Date(last_date);
-		alert(suju_date);
-		alert(today);
-		alert(suju_date > today);
+		
 		if(isNaN(suju_date) || isNaN(last_date)){
 			alert("날짜를 선택해주세요.");
 			return false;
@@ -85,21 +83,20 @@ table
 
 	// 거래처 리스트
 	function accountList() {
-		alert("거래처 조회시작");
+
 		$
 				.ajax({
 					url : "/sujuAccountList",
 					dataType : "json",
 					success : function(data) {
-						alert("거래처 조회성공");
+						
 						var jsonStr = JSON.stringify(data);
-						alert("jsonStr->" + jsonStr);
+						
 						var html = "";
 						var html2 = "";
 						var pageStartNum = data.page.startPage;
 						var pageEndNum = data.page.endPage;
-						alert("pageStartNum -> " + pageStartNum
-								+ "pageEndNum -> " + pageEndNum);
+						
 						if (data.list.length > 0) {
 							$
 									.each(
@@ -207,7 +204,7 @@ table
 
 	// 품목 조회
 	function itemList() {
-		alert("품목조회 시작");
+		
 		if (!($("#ajaxItemList tr").html())) {
 			$
 					.ajax({
@@ -215,7 +212,7 @@ table
 						dataType : "json",
 						success : function(data) {
 							var jsonStr2 = JSON.stringify(data);
-							alert("jsonStr2->" + jsonStr2);
+							
 							var html3 = "";
 							if (data.length > 0) {
 								$.each(
@@ -252,7 +249,7 @@ table
 						}
 					});
 		} else {
-			alert($("#ajaxItemList").html());
+
 		}
 
 	}
@@ -289,7 +286,6 @@ table
 							}
 
 						});
-		alert(selectItem);
 		for (var i = 0; i < selectItem.length; i++) {
 			$('#' + selectItem[i]).remove();
 		}

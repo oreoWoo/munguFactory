@@ -32,7 +32,6 @@
 		});
 		// 날짜 선택
 		$(document).on("change", "#startDate , #endDate", function() {
-			alert($(this).val());
 			if($(this).attr("id") == "startDate"){
 				$("#endDate").attr("min",$(this).val())
 			} else {
@@ -65,7 +64,6 @@
 		var startDate = $("#startDate").val();
 		var endDate = $("#endDate").val();
 		var searchName = $("#searchName").val();
-		alert(currentPage);
 		$.ajax({
 					url : "/user/sujuListAction",
 					type : "POST",
