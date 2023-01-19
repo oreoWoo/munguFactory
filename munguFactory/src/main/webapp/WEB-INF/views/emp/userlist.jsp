@@ -24,12 +24,13 @@ function userlistDeptSearch()
 </script>
 </head>
 <body>
+
 	<!-- <h4 class="fw-bold py-3 mb-4" style="padding-left: 80px; margin-top: 50px;">거래처 조회</h4> -->
 	<div class="container-xxl flex-grow-1 container-p-y" style="width: 1600px;">
+		<h4 class="fw-bold py-3 mb-4">사원목록</h4>
 	<div class="card mb-6">
 	<c:set var="no" value="${page.total-page.start+1 }"></c:set>
 	</p>
-		<h4 class="fw-bold py-3 mb-4" style="padding-left: 80px; margin-top: 50px;">사원목록</h4>
 		<div>
 				<tr>&nbsp;&nbsp;&nbsp;&nbsp; 부서별 조회:</tr>
 			<select name="dept_no" id="dept_no" class="form-select" style="width: auto; display: inline;">
@@ -56,7 +57,7 @@ function userlistDeptSearch()
 	
 			</c:forEach>
 		</table>
-		<div style="text-align: center; margin: 0 auto;">
+
 			<c:choose>
 			<c:when test="${dept_no eq 0}">
 				<c:if test="${page.startPage > page.pageBlock }">
@@ -82,7 +83,7 @@ function userlistDeptSearch()
 				</c:if>	
 			</c:otherwise>
 		</c:choose>
-		</div>
+
 		
 	</div>
 	</div>
