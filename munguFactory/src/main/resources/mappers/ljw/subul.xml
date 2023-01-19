@@ -67,23 +67,32 @@
 	</select>
 	<select id="ljwGetAccountList" resultType="Accounts">
 		SELECT DISTINCT a.account_no, a.* 
-		FROM accounts a, orders o, orders_detail od 
+		FROM accounts a, orders o, orders_detail od, production_order po
 		WHERE a.account_no=o.account_no 
 		AND o.Suju_No=od.Suju_No
+		AND od.suju_no=po.suju_no
+        AND od.item_no=po.item_no
+		AND po.prod_state!='생산지시'
 		AND od.balju_No IS NULL
 	</select>
 	<select id="ljwGetOrderList" resultType="Orders" parameterType="int">
 		SELECT distinct o.suju_no, o.* 
-		FROM orders o, orders_detail od 
+		FROM orders o, orders_detail od, production_order po 
 		WHERE o.account_no=#{account_no}
 		AND o.Suju_No=od.Suju_No 
+		AND od.suju_no=po.suju_no
+        AND od.item_no=po.item_no
+		AND po.prod_state!='생산지시'
 		AND od.balju_No IS NULL
 	</select>
 	<select id="ljwGetOrdersDetailList" resultType="OrdersDetail" parameterType="int">
 		SELECT * 
-		FROM orders_detail od, item i, storages s 
+		FROM orders_detail od, item i, storages s, production_order po 
 		WHERE od.Suju_No=#{suju_no} 
 		AND od.item_no=i.item_no 
+		AND od.item_no=po.item_no 
+		AND od.suju_no=po.suju_no
+		AND po.prod_state!='생산지시'
 		AND s.item_no=od.item_no
 		AND od.balju_no IS NULL
 	</select>
@@ -101,7 +110,11 @@
 		WHERE item_no = #{item_no}
 	</update>
 	<update id="baljuUpdate" parameterType="Subul">
-		UPDATE orders_detail SET balju_No = #{subul_num} WHERE Suju_No = #{serial_no} AND item_no=#{item_no}
+		UPDATE orders_detail 
+		SET balju_No = #{subul_num} 
+		WHERE Suju_No = #{serial_no} 
+		AND item_no=#{item_no}
+		AND balju_no IS NULL
 	</update>
 	<select id="getOrdersDetail" parameterType="OrdersDetail" resultType="OrdersDetail">
 		SELECT * 
