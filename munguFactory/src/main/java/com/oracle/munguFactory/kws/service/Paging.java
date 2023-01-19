@@ -8,8 +8,8 @@ import lombok.Setter;
 public class Paging 
 {
 	private int currentPage = 1;	
-	private int rowPage   = 3;//10
-	private int pageBlock = 3;//10
+	private int rowPage   = 10;//10
+	private int pageBlock = 10;//10
 	private int start;				
 	private int end;
 	private int startPage;			
