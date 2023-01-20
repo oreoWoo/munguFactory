@@ -81,6 +81,7 @@ public class JjhSujuDaoImpl implements JjhSujuDao {
 			System.out.println(result);
 			result = session.insert("sujuModifyDetails", ordersDTO);
 			System.out.println(result);
+			result = session.insert("sujuInsertPo", ordersDTO);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
