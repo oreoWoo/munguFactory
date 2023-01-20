@@ -94,9 +94,19 @@
 	<delete id="sujuModifyDelete" parameterType="Orders">
 		delete 
 		from orders_detail
-		where suju_no = 1004
-		and item_no not in(105,107,126)
-		and not exists (select * from production_order where suju_no = #{suju_no} and prod_state != '생산지시')
+		where suju_no = #{suju_no}
+		<foreach collection="ordersDetailDTOs" item="item" open="and item_no not in(" close=")" separator=", ">
+			#{item.item_no}
+		</foreach>
+		and not exists (
+			select * 
+			from production_order 
+			where suju_no = #{suju_no} 
+			<foreach collection="ordersDetailDTOs" item="item" open="and item_no not in(" close=")" separator=", ">
+				#{item.item_no}
+			</foreach>
+			and prod_state != '생산지시'
+		)
 	</delete>
 	
 	<update id="sujuModifyOrders" parameterType="Orders">
@@ -108,14 +118,27 @@
 	    last_date = #{last_date},
 	    order_note = #{order_note}
 	    where suju_no = #{suju_no}
-	    and not exists (select * from production_order where suju_no = #{suju_no} and prod_state != '생산지시')
+	    and not exists (
+	    select * 
+	    from production_order 
+	    where suju_no = #{suju_no}
+	    <foreach collection="ordersDetailDTOs" item="item" open="and item_no in(" close=")" separator=", ">
+				#{item.item_no}
+		</foreach>
+	    and prod_state != '생산지시')
 	</update>
 	
 	<insert id="sujuModifyDetails" parameterType="Orders">
 		insert into orders_detail (suju_no, item_no, suju_amount, balju_no)
 		<foreach collection="ordersDetailDTOs" item="item" separator=" union all ">
 			select #{suju_no}, #{item.item_no}, #{item.suju_amount}, #{item.balju_no}
-			where not exists (select * from production_order where suju_no = #{suju_no} and prod_state != '생산지시')
+			where not exists (
+				select * from production_order 
+				where suju_no = #{suju_no}
+				<foreach collection="ordersDetailDTOs" item="item" open="and item_no in(" close=")" separator=", ">
+					#{item.item_no}
+				</foreach>
+				and prod_state != '생산지시')
 		</foreach>
 		on duplicate key update
 		suju_amount = VALUES(suju_amount);
