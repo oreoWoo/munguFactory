@@ -88,7 +88,7 @@
 		delete 
 		from orders
 		where suju_no = #{suju_no}
-		and not exists (select * from production_order where suju_no = #{suju_no} and prod_state != '생산지시')
+		and not exists (select * from production_order where suju_no = #{suju_no} and prod_state != '지시 전')
 	</delete>
 	
 	<delete id="sujuModifyDelete" parameterType="Orders">
