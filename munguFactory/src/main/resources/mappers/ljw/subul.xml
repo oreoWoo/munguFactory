@@ -72,7 +72,7 @@
 		AND o.Suju_No=od.Suju_No
 		AND od.suju_no=po.suju_no
         AND od.item_no=po.item_no
-		AND po.prod_state!='생산지시'
+		AND po.prod_state!='지시 전'
 		AND od.balju_No IS NULL
 	</select>
 	<select id="ljwGetOrderList" resultType="Orders" parameterType="int">
@@ -82,7 +82,7 @@
 		AND o.Suju_No=od.Suju_No 
 		AND od.suju_no=po.suju_no
         AND od.item_no=po.item_no
-		AND po.prod_state!='생산지시'
+		AND po.prod_state!='지시 전'
 		AND od.balju_No IS NULL
 	</select>
 	<select id="ljwGetOrdersDetailList" resultType="OrdersDetail" parameterType="int">
@@ -92,7 +92,7 @@
 		AND od.item_no=i.item_no 
 		AND od.item_no=po.item_no 
 		AND od.suju_no=po.suju_no
-		AND po.prod_state!='생산지시'
+		AND po.prod_state!='지시 전'
 		AND s.item_no=od.item_no
 		AND od.balju_no IS NULL
 	</select>
