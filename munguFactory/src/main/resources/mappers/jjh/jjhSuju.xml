@@ -105,7 +105,7 @@
 			<foreach collection="ordersDetailDTOs" item="item" open="and item_no not in(" close=")" separator=", ">
 				#{item.item_no}
 			</foreach>
-			and prod_state != '생산지시'
+			and prod_state != '지시 전'
 		)
 	</delete>
 	
@@ -125,7 +125,7 @@
 	    <foreach collection="ordersDetailDTOs" item="item" open="and item_no in(" close=")" separator=", ">
 				#{item.item_no}
 		</foreach>
-	    and prod_state != '생산지시')
+	    and prod_state != '지시 전')
 	</update>
 	
 	<insert id="sujuModifyDetails" parameterType="Orders">
@@ -135,12 +135,24 @@
 			where not exists (
 				select * from production_order 
 				where suju_no = #{suju_no}
-				<foreach collection="ordersDetailDTOs" item="item" open="and item_no in(" close=")" separator=", ">
-					#{item.item_no}
-				</foreach>
-				and prod_state != '생산지시')
+				and item_no = #{item.item_no}
+				and Prod_state = '생산완료')
 		</foreach>
 		on duplicate key update
 		suju_amount = VALUES(suju_amount);
+	</insert>
+	
+	<insert id="sujuInsertPo" parameterType="Orders">
+		insert into production_order (suju_no, item_no, emp_no, finish_date, prod_date,prod_amount, prod_state, factory_no)
+		<foreach collection="ordersDetailDTOs" item="item" separator=" union all ">
+			select #{suju_no}, #{item.item_no},#{emp_no}, null, #{suju_date}, #{item.suju_amount}, '지시 전', null
+			where not exists (
+				select * from production_order 
+				where suju_no = #{suju_no}
+				and item_no = #{item.item_no}
+				and Prod_state = '생산완료')
+		</foreach>
+		on duplicate key update
+		prod_amount = VALUES(prod_amount)
 	</insert>
 </mapper>
