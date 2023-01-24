@@ -120,7 +120,7 @@
 </head>
 <body>
 	<div class="outputContainer">
-		<h1 class="display-3">생산실적</h1>
+		<h4 class="fw-bold py-3 mb-4">생산 실적</h4>
 		
 		<!-- 생산실적 관련 정보 조회 -->
 		<form action="listSearch" style="translate: 2px 52px;">

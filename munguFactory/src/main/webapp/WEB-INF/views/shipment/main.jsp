@@ -73,7 +73,7 @@
 </head>
 <body>
 	<div class="background">
-		<h1>출하</h1>
+		<h4 class="fw-bold py-3 mb-4">출하</h4>
 		<div class="shipmentContainer card mb-4">
 			<sec:authentication property="principal.empDTO" var="myEmp"/>
 			<div class="modal fade" id="fullsizemodal" tabindex="-1" aria-hidden="true">
