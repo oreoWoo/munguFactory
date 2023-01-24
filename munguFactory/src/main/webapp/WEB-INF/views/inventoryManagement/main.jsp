@@ -50,7 +50,7 @@
 </head>
 <body>
 	<div class="background">
-		<h1>수불부</h1>
+		<h4 class="fw-bold py-3 mb-4">수불부</h4>
 		<div class="inventoryManagementContainer card mb-4">
 			<sec:authentication property="principal.empDTO.emp_name" var="myName"/>
 			<div class="modal fade" id="fullsizemodal" tabindex="-1" aria-hidden="true">

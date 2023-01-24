@@ -137,7 +137,7 @@
 </head>
 <body>
 	<div class="stockContainer">
-		<h1 class="display-3">재고실사 관리</h1>
+		<h4 class="fw-bold py-3 mb-4">재고실사 관리</h4>
 		<!-- 검색 옵션 영역 -->
 		<div class="searchStock row">
 			<div class="col-sm-6">

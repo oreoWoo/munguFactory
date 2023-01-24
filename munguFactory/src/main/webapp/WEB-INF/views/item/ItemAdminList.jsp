@@ -35,11 +35,17 @@ thead, tbody, tfoot, tr, td, th {
 	text-align: center;
 	margin-top: 20px;
 }
+
+.outputContainer {
+		padding-top: 50px;
+		padding-left: 50px;
+		padding-right: 50px;
+	}
 </style>
 </head>
 <body>
 	<div class="outputContainer">
-		<h1 class="display-3" style="translate: 145px 39px;">품목 목록 조회</h1>
+		<h4 class="fw-bold py-3 mb-4">품목 목록 조회</h4>
 		<sec:authorize access="hasRole('admin')">
 			<div class="alert alert-primary" role="alert"
 				style="width: 70px; text-align: center; height: 40px; translate: 1330px 100px; padding: 9px 2px 0px 1px; font-weight: bold;">
