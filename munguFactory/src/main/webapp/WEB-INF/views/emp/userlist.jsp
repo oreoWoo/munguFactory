@@ -11,6 +11,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	.userlistPage {
+		text-align: center;
+	}
+</style>
 <script type="text/javascript">
 
 function userlistDeptSearch()
@@ -19,7 +24,7 @@ function userlistDeptSearch()
 	
 	location.href= '<%=context%>/admin/userlistDeptSearch?dept_no=' + dept_no;
 }
-	
+
 
 </script>
 </head>
@@ -58,31 +63,33 @@ function userlistDeptSearch()
 			</c:forEach>
 		</table>
 
+		<div class="userlistPage">
 			<c:choose>
-			<c:when test="${dept_no eq 0}">
-				<c:if test="${page.startPage > page.pageBlock }">
-					<a href="/admin/userlist?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
-				</c:if>
-				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-					<a href="/admin/userlist?currentPage=${i}">[${i}]</a>
-				</c:forEach>
-				<c:if test="${page.endPage < page.totalPage }">
-					<a href="/admin/userlist?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
-				</c:if>	
-			</c:when>
+				<c:when test="${dept_no eq 0}">
+					<c:if test="${page.startPage > page.pageBlock }">
+						<a href="/admin/userlist?currentPage=${page.startPage-page.pageBlock}">[이전]</a>
+					</c:if>
+					<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+						<a href="/admin/userlist?currentPage=${i}">[${i}]</a>
+					</c:forEach>
+					<c:if test="${page.endPage < page.totalPage }">
+						<a href="/admin/userlist?currentPage=${page.startPage+page.pageBlock}">[다음]</a>
+					</c:if>	
+				</c:when>
 			
-			<c:otherwise>
-				<c:if test="${page.startPage > page.pageBlock }">
-					<a href="/admin/userlistDeptSearch?currentPage=${page.startPage-page.pageBlock}&&dept_no=${dept_no}">[이전]</a>
-				</c:if>
-				<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
-					<a href="/admin/userlistDeptSearch?currentPage=${i}&&dept_no=${dept_no}">[${i}]</a>
-				</c:forEach>
-				<c:if test="${page.endPage < page.totalPage }">
-					<a href="/admin/userlistDeptSearch?currentPage=${page.startPage+page.pageBlock}&&dept_no=${dept_no}">[다음]</a>
-				</c:if>	
-			</c:otherwise>
-		</c:choose>
+				<c:otherwise>
+					<c:if test="${page.startPage > page.pageBlock }">
+						<a href="/admin/userlistDeptSearch?currentPage=${page.startPage-page.pageBlock}&&dept_no=${dept_no}">[이전]</a>
+					</c:if>
+					<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+						<a href="/admin/userlistDeptSearch?currentPage=${i}&&dept_no=${dept_no}">[${i}]</a>
+					</c:forEach>
+					<c:if test="${page.endPage < page.totalPage }">
+						<a href="/admin/userlistDeptSearch?currentPage=${page.startPage+page.pageBlock}&&dept_no=${dept_no}">[다음]</a>
+					</c:if>	
+				</c:otherwise>
+			</c:choose>
+		</div>
 
 		
 	</div>
