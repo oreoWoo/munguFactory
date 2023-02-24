@@ -72,13 +72,7 @@ public class JjhSujuController {
 		redirect.addAttribute("suju_no", ordersDTO.getSuju_no());
 		if(ordersDTO.getEmp_no() == principal.getEmpDTO().getEmp_no()) {
 			int result = jjhSujuService.sujuModify(ordersDTO);
-			if(result == 0) {
-				redirect.addAttribute("msg", "수정에 실패했습니다");
-				return "redirect:/user/sujuDetail";
-			}else {
-				redirect.addAttribute("msg", "수정에 성공했습니다");
-				return "redirect:/user/sujuDetail";
-			}
+			return "redirect:/user/sujuDetail";
 		}else {
 			redirect.addAttribute("msg", "등록한 사람만 수정할 수 있습니다");
 			return "redirect:/user/sujuDetail";

@@ -100,13 +100,22 @@
 			});
 		});
 	</script>
-	<select class="form-select ajaxGetSujuList">
-		<c:if test="${accountList!=null }">
-		<c:forEach var="acc" items="${accountList }">
-			<option value="${acc.account_no }">${acc.account_name }</option>
-		</c:forEach>
-		</c:if>
-	</select>
+	<c:if test="${accountList==null || accountList.size()==0}">
+		<script type="text/javascript">
+			$(function(){
+				alert("출하 가능한 정보가 없습니다.");
+				cancelInsert();
+			});
+		</script>
+	</c:if>
+	<c:if test="${accountList!=null && accountList.size()!=0 }">
+		<select class="form-select ajaxGetSujuList">
+			<option selected="selected" style="display:none; ">옵션선택</option>
+			<c:forEach var="acc" items="${accountList }">
+				<option value="${acc.account_no }">${acc.account_name }</option>
+			</c:forEach>
+		</select>
+	</c:if>
 </div>
 <div id="setSujuList">
 	<c:if test="${orderList==null || orderList.size()==0}">
@@ -183,7 +192,6 @@
 </div>
 <div id="setOrdersDetail">
 	<c:if test="${OrdersDetail==null}">
-		없음
 		<script type="text/javascript">
 			$(function(){
 				alert("출하 가능한 상품이 없습니다.");

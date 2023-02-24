@@ -28,6 +28,9 @@
 			}
 		});
 	}
+	function cancelInsert(){
+		$(".ajaxContents tbody tr:first").remove();
+	}
 	function ajaxInsertShipmentForm(){
 		if($(".insertShipment").html()==null){
 			$.ajax({
@@ -55,6 +58,7 @@
 			success	: function(data){
 				var html = $('<div>').html(data);
 				$('.modal-body').append(html.find("div #container").html());
+				$('.modal-body').append(html.find("div .card-body").html());
 				$('.modal-body').append(html.find("div .subulContainer").html());
 				$('.modal-body').append(html.find("div .inventoryManagementContainer").html());
 				$('.modal-body').append(html.find("div .col-xxl").html());
@@ -69,7 +73,7 @@
 </head>
 <body>
 	<div class="background">
-		<h1>출하</h1>
+		<h4 class="fw-bold py-3 mb-4">출하</h4>
 		<div class="shipmentContainer card mb-4">
 			<sec:authentication property="principal.empDTO" var="myEmp"/>
 			<div class="modal fade" id="fullsizemodal" tabindex="-1" aria-hidden="true">
@@ -114,6 +118,7 @@
 					<button type="button" class="btn btn-outline-primary" onclick="ajaxInsertShipmentForm()"><span class="tf-icons bx bx-pie-chart-alt"></span>&nbsp;추가</button>
 				</div>
 			</form>
+			<br>
 		</div>
 	</div>
 </body>

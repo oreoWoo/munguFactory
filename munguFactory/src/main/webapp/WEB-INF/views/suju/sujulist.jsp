@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+.SujuContainer{
+	 	padding-top: 50px;
+		padding-left: 50px;
+		padding-right: 50px;
+}
+
 .sujulist-search{
 	padding-left: 10px;
 	padding-right: 10px;
@@ -32,7 +38,6 @@
 		});
 		// 날짜 선택
 		$(document).on("change", "#startDate , #endDate", function() {
-			alert($(this).val());
 			if($(this).attr("id") == "startDate"){
 				$("#endDate").attr("min",$(this).val())
 			} else {
@@ -118,7 +123,7 @@
 <body>
 	<div class="SujuContainer container-xxl flex-grow-1 container-p-y">
 		<div style="position: relative; right: 120px; margin-bottom: 30px;">
-			<h1>수주 관리</h1>
+			<h4 class="fw-bold py-3 mb-4">수주 관리</h4>
 		</div>
 		<div class=" card">
 			<div class="table-responsive text-nowrap">

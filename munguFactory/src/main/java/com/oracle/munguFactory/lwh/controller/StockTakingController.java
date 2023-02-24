@@ -121,5 +121,11 @@ public class StockTakingController {
 		int result = st.updateTempSilsa(stockTakingDTO);
 		return result;
 	}
-		
+	
+	//차트용 데이터 가져오기
+	@ResponseBody
+	@GetMapping(value = "/selectItemStockCnt")
+	public List<StockTakingDTO> selectItemStockCnt(){
+		return st.selectItemStockCnt();
+	}
 }

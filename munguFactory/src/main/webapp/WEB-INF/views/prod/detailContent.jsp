@@ -59,7 +59,7 @@ $(document).ready(function(){
 	
 	// 지시하기 버튼 이벤트 등록
 	$("#delChk").on("click", function(){
-		if(confirm("생산을 지시를 삭제 하시겠습니까?")){
+		if(confirm("생산지시를 삭제 하시겠습니까?")){
 			var frm = $("#frm").serialize();
 			console.log("frm : " + frm);
 
@@ -68,12 +68,12 @@ $(document).ready(function(){
 				url : '/user/delete',
 				data: frm,
 				dataType: "text",
-				success : function(data){
+				 success : function(data){
 					if (data == 0){
 						alert("삭제를 실패하였습니다.");
 					}else{
 						alert("삭제가 완료되었습니다.");
-					}
+					} 
 					opener.location.reload();
 					self.close();
 				}
@@ -90,6 +90,38 @@ $(document).ready(function(){
 } */
 
 </script>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	// 지시하기 버튼 이벤트 등록
+	$("#ListChk").on("click", function(){
+		if(confirm("생산지시 전 입니다. 목록으로 이동하시겠습니까? ")){
+			var frm = $("#frm").serialize();
+			console.log("frm : " + frm);
+
+			$.ajax({
+				type: "post",
+				url : '/user/ProdList',
+				/* data: frm, */
+				dataType: "text",
+				success : function(data){
+					if (data == 0){
+						alert("이동 완료");
+					}else{
+						alert("이동 완료");
+					} 
+					opener.location.reload();
+					self.close();
+				}
+			});
+		}
+	});
+});
+
+
+
+</script>
+
 </head>
 <body>
 
@@ -131,11 +163,11 @@ $(document).ready(function(){
 				<td>${prodDto.emp_no}</td>
 			</tr>
 			<tr>
-				<th>생산지시일</th>
+				<th>수주일</th>
 				<td><input type="date" name="prod_date" value="${prodDto.prod_date}" readonly="readonly"></td>
 			</tr>
 			<tr>
-				<th>생산완료일</th>
+				<th>생산지시일</th>
 				<td><input type="date" name="finish_date" id="finish_date"  value="${prodDto.finish_date}" min=""></td>
 <!-- 				<td><input type="date" name="finishDate" required="required"></td>
  -->					
@@ -147,8 +179,8 @@ $(document).ready(function(){
 			<tr>
 				<th></th>
 				<th class="d-flex justify-content-end">
-					<button type="button" class="btn btn-outline-secondary mx-2"
-					onclick="location.href='/user/ProdList?suju_no=${prodDto.suju_no}'">
+					<button id="ListChk" class="btn btn-outline-secondary mx-2"
+					<%-- onclick="location.href='/user/ProdList?suju_no=${prodDto.suju_no}'" --%>>
 					목록 보기</button>	
 					
 					<button id="delChk" class="btn btn-outline-secondary  mx-2 justify-content-end">삭제</button>

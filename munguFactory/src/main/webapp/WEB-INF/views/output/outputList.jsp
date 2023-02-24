@@ -120,25 +120,31 @@
 </head>
 <body>
 	<div class="outputContainer">
-		<h1 class="display-3">생산실적</h1>
-		<!-- 생산실적 등록 -->
-		<button type="button" class="alert alert-primary" onclick="location.href='${pageContext.request.contextPath }/user/writeFormOutput'" style="width: 70px; text-align: center;translate: 1300px 107px;height:40px;padding: 9px 2px 0px 1px;font-weight: bold;">등록</button>
+		<h4 class="fw-bold py-3 mb-4">생산 실적</h4>
+		
 		<!-- 생산실적 관련 정보 조회 -->
-		<form action="listSearch" style="translate: 2px 52px; width:1000px;">
+		<form action="listSearch" style="translate: 2px 52px;">
 			<input type="hidden" value="1" name="pageNum" id="pageNum">
 		
-			<div class="searchBox">
-				<select name="search" class="form-select" style="width: 110px;">
-					<option value="">전체</option>
-					<option value="item_no">품번</option>
-					<option value="item_name">품명</option>
-					<option value="emp_no">사원번호</option>
-					<option value="factory_no">공장코드</option>
-					<!-- 기간별 조회는 나중에 추가 예정 -->
-				</select>
-				<input type="text" class="form-control" name="keyword" style="height: 38.91px;translate: 110px -39px;width: 250px;">
-				<!-- <input type="text" style="display: none;"> -->	<!-- 엔터키를 위해 쓴 -->
-				<button type="submit" class="btn btn-outline-primary btn_submit" id="btnSearch" style="translate: 360px -70px;"><img src="https://cdn-icons-png.flaticon.com/512/71/71403.png" style="width: 20px;height: 20px;translate: -10px -10px;"></button>
+			<div class="searchBox row">
+				<div class="col-sm-6">
+					<select name="search" class="form-select" style="width: 110px;">
+						<option value="">전체</option>
+						<option value="item_no">품번</option>
+						<option value="item_name">품명</option>
+						<option value="emp_no">사원번호</option>
+						<option value="factory_no">공장코드</option>
+						<!-- 기간별 조회는 나중에 추가 예정 -->
+					</select>
+					<input type="text" class="form-control" name="keyword" style="height: 38.91px;translate: 110px -39px;width: 250px;">
+					<!-- <input type="text" style="display: none;"> -->	<!-- 엔터키를 위해 쓴 -->
+					<button type="submit" class="btn btn-outline-primary btn_submit" id="btnSearch" style="translate: 360px -70px;"><img src="https://cdn-icons-png.flaticon.com/512/71/71403.png" style="width: 20px;height: 20px;translate: -10px -10px;"></button>
+				</div>
+				
+				<div class="col-sm-6" style="text-align: right;">
+					<!-- 생산실적 등록 -->
+					<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath }/user/writeFormOutput'" style="width: 70px; text-align: center; height:40px;padding: 9px 2px 0px 1px;font-weight: bold;">등록</button>
+				</div>
 			</div>
 		</form>
 		

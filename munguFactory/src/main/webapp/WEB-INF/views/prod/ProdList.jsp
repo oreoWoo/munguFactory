@@ -1,9 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+
+
+ .prodcontainer{
+ 		padding-top: 50px;
+		padding-left: 50px;
+		padding-right: 50px;
+ }
+
+</style>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <script type="text/javascript">
@@ -62,19 +74,30 @@
 </head>
 <body>
  <!-- Bordered Table -->
-	<div class="card">
+	<!-- <div class="card">
 		<h5 class="card-header">생산지시! </h5>
 		<div class="card-body">
 			<div class="table-responsive text-nowrap">
 				<table class="table table-bordered">
 					<thead class="thead">
-						<tr>
+						<tr> -->
+ <div class="prodcontainer" >
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light" ></span>생산지시</h4>
+
+              <!-- Basic Bootstrap Table -->
+              <div class="card">
+                <h5 class="card-header">Production Order</h5>
+                <div class="table-responsive text-nowrap">
+                  <table class="table">
+                    <thead>
+                      <tr>
 							<th>수주번호</th>
 							<th>품번</th>
 							<th>공장코드</th>
 							<th>생산수량</th>
 							<th>담당자</th>
 							<th>진행상태</th>
+							
 							<th>수주일자</th>
 							<th>작업완료일자</th>             
 						</tr>
@@ -83,9 +106,9 @@
 						<c:set var="num" value="${page.total-page.start+1 }"></c:set> 
 						<c:forEach var="list" items="${prodList}">
 							<tr>
-								<%-- <th scope="row">${list.rn}</th>  --%>
+			
 								<td>
-									<a href="/user/ProdModPop?suju_no=${list.suju_no}">${list.suju_no}</a>
+									<a href="" readonly>${list.suju_no}</a>
 								</td>
 								<td>${list.item_no}</td>
 								<td>${list.factory_no}</td>
@@ -93,10 +116,13 @@
 								<td>${list.emp_no}</td>
 								<td>
 									${list.prod_state}
-									<c:if test="${list.prod_state eq '생산지시'}">
-										<button type="button" onclick="click_add(${list.suju_no}, ${list.item_no} );">수정</button>
+									<c:if test="${list.prod_state eq '지시 전'}">
+				<button type="button" class="btn btn-sm btn-primary"  onclick="click_add(${list.suju_no}, ${list.item_no} );">지시</button>
 									</c:if>
 								</td>
+								<%-- <td>	
+									<input type="button" class="btn btn-primary" onclick="click_add(${list.suju_no}, ${list.item_no} );" value="지시">
+								</td> --%>
 								<td>${list.prod_date}</td>
 								<td>${list.finish_date}</td>
 							</tr>

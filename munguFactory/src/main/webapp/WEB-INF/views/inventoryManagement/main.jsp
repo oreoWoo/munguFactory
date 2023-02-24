@@ -36,9 +36,9 @@
 			success	: function(data){
 				var html = $('<div>').html(data);
 				$('.modal-body').append(html.find("div #container").html());
+				$('.modal-body').append(html.find("div .card-body").html());
 				$('.modal-body').append(html.find("div .subulContainer").html());
 				$('.modal-body').append(html.find("div .inventoryManagementContainer").html());
-				$('.modal-body').append(html.find("div .col-xxl").html());
 				$('.modal-body button, .modal-body input').attr('disabled','disabled');
 			}
 		});
@@ -50,7 +50,7 @@
 </head>
 <body>
 	<div class="background">
-		<h1>수불부</h1>
+		<h4 class="fw-bold py-3 mb-4">수불부</h4>
 		<div class="inventoryManagementContainer card mb-4">
 			<sec:authentication property="principal.empDTO.emp_name" var="myName"/>
 			<div class="modal fade" id="fullsizemodal" tabindex="-1" aria-hidden="true">
@@ -98,6 +98,7 @@
 					<button type="reset" class="btn btn-outline-primary" onclick="ajaxChk(1)"><span class="tf-icons bx bx-pie-chart-alt"></span>&nbsp;초기화</button>
 				</div>
 			</form>
+			<br>
 		</div>
 	</div>
 </body>

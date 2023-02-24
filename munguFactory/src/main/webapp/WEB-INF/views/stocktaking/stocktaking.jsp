@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <title>재고실사 관리</title>
 <style type="text/css">
+
+	.col-sm-6 {
+		padding-left : 0px;
+		padding-right : 0px;
+	}
+	
 	.stockContainer{
 		padding-top: 50px;
 		padding-left: 50px;
@@ -14,8 +20,18 @@
 		
 	}
 	
+	
+	.insertTblDiv {
+		margin-bottom: 35px;
+	}
+	
 	.stockPaging {
 		margin-top: 20px;
+	}
+	
+	.hrLine {
+		margin-left : 20px;
+		margin-right : 20px;
 	}
 	
 	.pgnumclick {
@@ -76,6 +92,7 @@
 		text-align: center;
 	}
 	
+	
 	.itemName {
 		width: 305px;
 	}
@@ -120,39 +137,39 @@
 </head>
 <body>
 	<div class="stockContainer">
-		<h1 class="display-3">재고실사 관리</h1>
+		<h4 class="fw-bold py-3 mb-4">재고실사 관리</h4>
 		<!-- 검색 옵션 영역 -->
-		<div class="card">
-			<div class="searchStock row">
-				<div class="col-sm-6">
-					<!-- 공장선택 -->
-					<select class='form-select selectFactory' id="searchFactory">
-					</select>
-					
-					<!-- 상태선택 -->
-					<select class='form-select selectGubun' id="searchGubun">
-						<option value="">상태선택</option>
-						<option value="재고실사">재고실사</option>
-						<option value="임시실사">임시실사</option>
-					</select>  
-					
-					<!-- 날짜선택 -->
-					<input class="form-control" type="date" value="" id="startDate" max="">
-					<input class="form-control" type="date" value="" id="endDate" max="">
-					
-					<button type="button" class="btn btn-primary searchBtn" onclick="selectStockTakingList()">검색</button>
-				</div>
+		<div class="searchStock row">
+			<div class="col-sm-6">
+				<!-- 공장선택 -->
+				<select class='form-select selectFactory' id="searchFactory">
+				</select>
 				
-				<!-- 행 추가 -->
-				<div class="col-sm-6" style="text-align : right;">
-					<button type="button" class="btn rounded-pill btn-primary" id="plusBtn" onclick="addRow()"><strong>+</strong></button>
-				</div>
+				<!-- 상태선택 -->
+				<select class='form-select selectGubun' id="searchGubun">
+					<option value="">상태선택</option>
+					<option value="재고실사">재고실사</option>
+					<option value="임시실사">임시실사</option>
+				</select>  
 				
+				<!-- 날짜선택 -->
+				<input class="form-control" type="date" value="" id="startDate" max="">
+				<input class="form-control" type="date" value="" id="endDate" max="">
+				
+				<button type="button" class="btn btn-primary searchBtn" onclick="selectStockTakingList()">검색</button>
 			</div>
 			
+			<!-- 행 추가 -->
+			<div class="col-sm-6" style="text-align : right;">
+				<button type="button" class="btn rounded-pill btn-primary" id="plusBtn" onclick="addRow()"><strong>+</strong></button>
+			</div>
+			
+		</div>
+
+		<div class="card">
 			<!-- 재고실사 데이터 등록 -->
 			<form action="${pageContext.request.contextPath }/user/stocktaking/insertStockTaking" name="insertForm" method="post">
-					<div class="table-responsive text-nowrap">
+					<div class="table-responsive text-nowrap insertTblDiv">
 						<table class="table insertStockTbl" id="stockInsertTbl">
 							<thead>
 								<tr>
@@ -174,9 +191,11 @@
 						</table>
 					
 					</div>
-				
+					
 			</form>
+		</div>
 			
+			<div class="card">
 			<!-- 검색결과 영역 -->
 				<div class="table-responsive text-nowrap">
 					<table class="table realSearchTbl">

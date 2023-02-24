@@ -180,9 +180,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<div class="container-xxl flex-grow-1 container-p-y" style="width: 1600px;">
+	<h4 class="fw-bold py-3 mb-4">관리자용 사원 마이페이지</h4>
 	<div class="card mb-6">
-		<h4 class="fw-bold py-3 mb-4" style="padding-left: 80px; margin-top: 50px;">관리자용 마이페이지</h4>
+		
 		<form action="/admin/adminEditUserInfo" method="post">
 			<table class="table" style="width: 1300px; margin-left:50px;  margin-top: 50px; margin-bottom: 50px;">
 				<tr>
