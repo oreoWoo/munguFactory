@@ -65,7 +65,6 @@
 		var startDate = $("#startDate").val();
 		var endDate = $("#endDate").val();
 		var searchName = $("#searchName").val();
-		alert(currentPage);
 		$.ajax({
 					url : "/user/sujuListAction",
 					type : "POST",
